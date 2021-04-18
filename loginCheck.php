@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <title>Login Checking</title>
     <style>
 /************************************outer************************************/
 
@@ -49,7 +50,6 @@
     }
 
     </style>
-    <title>Blog Login Checking</title>
 </head>
 
 <script>
@@ -61,12 +61,14 @@
         ?>
         if(<?php echo $ret[0]; ?> == 1){
             localStorage.setItem("isLogin", true);
-		    location.href = "index.php?id=" + <?php echo '"'.$array["id"].'"'; ?> + "&pw=" + <?php echo '"'.(string)$array["pw"].'"'; ?>;
+            localStorage.setItem("id", <?php echo '"'.$array["id"].'"'; ?>);
+            localStorage.setItem("pw", <?php echo '"'.$array["pw"].'"'; ?>);
+		    location.href = "index?id=" + <?php echo '"'.$array["id"].'"'; ?> + "&pw=" + <?php echo '"'.$array["pw"].'"'; ?>;
         }
         else{
             alert("Worng ID or PW, check your input");
             localStorage.setItem("isLogin", false);
-		    location.href = "login.php";
+		    location.href = "login";
         }
     }
 </script>

@@ -22,7 +22,7 @@
         $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
         if(mysqli_connect_error()) return array();
 
-        $sql_query = 'select * from class_list where level >= '.$user[1];
+        $sql_query = 'select * from class_list where level >= '.$user[1].' order by num asc';
         $result = mysqli_query($conn, $sql_query);
         mysqli_close($conn);
 

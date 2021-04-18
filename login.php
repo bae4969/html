@@ -1,9 +1,10 @@
-<!-- .php -->
+<!--login.php -->
 <!doctype html>
 <html>
 
 <head>
     <meta charset='utf-8'>
+    <title>Login</title>
     <style>
 /************************************outer************************************/
 
@@ -100,16 +101,23 @@
     }
 
     </style>
-    <title>Blog Login</title>
 </head>
 
 <script type="text/javascript" src="encode/sha256.js"></script>
 <script>
 
+    window.onload = function() {
+        var id = localStorage.getItem("id");
+        var pw = localStorage.getItem("pw");
+        if(id != null & pw !=null){
+		    location.href = "index?id=" + id + "&pw=" + pw;
+        }
+    }
+
     function loginChecker(id, pw){
         var idHash = sha256(id);
         var pwHash = sha256(pw);
-		location.href = "loginCheck.php?id=" + idHash + "&pw=" + pwHash;
+		location.href = "loginCheck?id=" + idHash + "&pw=" + pwHash;
     }
 
     function enter(){
@@ -124,12 +132,12 @@
 
     <div id='main'>
         <div id="topLeft">
-            <a id="homeTop" href="index.php" alt="Home Page">Home</a>
+            <a id="homeTop" href="index" alt="Home Page">Home</a>
         </div>
 
         <div id='inputLayout'>
             <div class='input'>
-                <a href="index.php">
+                <a href="index">
                     <img src="res/index/title.png" alt="Index Page" height="50px" />
                 </a>
             </div>

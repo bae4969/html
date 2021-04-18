@@ -83,15 +83,19 @@
         background: #222426;
     }
 
+    div#profile{
+        margin: 10px;
+        margin-bottom: 50px;
+    }
+
     aside ul#category {
-        margin: 20px;
-        margin-bottom: 20px;
+        margin: 10px;
         padding: 0px;
         list-style: none;
     }
 
     aside ul li.category {
-        margin-top: 30px;
+        margin-bottom: 30px;
     }
 
 /************************************section************************************/
@@ -211,21 +215,35 @@
     var isLogin = 'false';
 
     window.onload = function() {
+        var str = location.href;
+        var index = str.indexOf("?") + 1;
+        var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+        if (index == 0) {
+            var id = localStorage.getItem("id");
+            var pw = localStorage.getItem("pw");
+            if(id != null & pw !=null){
+                location.href = "index?id=" + id + "&pw=" + pw;
+            }
+        }
+
         isLogin = localStorage.getItem("isLogin");
         if(isLogin == null) isLogin = 'false';
         if(isLogin == 'true')
             document.getElementById("loginTop").innerHTML = "Logout";
         else
             document.getElementById("loginTop").innerHTML = "Login";
+        history.replaceState({}, null, location.pathname);
     }
 
     var loginout = function() {
         if (isLogin == 'true') {
             localStorage.setItem("isLogin", false);
-            location.href = "index.php";
+            localStorage.removeItem("id");
+            localStorage.removeItem("pw");
+            location.href = "index";
             alert("logout");
         } else {
-            location.href = "login.php";
+            location.href = "login";
         }
     }
 
@@ -235,13 +253,13 @@
     <div id="main">
         <header>
             <div id="topLeft">
-                <a id="homeTop" href="index.php" alt="Home Page">Home</a>
+                <a id="homeTop" href="index" alt="Home Page">Home</a>
             </div>
             <div id="topRight">
                 <label id="loginTop" onclick="loginout()" alt="Login Page"></label>
             </div>
             <div id="title">
-                <a href="index.php">
+                <a href="index">
                     <img id="mainTitle" src="res/index/title.png" alt="Index Page" />
                 </a>
             </div>
@@ -265,10 +283,7 @@
                         for($i = 0; $i < count($classList); $i++) {
                             echo
                             '<li class="category" >
-                                <a href="index.php
-                                ?id='.$id.
-                                '&pw='.$pw.
-                                '&class='.strval($classList[$i]).'">
+                                <a href="index?id='.$id.'&pw='.$pw.'&class='.strval($classList[$i]).'">
                                     '.strval($classList[$i]).'
                                 </a>
                             </li>';
