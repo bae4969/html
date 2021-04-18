@@ -1,0 +1,6 @@
+<?php
+    $sqlAddr = ;
+    $sqlId = ;
+    $sqlPw = ;
+    $sqlDb = ;
+?>
