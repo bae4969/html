@@ -38,7 +38,7 @@
 
 		1. before install this, you have to install APM.
 
-		2. put this project to '/Apache24/htdocs'
+		2. put this project to '/var/www/html'
 
 		3. need to fix 'sql/sqlcon.php-temp' to 'sql/sqlcon.php' whitch contains sql conntion info
 
