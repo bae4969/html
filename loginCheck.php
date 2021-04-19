@@ -57,13 +57,18 @@
         <?php
             include "sql/basic.php";
             parse_str(getenv("QUERY_STRING"), $array);
-            $ret = userCheck($array["id"], $array["pw"]);
+            $user = userCheck($array["id"], $array["pw"]);
         ?>
-        if(<?php echo $ret[0]; ?> == 1){
+        if(<?php echo $user["valid"]; ?> == 1){
             localStorage.setItem("isLogin", true);
             localStorage.setItem("id", <?php echo '"'.$array["id"].'"'; ?>);
             localStorage.setItem("pw", <?php echo '"'.$array["pw"].'"'; ?>);
 		    location.href = "index?id=" + <?php echo '"'.$array["id"].'"'; ?> + "&pw=" + <?php echo '"'.$array["pw"].'"'; ?>;
+        }
+        else if(<?php echo $user["valid"]; ?> == -1){
+            alert("Banned User");
+            localStorage.setItem("isLogin", false);
+		    location.href = "login";
         }
         else{
             alert("Worng ID or PW, check your input");

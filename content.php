@@ -1,4 +1,4 @@
-<!-- index.php -->
+<!-- content.php -->
 <!doctype html>
 <html>
 
@@ -17,11 +17,6 @@
     a:hover {
         color: white;
         text-decoration: none;
-        cursor: pointer;
-    }
-
-    div.content:hover{
-        background-color: #36383A;
         cursor: pointer;
     }
 
@@ -114,11 +109,9 @@
     div#contents {
         width: calc(100% - 260px);
         margin-top: 20px;
-        column-count: 2;
-        column-gap: 10px;
     }
 
-    div.content {
+    div#content {
         width: calc(100% - 60px);
         margin: 20px;
         margin-top: 0px;
@@ -130,15 +123,15 @@
         color: white;
     }
 
-    div.content_title {
+    div#content_title {
         padding: 8%;
         padding-top: 30px;
         padding-bottom: 0px;
-        font-size: 4ex;
+        font-size: 6ex;
         font-weight: bold;
     }
 
-    div.content_date {
+    div#content_date {
         padding: 4%;
         padding-top: 0px;
         padding-bottom: 20px;
@@ -147,22 +140,27 @@
         font-size: 2ex;
     }
 
-    div.content_thumbnail {
+    hr{
+        background-color: #C3C3C3;
+    }
+
+    div#content_content {
         padding: 10px;
-        font-size: 2.5ex;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 2.2ex;
     }
 
 /************************************media************************************/
 
     /* vertical monitor */
-    @media screen and (max-width: 1600px) {
+    @media screen and (max-width: 1300px) {
         div#main {
             width: calc(100% - 40px);
         }
 
         div#contents {
             width: calc(100% - 250px);
-            column-count: 1;
         }
     }
 
@@ -276,28 +274,6 @@
         //history.replaceState({}, null, location.pathname);
     }
 
-    var loginout = function() {
-        if (isLogin == 'true') {
-            localStorage.setItem("isLogin", false);
-            localStorage.removeItem("id");
-            localStorage.removeItem("pw");
-            alert("로그아웃");
-        }
-    }
-
-    var contentClick = function(content_index){
-        var id = localStorage.getItem('id');
-        var pw = localStorage.getItem('pw');
-
-        if(id == null) id = '';
-        if(pw == null) pw = '';
-
-        location.href = 'content'
-            + '?id=' + id
-            + '&pw=' + pw
-            + '&index=' + content_index;
-    }
-
 </script>
 
 <body>
@@ -342,31 +318,27 @@
             </aside>
 
             <div id=contents>
-                <?php
-                    parse_str(getenv("QUERY_STRING"), $array);
-                    $id = $array["id"];
-                    $pw = $array["pw"];
-                    $class_index = $array["class"];
-                    $contents = loadMainContentList($id, $pw, $class_index);
-
-                    for($i = 0; $i < count($contents); $i++){
+                <div id=content>
+                    <?php
+                        parse_str(getenv("QUERY_STRING"), $array);
+                        $id = $array["id"];
+                        $pw = $array["pw"];
+                        $content_index = $array["index"];
+                        $content = loadDetailContentList($id, $pw, $content_index);
                         echo
-                        '<div class="content" onclick="contentClick('.$contents[$i]['content_index'].')">
-                            <div class="content_title">';
-                        echo $contents[$i]["title"];
+                        '<div id=content_title>'
+                            .$content["title"].
+                        '</div>';
                         echo
-                            '</div>
-                            <div class="content_date">';
-                        echo $contents[$i]["date"];
+                        '<div id=content_date>'
+                            .$content["date"].
+                        '</div><hr>';
                         echo
-                            '</div>
-                            <div class="content_thumbnail">';
-                        echo $contents[$i]["thumbnail"];
-                        echo
-                            '</div>
-                        </div>';
-                    }
-                ?>
+                        '<div id=content_content>'
+                            .$content["content"].
+                        '</div>';
+                    ?>
+                </div>
             </div>
 
         </section>
