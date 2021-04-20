@@ -6,21 +6,6 @@
     <style>
 /************************************outer************************************/
 
-    a:link {
-        color: #C3C3C3;
-        text-decoration: none;
-    }
-
-    a:visited {
-        color: #C3C3C3;
-        text-decoration: none;
-    }
-
-    a:hover {
-        color: #C3C3C3;
-        text-decoration: none;
-    }
-
     html{
         height: 97%;
     }
@@ -54,9 +39,10 @@
 
 <script src="script/main.js"></script>
 <script>
+
     window.onload = function() {
         <?php
-            include "sql/basic.php";
+            include "php/basic.php";
             $user = userCheck($_POST["id"], $_POST["pw"]);
         ?>
         if(<?php echo $user["valid"]; ?> == 1){
@@ -76,8 +62,8 @@
             localStorage.removeItem("pw");
             location.href = "login";
         }
-
     }
+    
 </script>
 
 <body>

@@ -1,4 +1,4 @@
-<!-- content.php -->
+<!-- content/writer.php -->
 <!doctype html>
 <html>
 
@@ -143,7 +143,6 @@
 
 /************************************media************************************/
 
-    /* vertical monitor */
     @media screen and (max-width: 1300px) {
         div#main {
             width: calc(100% - 40px);
@@ -154,62 +153,9 @@
         }
     }
 
-    /* half of vertical monitor */
-    /* @media screen and (max-width: 800px) {
-        div#title {
-            width: 100%;
-            margin-left: 0%;
-            padding-top: 50px;
-            padding-bottom: 40px;
-            text-align: center;
-        }
-
-        div#title img#mainTitle {
-            width: 80%;
-        }
-
-        aside {
-            width: calc(100% - 60px);
-            margin: 10px;
-            float: none;
-        }
-
-        div#contents {
-            width: 100%;
-        }
-
-        div.content {
-            margin: 10px;
-        }
-    } */
-
 /************************************after************************************/
 
-    header::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    nav::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    aside::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    div::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    section::after {
+    header::after, nav::after, aside::after, div::after, section::after, li::after {
         content: "";
         display: block;
         clear: both;
@@ -229,11 +175,11 @@
 </head>
 
 <?php
-    include 'sql/sqlcon.php';
-    include 'sql/basic.php';
+    include '../php/sqlcon.php';
+    include '../php/basic.php';
 ?>
 
-<script src="script/main.js"> </script>
+<script src="../script/content.js"> </script>
 <script>
 
     var isLogin = 'false';
@@ -252,7 +198,7 @@
             <div id=topLeft onclick=homeClick()>Home</div>
             <div id=topRight onclick=loginout()></div>
             <div id=title>
-                <img id=mainTitle onclick=homeClick() src="res/index/title.png" alt="Index Page" />
+                <img id=mainTitle onclick=homeClick() src="../res/index/title.png" alt="Index Page" />
             </div>
         </header>
 
@@ -283,24 +229,7 @@
             </aside>
 
             <div id=content>
-                <?php
-                    $id = $_POST["id"];
-                    $pw = $_POST["pw"];
-                    $content_index = $_POST["index"];
-                    $content = loadDetailContentList($id, $pw, $content_index);
-                    echo
-                    '<div id=content_title>'
-                        .$content["title"].
-                    '</div>';
-                    echo
-                    '<div id=content_date>'
-                        .$content["date"].
-                    '</div><hr>';
-                    echo
-                    '<div id=content_content>'
-                        .$content["content"].
-                    '</div>';
-                ?>
+                
             </div>
 
         </section>

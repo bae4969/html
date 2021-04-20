@@ -1,4 +1,4 @@
-<!-- index.php -->
+<!-- content/reader.php -->
 <!doctype html>
 <html>
 
@@ -108,16 +108,9 @@
         background-color: #1A1C1D;
     }
 
-    div#contents {
-        width: calc(100% - 260px);
-        margin-top: 20px;
-        column-count: 2;
-        column-gap: 20px;
-    }
-
-    div.content {
-        width: calc(100% - 40px);
-        margin: 0px 20px 20px 10px;
+    div#content {
+        width: calc(100% - 300px);
+        margin: 20px 0px 30px 10px;
         padding: 20px;
         display: inline-block;
         vertical-align: top;
@@ -125,35 +118,70 @@
         color: white;
     }
 
-    div.content_title {
-        padding: 30px 8% 0px 8%;
-        font-size: 4ex;
+    div#content_title {
+        padding: 20px 8% 0px 8%;
+        font-size: 6ex;
         font-weight: bold;
     }
 
-    div.content_date {
+    div#content_date {
         padding: 0px 4% 20px 4%;
         vertical-align: bottom;
         text-align: right;
         font-size: 2ex;
     }
 
-    div.content_thumbnail {
+    hr{
+        background-color: #C3C3C3;
+    }
+
+    div#content_content {
         padding: 10px;
-        font-size: 2.5ex;
+        padding: 30px 0 20px 0;
+        font-size: 2.2ex;
     }
 
 /************************************media************************************/
 
-    @media screen and (max-width: 1600px) {
+    /* vertical monitor */
+    @media screen and (max-width: 1300px) {
         div#main {
             width: calc(100% - 40px);
         }
 
         div#contents {
-            column-count: 1;
+            width: calc(100% - 250px);
         }
     }
+
+    /* half of vertical monitor */
+    /* @media screen and (max-width: 800px) {
+        div#title {
+            width: 100%;
+            margin-left: 0%;
+            padding-top: 50px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        div#title img#mainTitle {
+            width: 80%;
+        }
+
+        aside {
+            width: calc(100% - 60px);
+            margin: 10px;
+            float: none;
+        }
+
+        div#contents {
+            width: 100%;
+        }
+
+        div.content {
+            margin: 10px;
+        }
+    } */
 
 /************************************after************************************/
 
@@ -177,11 +205,11 @@
 </head>
 
 <?php
-    include 'php/sqlcon.php';
-    include 'php/basic.php';
+    include '../php/sqlcon.php';
+    include '../php/basic.php';
 ?>
 
-<script src="script/main.js"> </script>
+<script src="../script/content.js"> </script>
 <script>
 
     var isLogin = 'false';
@@ -195,12 +223,12 @@
 </script>
 
 <body>
-    <div id=main>
+    <div id="main">
         <header>
             <div id=topLeft onclick=homeClick()>Home</div>
             <div id=topRight onclick=loginout()></div>
             <div id=title>
-                <img id=mainTitle onclick=homeClick() src="res/index/title.png" alt="Index Page" />
+                <img id=mainTitle onclick=homeClick() src="../res/index/title.png" alt="Index Page" />
             </div>
         </header>
 
@@ -230,33 +258,24 @@
                 </ul>
             </aside>
 
-            <div id=contents>
+            <div id=content>
                 <?php
                     $id = $_POST["id"];
                     $pw = $_POST["pw"];
-                    $class_index = $_POST["class"];
-                    $contents = loadMainContentList($id, $pw, $class_index);
-
-                    for($i = 0; $i < count($contents); $i++){
-                        echo
-                        '<div class="content" onclick="contentClick('.$contents[$i]['content_index'].')">
-                            <div class="content_title">';
-                        echo 
-                                $contents[$i]["title"];
-                        echo
-                            '</div>
-                            <div class="content_date">';
-                        echo
-                                $contents[$i]["date"];
-                        echo
-                            '</div>
-                            <div class="content_thumbnail">';
-                        echo
-                                $contents[$i]["thumbnail"];
-                        echo
-                            '</div>
-                        </div>';
-                    }
+                    $content_index = $_POST["index"];
+                    $content = loadDetailContentList($id, $pw, $content_index);
+                    echo
+                    '<div id=content_title>'
+                        .$content["title"].
+                    '</div>';
+                    echo
+                    '<div id=content_date>'
+                        .$content["date"].
+                    '</div><hr>';
+                    echo
+                    '<div id=content_content>'
+                        .$content["content"].
+                    '</div>';
                 ?>
             </div>
 

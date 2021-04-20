@@ -7,7 +7,7 @@ var loginout = function() {
         homeClick();
     }
     else{
-        location.href = 'login';
+        location.href = '../login';
     }
 }
 
@@ -17,7 +17,7 @@ var getDefaultPostForm = function(url){
     var form = document.createElement('form');
 
     form.setAttribute('method', 'post');
-    form.setAttribute('action', url);
+    form.setAttribute('action', '../' + url);
     document.charset = "utf-8";
 
     if(id != null && pw != null){
@@ -54,7 +54,7 @@ var classClick = function(class_index){
 }
 
 var contentClick = function(content_index){
-    var form = getDefaultPostForm('content/reader');
+    var form = getDefaultPostForm('reader');
     var hiddenField = document.createElement('input');
     hiddenField.setAttribute('type', 'hidden');
     hiddenField.setAttribute('name', 'index');
