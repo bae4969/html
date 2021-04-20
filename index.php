@@ -8,19 +8,17 @@
     <style>
 /************************************outer************************************/
 
-    a:link,
-    a:visited {
-        color: #C3C3C3;
-        text-decoration: none;
+    img#mainTitle {
+        cursor: pointer;
     }
 
-    a:hover {
+    div#topLeft:hover, div#topRight:hover, div.category:hover {
         color: white;
         text-decoration: none;
         cursor: pointer;
     }
 
-    div.content:hover{
+    div.content:hover {
         background-color: #36383A;
         cursor: pointer;
     }
@@ -73,7 +71,7 @@
         text-align: center;
     }
 
-    div#title img#mainTitle {
+    img#mainTitle {
         width: 500px;
     }
 
@@ -88,18 +86,17 @@
     }
 
     div#profile{
-        margin: 10px;
-        margin-bottom: 50px;
+        margin: 10px 10px 40px 10px;
     }
 
-    aside ul#category {
+    ul#category {
         margin: 10px;
         padding: 0px;
         list-style: none;
     }
 
-    aside ul li.category {
-        margin-bottom: 20px;
+    li.category {
+        margin-bottom: 30px;
         font-size: 1.8ex;
         font-weight: bold;
     }
@@ -119,10 +116,8 @@
     }
 
     div.content {
-        width: calc(100% - 60px);
-        margin: 20px;
-        margin-top: 0px;
-        margin-bottom: 30px;
+        width: calc(100% - 50px);
+        margin: 0px 20px 30px 10px;
         padding: 20px;
         display: inline-block;
         vertical-align: top;
@@ -131,17 +126,13 @@
     }
 
     div.content_title {
-        padding: 8%;
-        padding-top: 30px;
-        padding-bottom: 0px;
+        padding: 30px 8% 0px 8%;
         font-size: 4ex;
         font-weight: bold;
     }
 
     div.content_date {
-        padding: 4%;
-        padding-top: 0px;
-        padding-bottom: 20px;
+        padding: 0px 4% 20px 4%;
         vertical-align: bottom;
         text-align: right;
         font-size: 2ex;
@@ -197,31 +188,7 @@
 
 /************************************after************************************/
 
-    header::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    nav::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    aside::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    div::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    section::after {
+    header::after, nav::after, aside::after, div::after, section::after, li::after {
         content: "";
         display: block;
         clear: both;
@@ -245,74 +212,26 @@
     include 'sql/basic.php';
 ?>
 
+<script src="script/main.js"> </script>
 <script>
 
     var isLogin = 'false';
-    var par;
 
     window.onload = function() {
-        var str = location.href;
-        var par = window.location.search;
-        var index = str.indexOf("?") + 1;
-        var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
-        if (index == 0) {
-            var id = localStorage.getItem("id");
-            var pw = localStorage.getItem("pw");
-            if(id != null & pw !=null){
-                location.href = "index?id=" + id + "&pw=" + pw;
-            }
-        }
-
         isLogin = localStorage.getItem("isLogin");
         if(isLogin == null) isLogin = 'false';
-        if(isLogin == 'true'){
-            document.getElementById("loginTop").href = "index";
-            document.getElementById("loginTop").innerHTML = "Logout";
-        }
-        else{
-            document.getElementById("loginTop").href = "login";
-            document.getElementById("loginTop").innerHTML = "Login";
-        }
-        //history.replaceState({}, null, location.pathname);
-    }
-
-    var loginout = function() {
-        if (isLogin == 'true') {
-            localStorage.setItem("isLogin", false);
-            localStorage.removeItem("id");
-            localStorage.removeItem("pw");
-            alert("로그아웃");
-        }
-    }
-
-    var contentClick = function(content_index){
-        var id = localStorage.getItem('id');
-        var pw = localStorage.getItem('pw');
-
-        if(id == null) id = '';
-        if(pw == null) pw = '';
-
-        location.href = 'content'
-            + '?id=' + id
-            + '&pw=' + pw
-            + '&index=' + content_index;
+        document.getElementById("topRight").innerHTML = isLogin == 'true' ? "Logout" : "Login";
     }
 
 </script>
 
 <body>
-    <div id="main">
+    <div id=main>
         <header>
-            <div id="topLeft">
-                <a id="homeTop" href="index" alt="Home Page">Home</a>
-            </div>
-            <div id="topRight">
-                <a id="loginTop" onclick="loginout()" alt="Login Page"></a>
-            </div>
-            <div id="title">
-                <a href="index">
-                    <img id="mainTitle" src="res/index/title.png" alt="Index Page" />
-                </a>
+            <div id=topLeft onclick=homeClick()>Home</div>
+            <div id=topRight onclick=loginout()></div>
+            <div id=title>
+                <img id=mainTitle onclick=homeClick() src="res/index/title.png" alt="Index Page" />
             </div>
         </header>
 
@@ -320,21 +239,22 @@
 
             <aside>
                 <div id=profile>
-                    test
+                    profile
                 </div>
-                <ul id="category">
+                <ul id=category>
                     <?php
-                        parse_str(getenv("QUERY_STRING"), $array);
-                        $id = $array["id"];
-                        $pw = $array["pw"];
+                        $id = $_POST["id"];
+                        $pw = $_POST["pw"];
                         $classList = loadClassList($id, $pw);
 
                         for($i = 0; $i < count($classList); $i++) {
                             echo
-                            '<li class="category" >
-                                <a href="index?id='.$id.'&pw='.$pw.'&class='.$classList[$i]["class_index"].'">
-                                    '.$classList[$i]["name"].'
-                                </a>
+                            '<li class=category>
+                                <div class=category onclick=classClick('.$classList[$i]["class_index"].')>';
+                            echo
+                                    $classList[$i]["name"];
+                            echo
+                                '</div>
                             </li>';
                         }
                     ?>
@@ -343,25 +263,27 @@
 
             <div id=contents>
                 <?php
-                    parse_str(getenv("QUERY_STRING"), $array);
-                    $id = $array["id"];
-                    $pw = $array["pw"];
-                    $class_index = $array["class"];
+                    $id = $_POST["id"];
+                    $pw = $_POST["pw"];
+                    $class_index = $_POST["class"];
                     $contents = loadMainContentList($id, $pw, $class_index);
 
                     for($i = 0; $i < count($contents); $i++){
                         echo
                         '<div class="content" onclick="contentClick('.$contents[$i]['content_index'].')">
                             <div class="content_title">';
-                        echo $contents[$i]["title"];
+                        echo 
+                                $contents[$i]["title"];
                         echo
                             '</div>
                             <div class="content_date">';
-                        echo $contents[$i]["date"];
+                        echo
+                                $contents[$i]["date"];
                         echo
                             '</div>
                             <div class="content_thumbnail">';
-                        echo $contents[$i]["thumbnail"];
+                        echo
+                                $contents[$i]["thumbnail"];
                         echo
                             '</div>
                         </div>';

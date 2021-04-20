@@ -2,7 +2,7 @@
     function userCheck($id, $pw){
         include "sqlcon.php";
 
-        if($id == 'null' || $pw == 'null')
+        if($id == '' || $pw == '')
             return array("valid"=>0, "level"=>4, "user_index"=>0);
 
         $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );

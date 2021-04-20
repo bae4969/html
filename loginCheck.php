@@ -52,29 +52,31 @@
     </style>
 </head>
 
+<script src="script/main.js"></script>
 <script>
     window.onload = function() {
         <?php
             include "sql/basic.php";
-            parse_str(getenv("QUERY_STRING"), $array);
-            $user = userCheck($array["id"], $array["pw"]);
+            $user = userCheck($_POST["id"], $_POST["pw"]);
         ?>
         if(<?php echo $user["valid"]; ?> == 1){
             localStorage.setItem("isLogin", true);
-            localStorage.setItem("id", <?php echo '"'.$array["id"].'"'; ?>);
-            localStorage.setItem("pw", <?php echo '"'.$array["pw"].'"'; ?>);
-		    location.href = "index?id=" + <?php echo '"'.$array["id"].'"'; ?> + "&pw=" + <?php echo '"'.$array["pw"].'"'; ?>;
-        }
-        else if(<?php echo $user["valid"]; ?> == -1){
-            alert("Banned User");
-            localStorage.setItem("isLogin", false);
-		    location.href = "login";
+            localStorage.setItem("id", <?php echo '"'.$_POST["id"].'"'; ?>);
+            localStorage.setItem("pw", <?php echo '"'.$_POST["pw"].'"'; ?>);
+		    homeClick();
         }
         else{
-            alert("Worng ID or PW, check your input");
+            if(<?php echo $user["valid"]; ?> == -1)
+                alert("Banned User");
+            else
+                alert("Worng ID or PW, check your input");
+                
             localStorage.setItem("isLogin", false);
-		    location.href = "login";
+            localStorage.removeItem("id");
+            localStorage.removeItem("pw");
+            location.href = "login";
         }
+
     }
 </script>
 

@@ -103,21 +103,16 @@
     </style>
 </head>
 
-<script type="text/javascript" src="encode/sha256.js"></script>
+<script src="encode/sha256.js"></script>
+<script src="script/main.js"></script>
 <script>
 
-    window.onload = function() {
-        var id = localStorage.getItem("id");
-        var pw = localStorage.getItem("pw");
-        if(id != null & pw !=null){
-		    location.href = "index?id=" + id + "&pw=" + pw;
-        }
-    }
-
     function loginChecker(id, pw){
-        var idHash = sha256(id);
-        var pwHash = sha256(pw);
-		location.href = "loginCheck?id=" + idHash + "&pw=" + pwHash;
+        localStorage.setItem("id", sha256(id));
+        localStorage.setItem("pw", sha256(pw));
+        var form = getDefaultPostForm('loginCheck');
+        document.body.appendChild(form);
+        form.submit();
     }
 
     function enter(){
