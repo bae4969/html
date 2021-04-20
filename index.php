@@ -112,12 +112,12 @@
         width: calc(100% - 260px);
         margin-top: 20px;
         column-count: 2;
-        column-gap: 10px;
+        column-gap: 20px;
     }
 
     div.content {
-        width: calc(100% - 50px);
-        margin: 0px 20px 30px 10px;
+        width: calc(100% - 40px);
+        margin: 0px 20px 20px 10px;
         padding: 20px;
         display: inline-block;
         vertical-align: top;
@@ -152,7 +152,6 @@
         }
 
         div#contents {
-            width: calc(100% - 250px);
             column-count: 1;
         }
     }
