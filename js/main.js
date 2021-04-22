@@ -28,6 +28,10 @@ function loginoutClick(user_index) {
         localStorage.setItem("isLogin", false);
         localStorage.removeItem("id");
         localStorage.removeItem("pw");
+        sessionStorage.removeItem('class_index');
+        sessionStorage.removeItem('title');
+        sessionStorage.removeItem('thumbnail');
+        sessionStorage.removeItem('content');
         alert("로그아웃");
         homeClick();
     }
@@ -71,3 +75,4 @@ function contentClick(content_index){
     document.body.appendChild(form);
     form.submit();
 }
+ 

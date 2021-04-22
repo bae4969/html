@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Login Checking</title>
+    <title>Writing Checking</title>
     <style>
 /************************************outer************************************/
 
@@ -60,6 +60,10 @@
                     $_POST['content']);
             ?>
             if(<?php echo $ret; ?> > 0){
+                sessionStorage.removeItem('class_index');
+                sessionStorage.removeItem('title');
+                sessionStorage.removeItem('thumbnail');
+                sessionStorage.removeItem('content');
                 contentClick(<?php echo $ret; ?>);
             }
             else{
@@ -69,6 +73,10 @@
                     alert("입력 불가능한 문자열이 포함되어 있습니다.");
                 else
                     alert("저장 실패");
+
+                var form = getDefaultPostForm('/content/writer');
+                document.body.appendChild(form);
+                form.submit();
             }
         }
 
@@ -76,7 +84,7 @@
 </head>
 <body>
     <div>
-        <p id='text'>Writer Checking ...</p>
+        <p id='text'>Checking Writer ...</p>
     </div>
 </body>
 </html>

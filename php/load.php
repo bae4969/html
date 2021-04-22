@@ -73,7 +73,8 @@ function echoMainOnload($user_index = 0){
     else{
         echo'
         document.getElementById("topRight").innerHTML = "로그인";
-        document.getElementById("topWrite").innerHTML = "";';
+        if(document.getElementById("topWrite") !== null)
+            document.getElementById("topWrite").innerHTML = "";';
     }
 }
 

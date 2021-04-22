@@ -21,11 +21,50 @@
 
     <script src="/js/main.js"> </script>
     <script>
+        var submitLeave = false;
+
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
+
+            if(sessionStorage.getItem('class_index') !== null){
+                var select = document.getElementById("select_class");
+                for(i = 0; i < select.length; i++)
+                    if(select[i].value == sessionStorage.getItem('class_index'))
+                        select[i].selected = true;
+            }
+
+            if(sessionStorage.getItem('title') !== null)
+                document.getElementById("input_title").value = sessionStorage.getItem('title');
+
+            if(sessionStorage.getItem('thumbnail') !== null)
+                document.getElementById("input_thumbnail").value = sessionStorage.getItem('thumbnail');
+
+            if(sessionStorage.getItem('content') !== null)
+                document.getElementById("input_content").value = sessionStorage.getItem('content');
         }
 
-        function submitClick(class_index, title, thumbnail, content){
+        window.onbeforeunload = function(){
+            if(submitLeave === false){
+                sessionStorage.removeItem('class_index');
+                sessionStorage.removeItem('title');
+                sessionStorage.removeItem('thumbnail');
+                sessionStorage.removeItem('content');
+            }
+        }
+
+        function submitClick(){
+            if(document.getElementById("select_class").value < 1){
+                alert('분류를 선택해주세요.');
+                return;
+            }
+            
+            submitLeave = true;
+
+            sessionStorage.setItem('class_index', document.getElementById("select_class").value);
+            sessionStorage.setItem('title', document.getElementById("input_title").value);
+            sessionStorage.setItem('thumbnail', document.getElementById("input_thumbnail").value);
+            sessionStorage.setItem('content', document.getElementById("input_content").value);
+
             var form = getDefaultPostForm('/content/writerCheck');
 
             var hiddenField = document.createElement('input');
@@ -72,7 +111,7 @@
                 
                 <div class='inputBox'>
                     <select id=select_class>
-                        <option value="">분류 선택</option>
+                        <option value=0>분류 선택</option>
                         <?php echoSelectClassList($user['level']); ?>
                     </select>
                 </div>

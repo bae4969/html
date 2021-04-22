@@ -66,7 +66,7 @@
 </head>
 <body>
     <div>
-        <p id='text'>Login Checking ...</p>
+        <p id='text'>Checking Login ...</p>
     </div>
 </body>
 </html>

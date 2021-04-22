@@ -8,9 +8,9 @@ function submitContent($user_index, $level, $class_index, $read_level, $write_le
     if($level > $write_level) return -1;
 
     $filter = array('<script', '</');
-    for($i = 0; $i < count($filter); $i++) if(stripos($title, $filter) != 0) return -2;
-    for($i = 0; $i < count($filter); $i++) if(stripos($thumbnail, $filter) != 0) return -2;
-    for($i = 0; $i < count($filter); $i++) if(stripos($content, $filter) != 0) return -2;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($title, $filter[$i]) !== false) return -2;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($thumbnail, $filter[$i]) !== false) return -2;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($content, $filter[$i]) !== false) return -2;
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query
