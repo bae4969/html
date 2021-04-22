@@ -1,23 +1,10 @@
-var loginout = function() {
-    if (isLogin == 'true') {
-        localStorage.setItem("isLogin", false);
-        localStorage.removeItem("id");
-        localStorage.removeItem("pw");
-        alert("로그아웃");
-        homeClick();
-    }
-    else{
-        location.href = '../login';
-    }
-}
-
-var getDefaultPostForm = function(url){
+function getDefaultPostForm(url){
     var id = localStorage.getItem('id');
     var pw = localStorage.getItem('pw');
     var form = document.createElement('form');
 
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '../' + url);
+    form.setAttribute('action', url);
     document.charset = "utf-8";
 
     if(id != null && pw != null){
@@ -36,28 +23,49 @@ var getDefaultPostForm = function(url){
     return form
 }
 
-var homeClick = function(){
-    var form = getDefaultPostForm('index');
+function loginoutClick(user_index) {
+    if (user_index > 0) {
+        localStorage.setItem("isLogin", false);
+        localStorage.removeItem("id");
+        localStorage.removeItem("pw");
+        alert("로그아웃");
+        homeClick();
+    }
+    else{
+        location.href = '/login';
+    }
+}
+
+function writeClick(user_index){
+    if (user_index > 0){
+        var form = getDefaultPostForm('/content/writer');
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function homeClick(){
+    var form = getDefaultPostForm('/index');
     document.body.appendChild(form);
     form.submit();
 }
 
-var classClick = function(class_index){
-    var form = getDefaultPostForm('index');
+function classClick(class_index){
+    var form = getDefaultPostForm('/index');
     var hiddenField = document.createElement('input');
     hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', 'class');
+    hiddenField.setAttribute('name', 'class_index');
     hiddenField.setAttribute('value', class_index);
     form.appendChild(hiddenField);
     document.body.appendChild(form);
     form.submit();
 }
 
-var contentClick = function(content_index){
-    var form = getDefaultPostForm('reader');
+function contentClick(content_index){
+    var form = getDefaultPostForm('/content/reader');
     var hiddenField = document.createElement('input');
     hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', 'index');
+    hiddenField.setAttribute('name', 'content_index');
     hiddenField.setAttribute('value', content_index);
     form.appendChild(hiddenField);
     document.body.appendChild(form);

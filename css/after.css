@@ -1,0 +1,6 @@
+header::after, nav::after, aside::after, div::after, section::after, li::after {
+    content: "";
+    display: block;
+    clear: both;
+    cursor: auto;
+}

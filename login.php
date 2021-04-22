@@ -1,23 +1,16 @@
 <!--login.php -->
 <!doctype html>
 <html>
-
 <head>
     <meta charset='utf-8'>
     <title>Login</title>
     <style>
 /************************************outer************************************/
 
-    a:link,
-    a:visited {
-        color: #C3C3C3;
-        text-decoration: none;
-    }
-
-    a:hover,
-    label:hover {
+    div#topLeft:hover, img#mainTitle {
         color: white;
         text-decoration: none;
+        cursor: pointer;
     }
 
     html{
@@ -46,8 +39,8 @@
     }
 
     div#topLeft {
-        width: 15%;
-        min-width: 80px;
+        width: 60px;
+        margin-left: 7%;
         float: left;
         font-size: 2ex;
         text-align: center;
@@ -101,58 +94,45 @@
     }
 
     </style>
+
+<!--********************************script**********************************-->
+    
+    <script src="/encode/sha256.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+        function loginChecker(){
+            localStorage.setItem("id", sha256(document.getElementById("text_id").value));
+            localStorage.setItem("pw", sha256(document.getElementById("text_pw").value));
+            var form = getDefaultPostForm('loginCheck');
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
-
-<script src="encode/sha256.js"></script>
-<script src="script/main.js"></script>
-<script>
-
-    function loginChecker(id, pw){
-        localStorage.setItem("id", sha256(id));
-        localStorage.setItem("pw", sha256(pw));
-        var form = getDefaultPostForm('loginCheck');
-        document.body.appendChild(form);
-        form.submit();
-    }
-
-    function enter(){
-        loginChecker(
-            document.getElementById("text_id").value,
-            document.getElementById("text_pw").value);
-    }
-
-</script>
-
 <body>
-
     <div id='main'>
         <div id="topLeft">
-            <a id="homeTop" href="index" alt="Home Page">Home</a>
+            <div id=topLeft onclick=homeClick()>Home</div>
         </div>
-
         <div id='inputLayout'>
             <div class='input'>
-                <a href="index">
-                    <img src="res/index/title.png" alt="Index Page" height="50px" />
-                </a>
+                <img id=mainTitle onclick=homeClick() src="res/index/title.png" alt="Index Page" height="50px" />
             </div>
 
             <div class='input'>
                 <input id='text_id' class='input' type='text' placeholder='ID'
-                    onkeyup="if(window.event.keyCode==13){enter()}" />
+                    onkeyup="if(window.event.keyCode==13){loginChecker()}" />
             </div>
 
             <div class='input'>
                 <input id='text_pw' class='input' type='password' placeholder='PW'
-                    onkeyup="if(window.event.keyCode==13){enter()}" />
+                    onkeyup="if(window.event.keyCode==13){loginChecker()}" />
             </div>
 
             <div class='input'>
-                <button id='btn_login' onclick='enter()'>Login</button>
+                <button id='btn_login' onclick='loginChecker()'>Login</button>
             </div>
         </div>
     </div>
-
 </body>
-
 </html>

@@ -1,0 +1,23 @@
+aside {
+    width: 160px;
+    margin: 20px;
+    padding: 20px;
+    float: right;
+    background: #222426;
+}
+
+div#profile{
+    margin: 10px 10px 40px 10px;
+}
+
+ul#category {
+    margin: 10px;
+    padding: 0px;
+    list-style: none;
+}
+
+li.category {
+    margin-bottom: 30px;
+    font-size: 1.8ex;
+    font-weight: bold;
+}

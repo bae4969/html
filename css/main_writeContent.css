@@ -1,0 +1,48 @@
+section {
+    padding: 10px;
+    background-color: #1A1C1D;
+}
+
+div#content {
+    width: calc(100% - 300px);
+    margin: 20px 0px 30px 10px;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+    background: #222426;
+    color: white;
+}
+
+div.inputBox{
+    width: 100%;
+    align-items: center;
+}
+
+input#input_title, input#input_thumbnail, input#input_content{
+    width: 99%;
+    margin-bottom: 30px;
+}
+
+hr{
+    background-color: #C3C3C3;
+}
+
+input#input_title {
+    font-size: 6ex;
+    font-weight: bold;
+}
+
+input#input_thumbnail {
+    vertical-align: bottom;
+    font-size: 2ex;
+}
+
+input#input_content {
+    font-size: 2.2ex;
+}
+
+button#btn_submit{
+    width: 80px;
+    height: 30px;
+    float: right;
+}

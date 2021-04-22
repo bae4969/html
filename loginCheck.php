@@ -35,37 +35,35 @@
     }
 
     </style>
+
+<!--********************************php_script**********************************-->
+
+    <?php
+        include "php/basic.php";
+        $user = checkUser($_POST["id"], $_POST["pw"]);
+    ?>
+
+    <script src="/js/main.js"></script>
+    <script>
+        window.onload = function() {
+            if(<?php echo $user["user_index"]; ?> > 0){
+                localStorage.setItem("id", <?php echo '"'.$_POST["id"].'"'; ?>);
+                localStorage.setItem("pw", <?php echo '"'.$_POST["pw"].'"'; ?>);
+                homeClick();
+            }
+            else{
+                if(<?php echo $user["user_index"]; ?> < 0)
+                    alert("접근 금지된 유저입니다.");
+                else
+                    alert("ID 또는 PW가 일치하지 않습니다.");
+                    
+                localStorage.removeItem("id");
+                localStorage.removeItem("pw");
+                location.href = "/login";
+            }
+        }
+    </script>
 </head>
-
-<script src="script/main.js"></script>
-<script>
-
-    window.onload = function() {
-        <?php
-            include "php/basic.php";
-            $user = userCheck($_POST["id"], $_POST["pw"]);
-        ?>
-        if(<?php echo $user["valid"]; ?> == 1){
-            localStorage.setItem("isLogin", true);
-            localStorage.setItem("id", <?php echo '"'.$_POST["id"].'"'; ?>);
-            localStorage.setItem("pw", <?php echo '"'.$_POST["pw"].'"'; ?>);
-		    homeClick();
-        }
-        else{
-            if(<?php echo $user["valid"]; ?> == -1)
-                alert("Banned User");
-            else
-                alert("Worng ID or PW, check your input");
-                
-            localStorage.setItem("isLogin", false);
-            localStorage.removeItem("id");
-            localStorage.removeItem("pw");
-            location.href = "login";
-        }
-    }
-    
-</script>
-
 <body>
     <div>
         <p id='text'>Login Checking ...</p>
