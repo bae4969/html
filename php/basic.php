@@ -1,3 +1,5 @@
+<!-- basic.php -->
+<!-- select table function -->
 <?php
 
 function checkUser($id, $pw){
@@ -35,6 +37,21 @@ function getClassLevel($class_index){
         return $row;
 
     return array("class_index"=>0, "read_level"=>4, "write_level"=>4);
+}
+
+function getContentInfo($content_index){
+    include "sqlcon.php";
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = 'select content_index, user_index, class_index, read_level, write_level, state, date'.
+        ' from contents where content_index='.$content_index;
+    $result = mysqli_query($conn, $sql_query);
+    mysqli_close($conn);
+
+    if($row = mysqli_fetch_array($result))
+        return $row;
+        
+    return null;
 }
     
 ?>

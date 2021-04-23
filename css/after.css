@@ -1,4 +1,4 @@
-header::after, nav::after, aside::after, div::after, section::after, li::after {
+header::after, nav::after, aside::after, div::after, section::after, li::after, select::after {
     content: "";
     display: block;
     clear: both;

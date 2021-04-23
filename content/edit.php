@@ -1,4 +1,4 @@
-<!-- content/writer.php -->
+<!-- content/edit.php -->
 <!doctype html>
 <html>
 <head>
@@ -15,8 +15,9 @@
     <?php
         include '../php/basic.php';
         include '../php/load.php';
-        include '../php/control.php';
+        include '../php/save.php';
         $user = checkUser($_POST['id'], $_POST['pw']);
+        $content = getEditContent($user['user_index'], $_POST['content_index']);
     ?>
 
     <script src="/js/main.js"> </script>
@@ -84,6 +85,7 @@
             }
 
             submitLeave = true;
+
 
             var form = getDefaultPostForm('/content/writerCheck');
 

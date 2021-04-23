@@ -1,8 +1,9 @@
+<!-- content/writerCheck.php -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Writing Checking</title>
+    <title>Write Checking</title>
     <style>
 /************************************outer************************************/
 
@@ -40,7 +41,7 @@
 
     <?php
         include "../php/basic.php";
-        include "../php/save.php";
+        include "../php/control.php";
         $user = checkUser($_POST['id'], $_POST['pw']);
         $class = getClassLevel($_POST['class_index']);
     ?>
@@ -70,6 +71,12 @@
                 if(<?php echo $ret; ?> == -1)
                     alert("인증 실패");
                 else if(<?php echo $ret; ?> == -2)
+                    alert("제목의 최대 문자열이 초과했습니다.");
+                else if(<?php echo $ret; ?> == -3)
+                    alert("썸네일의 최대 문자열이 초과했습니다.");
+                else if(<?php echo $ret; ?> == -4)
+                    alert("내용의 최대 문자열이 초과했습니다.");
+                else if(<?php echo $ret; ?> == -5)
                     alert("입력 불가능한 문자열이 포함되어 있습니다.");
                 else
                     alert("저장 실패");
@@ -84,7 +91,7 @@
 </head>
 <body>
     <div>
-        <p id='text'>Checking Writer ...</p>
+        <p id='text'>Write Checking ...</p>
     </div>
 </body>
 </html>

@@ -1,21 +1,28 @@
 section {
     padding: 10px;
-    background-color: #1A1C1D;
+    background: #1A1C1D;
 }
 
 div#content {
+    background: #222426;
+}
+
+div#content_ban{
+    background: #3D202D;
+}
+
+div#content, div#content_ban{
     width: calc(100% - 300px);
     margin: 20px 0px 30px 10px;
     padding: 20px;
     display: inline-block;
     vertical-align: top;
-    background: #222426;
     color: white;
 }
 
 div#content_title {
-    padding: 5% 8% 0px 8%;
-    font-size: 6ex;
+    padding: 5% 7% 20px 7%;
+    font-size: 5ex;
     font-weight: bold;
 }
 
@@ -27,10 +34,24 @@ div#content_date {
 }
 
 hr{
-    background-color: #C3C3C3;
+    background: #C3C3C3;
 }
 
 div#content_content {
-    padding: 5% 0 20px 0;
+    padding: 5% 0 5% 0;
     font-size: 2.2ex;
+    line-height: 200%;
+    white-space: pre-wrap;
+}
+
+button.content_control{
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+    float: right;
+    font-size: 2.2ex;
+    font-weight: bold;
+    background: #36383A;
+    color: white;
+    cursor: pointer;
 }

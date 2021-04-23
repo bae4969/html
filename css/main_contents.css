@@ -3,9 +3,14 @@ div.content:hover {
     cursor: pointer;
 }
 
+div.content_ban:hover{
+    background: #5B243A;
+    cursor: pointer;
+}
+
 section {
     padding: 10px;
-    background-color: #1A1C1D;
+    background: #1A1C1D;
 }
 
 div#contents {
@@ -15,20 +20,30 @@ div#contents {
     column-gap: 20px;
 }
 
-div.content {
+div.content{
+    background: #222426;
+}
+
+div.content_ban{
+    background: #3D202D;
+}
+
+div.content, div.content_ban {
     width: calc(100% - 40px);
     margin: 0px 20px 20px 10px;
     padding: 20px;
     display: inline-block;
     vertical-align: top;
-    background: #222426;
     color: white;
 }
 
 div.content_title {
-    padding: 30px 8% 0px 8%;
+    padding: 30px 8% 20px 8%;
     font-size: 4ex;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 div.content_date {
@@ -39,10 +54,12 @@ div.content_date {
 }
 
 hr{
-    background-color: #C3C3C3;
+    background: #C3C3C3;
 }
 
 div.content_thumbnail {
     padding: 3% 10px 10px 10px;
     font-size: 2.5ex;
+    line-height: 200%;
+    word-break: break-all;
 }

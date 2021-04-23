@@ -1,10 +1,30 @@
+<!-- load.php -->
+<!-- load data from sql and make data to html form -->
 <?php
 
-function loadReadClassList($level = 4){
+function getReadClassList($level = 4){
     include "sqlcon.php";
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select class_index, name from class_list where read_level >= '.$level.' order by class_index asc';
+    $sql_query = 'select class_index, name from class_list where read_level>='.$level.' order by class_index asc';
+    $result = mysqli_query($conn, $sql_query);
+    mysqli_close($conn);
+
+    $classList = array();
+    while($row = mysqli_fetch_array($result))
+        $classList[] = $row;
+
+    if($level <= 1)
+        $classList[] = array('class_index'=>-1, 'name'=>'Class Lost');
+        
+    return $classList;
+}
+
+function getWriteClassList($level){
+    include "sqlcon.php";
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = 'select class_index, name from class_list where write_level>='.$level.' order by class_index asc';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
 
@@ -15,28 +35,36 @@ function loadReadClassList($level = 4){
     return $classList;
 }
 
-function loadWriteClassList($level){
-    include "sqlcon.php";
-
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select class_index, name from class_list where write_level >= '.$level.' order by class_index asc';
-    $result = mysqli_query($conn, $sql_query);
-    mysqli_close($conn);
-
-    $classList = array();
-    while($row = mysqli_fetch_array($result))
-        $classList[] = $row;
-        
-    return $classList;
-}
-
-function loadContentList($level, $class_index = null){
-    include "sqlcon.php";
-
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select content_index, date, title, thumbnail from contents where read_level >= '.$level;
+function getQuerySelectContentList($level, $class_index = null){
+    $sql_query = ' from contents where read_level>='.$level;
+    if($level > 1) $sql_query .= ' and state>=0';
     if($class_index) $sql_query .= ' and class_index = '.$class_index;
-    $sql_query .= ' order by content_index desc limit 10';
+    if($class_index < 0 && $level < 2)
+        $sql_query = ' from contents where class_index is NULL';
+
+    return $sql_query;
+}
+
+function getContentListCount($level, $class_index = null){
+    include "sqlcon.php";
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = 'select count(*)'.getQuerySelectContentList($level, $class_index);
+    $result = mysqli_query($conn, $sql_query);
+    mysqli_close($conn);
+
+    if($row = mysqli_fetch_array($result))
+        return $row[0];
+
+    return 0;
+}
+
+function getContentList($level, $pageNum = 1, $class_index = null){
+    include "sqlcon.php";
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = 'select user_index, content_index, state, date, title, thumbnail'.getQuerySelectContentList($level, $class_index);
+    $sql_query .= ' order by content_index desc limit '.(($pageNum - 1) * 10).', 10';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
 
@@ -47,12 +75,27 @@ function loadContentList($level, $class_index = null){
     return $MainContentList;
 }
 
-function loadDetailContent($level, $content_index){
+function getDetailContent($level, $content_index){
     include "sqlcon.php";
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select date, title, content from contents where content_index = '
-        .$content_index.' and read_level >= '.$level;
+    $sql_query = 'select user_index, state, date, title, content from contents where content_index='.$content_index;
+    if($level > 1) $sql_query .= ' and read_level>='.$level.' and state>=0';
+    $result = mysqli_query($conn, $sql_query);
+    mysqli_close($conn);
+
+    if($row = mysqli_fetch_array($result))
+        return $row;
+        
+    return null;
+}
+
+function getEditContent($user_index, $content_index){
+    include "sqlcon.php";
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = 'select user_index, date, title, content from contents where content_index='.
+        $content_index.' and user_index='.$user_index.' and state>=0';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
 
@@ -92,7 +135,7 @@ function echoHeader($user_index = 0, $level = 4){
 }
 
 function echoAsideList($level = 4){
-    $classList = loadReadClassList($level);
+    $classList = getReadClassList($level);
 
     for($i = 0; $i < count($classList); $i++) {
         echo
@@ -108,45 +151,63 @@ function echoAsideList($level = 4){
     return;
 }
 
-function echoContentList($level = 4, $class_index = null){
-    $contentList = loadContentList($level, $class_index);
+function echoContentList($level = 4, $page, $class_index = null){
+    $contentList = getContentList($level, $page, $class_index);
 
+    echo '<div id=contents>';
     for($i = 0; $i < count($contentList); $i++){
+        if($contentList[$i]['state'] < 0)
+            echo '<div class="content_ban" onclick="contentClick('.$contentList[$i]['content_index'].')">';
+        else
+            echo '<div class="content" onclick="contentClick('.$contentList[$i]['content_index'].')">';
         echo
-        '<div class="content" onclick="contentClick('.$contentList[$i]['content_index'].')">
-            <div class="content_title">';
-        echo 
-                $contentList[$i]["title"];
-        echo
-            '</div>
-            <div class="content_date">';
-        echo
-                $contentList[$i]["date"];
-        echo
-            '</div><hr>
-            <div class="content_thumbnail">';
-        echo
-                $contentList[$i]["thumbnail"];
-        echo
+            '<div class=content_title>'.
+                $contentList[$i]["title"].
+            '</div>'.
+            '<div class=content_date>'.
+                $contentList[$i]["date"].
+            '</div>'.
+            '<div class=content_date>'.
+                'UID : '.$contentList[$i]["user_index"].
+            '</div><hr>'.
+            '<div class=content_thumbnail>'.
+                $contentList[$i]["thumbnail"].
             '</div>
         </div>';
     }
+    echo '</div>';
 }
 
-function echoDetailContent($level, $content_index){
-    $content = loadDetailContent($level, $content_index);
+function echoDetailContent($user_index, $level, $content_index){
+    $content = getDetailContent($level, $content_index);
 
+    if($content['state'] < 0)
+        echo '<div id="content_ban">';
+    else
+        echo '<div id="content">';
     echo
-    '<div id=content_title>'
-        .$content["title"].
-    '</div>';
+        '<div id=content_title>'
+            .$content["title"].
+        '</div>'.
+        '<div id=content_date>'
+            .$content["date"].
+        '</div>'.
+        '<div id=content_date>'.
+            'UID : '.$content["user_index"].
+        '</div><hr>'.
+        '<div id=content_content>'
+            .$content["content"].
+        '</div>';
+    if($user_index == $content['user_index'] || $level < 2){
+        if($content['state'] < 0 && $level < 2)
+            echo '<button class=content_control onclick=restoreClick()>복구</button>';
+        else
+            echo '<button class=content_control onclick=deleteClick()>삭제</button>';
+    }
+    if($user_index == $content['user_index'])
+        echo '<button class=content_control onclick=editClick()>수정</button>';
+    
     echo
-    '<div id=content_date>'
-        .$content["date"].
-    '</div><hr>';
-    echo
-    '<div id=content_content>'
-        .$content["content"].
     '</div>';
 }
 
@@ -157,7 +218,7 @@ function echoFooter(){
 }
 
 function echoSelectClassList($level = 4){
-    $classList = loadWriteClassList($level);
+    $classList = getWriteClassList($level);
 
     for($i = 0; $i < count($classList); $i++)
         echo '<option value="'.$classList[$i]['class_index'].'">'.$classList[$i]['name'].'</option>';

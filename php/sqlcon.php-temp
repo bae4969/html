@@ -1,3 +1,4 @@
+<!-- sql connetion value -->
 <?php
     $sqlAddr = ;
     $sqlId = ;

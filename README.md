@@ -20,11 +20,13 @@
 
 	Can List
 
-		1. index(main) page, content page
+		1. Can show index(main) page, content page
 
-		3. Can log in, out
+		2. Can log in, out
 
-		4. Can write content, but does not finish design
+		3. Can write content
+
+		4. Can disable content and restore content
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

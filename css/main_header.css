@@ -3,7 +3,7 @@ header {
 }
 
 div#topLeft {
-    width: 60px;
+    width: 70px;
     margin-left: 7%;
     float: left;
     font-size: 2ex;
@@ -12,7 +12,7 @@ div#topLeft {
 }
 
 div#topRight {
-    width: 60px;
+    width: 70px;
     margin-right: 7%;
     float: right;
     font-size: 1.8ex;
@@ -21,7 +21,7 @@ div#topRight {
 }
 
 div#topWrite {
-    width: 60px;
+    width: 70px;
     float: right;
     font-size: 1.8ex;
     text-align: center;

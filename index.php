@@ -33,7 +33,7 @@
                 <div id=profile> profile </div>
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
-            <div id=contents> <?php echoContentList($user['level'], $_POST['class_index']); ?> </div>
+            <?php echoContentList($user['level'], 1, $_POST['class_index']); ?>
         </section>
         <footer> <?php echoFooter(); ?> </footer>
     </div>

@@ -23,6 +23,34 @@
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
         }
+
+        function editClick(){
+            var form = getDefaultPostForm('/content/edit');
+            document.body.appendChild(form);
+            form.submit();
+        }
+        
+        function deleteClick(){
+            var form = getDefaultPostForm('/content/deleteCheck');
+            var hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'content_index');
+            hiddenField.setAttribute('value', <?php echo $_POST['content_index']; ?>);
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        
+        function restoreClick(){
+            var form = getDefaultPostForm('/content/restoreCheck');
+            var hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'content_index');
+            hiddenField.setAttribute('value', <?php echo $_POST['content_index']; ?>);
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+            form.submit();
+        }
     </script>
 </head>
 <body>
@@ -33,7 +61,7 @@
                 <div id=profile> profile </div>
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
-            <div id=content> <?php echoDetailContent($user['level'], $_POST['content_index']); ?> </div>
+            <?php echoDetailContent($user['user_index'], $user['level'], $_POST['content_index']); ?>
         </section>
         <footer> <?php echoFooter(); ?> </footer>
     </div>

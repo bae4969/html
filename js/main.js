@@ -1,3 +1,6 @@
+// main.js
+// functions for index page and etc
+
 function getDefaultPostForm(url){
     var id = localStorage.getItem('id');
     var pw = localStorage.getItem('pw');
@@ -25,10 +28,8 @@ function getDefaultPostForm(url){
 
 function loginoutClick(user_index) {
     if (user_index > 0) {
-        localStorage.setItem("isLogin", false);
         localStorage.removeItem("id");
         localStorage.removeItem("pw");
-        sessionStorage.removeItem('class_index');
         sessionStorage.removeItem('title');
         sessionStorage.removeItem('thumbnail');
         sessionStorage.removeItem('content');

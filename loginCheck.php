@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- loginCheck.php -->
 <html>
 <head>
     <meta charset='utf-8'>
