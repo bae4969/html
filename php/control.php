@@ -18,9 +18,9 @@ function submitContent($user_index, $level, $class_index, $read_level, $write_le
     for($i = 0; $i < count($filter); $i++) if(mb_stripos($thumbnail, $filter[$i]) !== false) return -5;
     for($i = 0; $i < count($filter); $i++) if(mb_stripos($content, $filter[$i]) !== false) return -5;
 
-    if(!$thumbnail){
-        $thumbnail = substr($content, 0, 450);
-        if(strlen($content) > 450) $thumbnail.='...';
+    if($thumbnail == 0){
+        $thumbnail = mb_substr($content, 0, 190, 'utf-8');
+        if(mb_strlen($content) > 190) $thumbnail.='...';
     }
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
