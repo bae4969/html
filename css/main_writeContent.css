@@ -1,5 +1,6 @@
 section {
     padding: 10px;
+    border-radius: 20px;
     background-color: #1A1C1D;
 }
 
@@ -7,6 +8,7 @@ div#content {
     width: calc(100% - 300px);
     margin: 20px 0px 30px 10px;
     padding: 20px;
+    border-radius: 20px;
     display: inline-block;
     background: #222426;
     color: white;
@@ -17,6 +19,7 @@ input#input_title {
     padding: 3%;
     margin-bottom: 10px;
     border:none;
+    border-radius: 10px;
     font-size: 4ex;
     font-weight: bold;
     background: #36383A;
@@ -24,29 +27,12 @@ input#input_title {
     cursor: text;
 }
 
-div#preview{
-    width: 96%;
-    max-width: 800px;
-    max-height: 400px;
-    text-align: center;
-    align-items: center;
-    font-size: 2ex;
-    background: #36383A;
-    color: white;
-}
-
-div#photo{
-    width: 96%;
-    height: 96%;
-    background: #36383A;
-    color: white;
-}
-
 select#input_class {
     width: 30%;
     padding: 1.5%;
     margin-bottom: 10px;
     border:none;
+    border-radius: 10px;
     float:right;
     font-size: 2ex;
     background: #36383A;
@@ -59,8 +45,9 @@ textarea#input_content {
     min-height: 400px;
     padding: 2%;
     margin-bottom: 20px;
-    resize: vertical;
+    resize: none;
     border:none;
+    border-radius: 10px;
     font-size: 2.2ex;
     line-height: 200%;
     word-break: break-all;
@@ -70,12 +57,19 @@ textarea#input_content {
 }
 
 button#btn_submit{
-    width: 100px;
+    width: 80px;
     height: 40px;
     float: right;
+    border: 1px solid white;
+    border-radius: 5px;
     font-size: 2.2ex;
     font-weight: bold;
     background: #36383A;
     color: white;
     cursor: pointer;
+}
+
+button#btn_submit:hover{
+    border: none;
+    background: #484A4C;
 }

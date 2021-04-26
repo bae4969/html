@@ -70,6 +70,7 @@
         function submitClick(){
             if(document.getElementById("input_title").value == ''){
                 alert('제목을 작성해주세요.')
+                return;
             }
             else if(document.getElementById("input_class").value < 1){
                 alert('분류를 선택해주세요.');
@@ -77,6 +78,7 @@
             }
             else if(document.getElementById("input_content").value == ''){
                 alert('내용을 작성해주세요.')
+                return;
             }
 
             submitLeave = true;

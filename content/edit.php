@@ -54,9 +54,11 @@
         function submitClick(){
             if(document.getElementById("input_title").value == ''){
                 alert('제목을 작성해주세요.')
+                return;
             }
             else if(document.getElementById("input_content").value == ''){
                 alert('내용을 작성해주세요.')
+                return;
             }
 
             submitLeave = true;

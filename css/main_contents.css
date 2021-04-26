@@ -10,6 +10,7 @@ div.content_ban:hover{
 
 section {
     padding: 10px;
+    border-radius: 20px;
     background: #1A1C1D;
 }
 
@@ -32,6 +33,7 @@ div.content, div.content_ban {
     width: calc(100% - 40px);
     margin: 0px 20px 20px 10px;
     padding: 20px;
+    border-radius: 20px;
     display: inline-block;
     vertical-align: top;
     color: white;
