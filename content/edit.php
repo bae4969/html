@@ -25,9 +25,6 @@
 
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
-
-            document.getElementById("input_title").value = <?php echo '"'.$content['title'].'";'; ?>
-            document.getElementById("input_content").value = <?php echo '"'.$content['content'].'";'; ?>
         }
 
         window.onbeforeunload = function(){
@@ -102,8 +99,8 @@
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 120)'/>
-                <textarea id=input_content type='text' placeholder='내용' oninput='onInput(this, 3000)' onkeyup="autoHeight(this);"></textarea>
+                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 120)' value='<?php echo $content['title'] ?>'/>
+                <textarea id=input_content type='text' placeholder='내용' oninput='onInput(this, 3000)' onkeyup="autoHeight(this);"><?php echo $content['content']; ?></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
         </section>
