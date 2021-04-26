@@ -42,17 +42,6 @@ div#photo{
     color: white;
 }
 
-input#input_thumbnail {
-    width: 66%;
-    padding: 1%;
-    margin-bottom: 10px;
-    float:left;
-    font-size: 2ex;
-    background: #36383A;
-    color: white;
-    cursor: pointer;
-}
-
 select#input_class {
     width: 30%;
     padding: 1.5%;

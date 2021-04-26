@@ -94,7 +94,7 @@ function getEditContent($user_index, $content_index){
     include "sqlcon.php";
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select user_index, date, title, content from contents where content_index='.
+    $sql_query = 'select title, content from contents where content_index='.
         $content_index.' and user_index='.$user_index.' and state>=0';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);

@@ -15,7 +15,6 @@
     <?php
         include '../php/basic.php';
         include '../php/load.php';
-        include '../php/save.php';
         $user = checkUser($_POST['id'], $_POST['pw']);
         $content = getEditContent($user['user_index'], $_POST['content_index']);
     ?>
@@ -27,30 +26,13 @@
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
 
-            if(sessionStorage.getItem('class_index') !== null){
-                var select = document.getElementById("input_class");
-                for(i = 0; i < select.length; i++)
-                    if(select[i].value == sessionStorage.getItem('class_index')){
-                        select[i].selected = true;
-                        break;
-                    }
-            }
-
-            if(sessionStorage.getItem('title') !== null)
-                document.getElementById("input_title").value = sessionStorage.getItem('title');
-
-            if(sessionStorage.getItem('thumbnail') !== null)
-                document.getElementById("input_thumbnail").value = sessionStorage.getItem('thumbnail');
-
-            if(sessionStorage.getItem('content') !== null)
-                document.getElementById("input_content").value = sessionStorage.getItem('content');
+            document.getElementById("input_title").value = <?php echo '"'.$content['title'].'";'; ?>
+            document.getElementById("input_content").value = <?php echo '"'.$content['content'].'";'; ?>
         }
 
         window.onbeforeunload = function(){
             if(submitLeave == false){
                 sessionStorage.removeItem('title');
-                sessionStorage.removeItem('thumbnail');
-                sessionStorage.removeItem('class_index');
                 sessionStorage.removeItem('content');
             }
         }
@@ -76,10 +58,6 @@
             if(document.getElementById("input_title").value == ''){
                 alert('제목을 작성해주세요.')
             }
-            else if(document.getElementById("input_class").value < 1){
-                alert('분류를 선택해주세요.');
-                return;
-            }
             else if(document.getElementById("input_content").value == ''){
                 alert('내용을 작성해주세요.')
             }
@@ -87,27 +65,20 @@
             submitLeave = true;
 
 
-            var form = getDefaultPostForm('/content/writerCheck');
+            var form = getDefaultPostForm('/content/editCheck');
+
+            sessionStorage.setItem('title', document.getElementById("input_title").value);
+            var hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'content_index');
+            hiddenField.setAttribute('value', <?php echo $_POST['content_index']; ?>);
+            form.appendChild(hiddenField);
 
             sessionStorage.setItem('title', document.getElementById("input_title").value);
             var hiddenField = document.createElement('input');
             hiddenField.setAttribute('type', 'hidden');
             hiddenField.setAttribute('name', 'title');
             hiddenField.setAttribute('value', document.getElementById("input_title").value);
-            form.appendChild(hiddenField);
-
-            //sessionStorage.setItem('thumbnail', document.getElementById("input_thumbnail").value);
-            // var hiddenField = document.createElement('input');
-            // hiddenField.setAttribute('type', 'hidden');
-            // hiddenField.setAttribute('name', 'thumbnail');
-            // hiddenField.setAttribute('value', document.getElementById("input_thumbnail").value);
-            // form.appendChild(hiddenField);
-
-            sessionStorage.setItem('class_index', document.getElementById("input_class").value);
-            var hiddenField = document.createElement('input');
-            hiddenField.setAttribute('type', 'hidden');
-            hiddenField.setAttribute('name', 'class_index');
-            hiddenField.setAttribute('value', document.getElementById("input_class").value);
             form.appendChild(hiddenField);
 
             sessionStorage.setItem('content', document.getElementById("input_content").value);
@@ -132,14 +103,8 @@
             </aside>
             <div id=content>
                 <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 120)'/>
-                <!-- <div id="preview"><div id=photo></div></div>
-                <input id=input_thumbnail type=file accept=image/* placeholder='대표 사진' onchange="onFileUpload(this)"/> -->
-                <select id=input_class>
-                    <option value=0>분류 선택</option>
-                    <?php echoSelectClassList($user['level']); ?>
-                </select>
                 <textarea id=input_content type='text' placeholder='내용' oninput='onInput(this, 3000)' onkeyup="autoHeight(this);"></textarea>
-                <button id='btn_submit' onclick=submitClick()>제출</button>
+                <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
         </section>
         <footer> <?php echoFooter(); ?> </footer>

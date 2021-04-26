@@ -1,9 +1,9 @@
-<!-- content/writerCheck.php -->
+<!-- content/editCheck.php -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Write Checking</title>
+    <title>Edit Checking</title>
     <style>
 /************************************outer************************************/
 
@@ -43,27 +43,21 @@
         include "../php/basic.php";
         include "../php/control.php";
         $user = checkUser($_POST['id'], $_POST['pw']);
-        $class = getClassLevel($_POST['class_index']);
     ?>
 
     <script src="/js/main.js"></script>
     <script>
         window.onload = function() {
             <?php
-                $ret = insertContent(
+                $ret = editContent(
                     $user['user_index'],
-                    $user['level'],
-                    $class['class_index'],
-                    $class['read_level'],
-                    $class['write_level'],
+                    $_POST['content_index'],
                     $_POST['title'],
                     $_POST['content']);
             ?>
             if(<?php echo $ret; ?> > 0){
-                sessionStorage.removeItem('class_index');
                 sessionStorage.removeItem('title');
                 sessionStorage.removeItem('content');
-                contentClick(<?php echo $ret; ?>);
             }
             else{
                 if(<?php echo $ret; ?> == -1)
@@ -75,19 +69,16 @@
                 else if(<?php echo $ret; ?> == -4)
                     alert("입력 불가능한 문자열이 포함되어 있습니다.");
                 else
-                    alert("저장 실패");
-
-                var form = getDefaultPostForm('/content/writer');
-                document.body.appendChild(form);
-                form.submit();
+                    alert("수정 실패");
             }
+            contentClick(<?php echo $_POST['content_index']; ?>);
         }
 
     </script>
 </head>
 <body>
     <div>
-        <p id='text'>Write Checking ...</p>
+        <p id='text'>Edit Checking ...</p>
     </div>
 </body>
 </html>

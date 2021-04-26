@@ -1,4 +1,4 @@
-<!-- contont/deleteCheck.php -->
+<!-- content/deleteCheck.php -->
 <!DOCTYPE html>
 <html>
 <head>

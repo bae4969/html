@@ -2,26 +2,27 @@
 <!-- sql insert and update table function -->
 <?php
 
-function submitContent($user_index, $level, $class_index, $read_level, $write_level, $title, $thumbnail, $content){
+function checkContentInput($title, $content){
+    if(strlen($title) > 120) return -2;
+    if(strlen($content > 3000)) return -3;
+
+    $filter = array('<script', '</');
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($title, $filter[$i]) !== false) return -4;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($content, $filter[$i]) !== false) return -4;
+
+    return 0;
+}
+
+function insertContent($user_index, $level, $class_index, $read_level, $write_level, $title, $content){
     include "sqlcon.php";
 
     if($user_index < 1) return -1;
     if($class_index < 1) return -1;
     if($level > $write_level) return -1;
+    if(($ret = checkContentInput($title, $content)) < 0) return $ret;
 
-    if(strlen($title) > 120) return -2;
-    if(strlen($thumbnail > 600)) return -3;
-    if(strlen($content > 3000)) return -4;
-
-    $filter = array('<script', '</');
-    for($i = 0; $i < count($filter); $i++) if(mb_stripos($title, $filter[$i]) !== false) return -5;
-    for($i = 0; $i < count($filter); $i++) if(mb_stripos($thumbnail, $filter[$i]) !== false) return -5;
-    for($i = 0; $i < count($filter); $i++) if(mb_stripos($content, $filter[$i]) !== false) return -5;
-
-    if($thumbnail == 0){
-        $thumbnail = mb_substr($content, 0, 190, 'utf-8');
-        if(mb_strlen($content) > 190) $thumbnail.='...';
-    }
+    $thumbnail = mb_substr($content, 0, 190, 'utf-8');
+    if(mb_strlen($content) > 190) $thumbnail.='...';
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query
@@ -39,18 +40,23 @@ function submitContent($user_index, $level, $class_index, $read_level, $write_le
     return 0;
 }
 
-function editContent($user_index, $level, $content_user_index, $content_index){
+function editContent($user_index, $content_index, $title, $content){
     include "sqlcon.php";
 
-    if($level > 1 && $user_index != $content_user_index) return -1;
+    if($user_index < 1) return -1;
+    if(($ret = checkContentInput($title, $thumbnail, $content)) < 0) return $ret;
+
+    $thumbnail = mb_substr($content, 0, 190, 'utf-8');
+    if(mb_strlen($content) > 190) $thumbnail.='...';
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'update contents set state = -1 where content_index='.$content_index;
+    $sql_query = 'update contents set title="'.$title.'", thumbnail="'.$thumbnail.'", content="'.$content.
+        '" where content_index='.$content_index.' and user_index='.$user_index;
     if(mysqli_query($conn, $sql_query)){
         return 1;
     }
     
-    return 0;
+    return mysqli_error($conn);
 }
 
 function disableContent($user_index, $level, $content_user_index, $content_index){

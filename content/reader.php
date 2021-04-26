@@ -26,6 +26,11 @@
 
         function editClick(){
             var form = getDefaultPostForm('/content/edit');
+            var hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'content_index');
+            hiddenField.setAttribute('value', <?php echo $_POST['content_index']; ?>);
+            form.appendChild(hiddenField);
             document.body.appendChild(form);
             form.submit();
         }
