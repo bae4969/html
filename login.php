@@ -101,8 +101,8 @@
     <script src="/js/main.js"></script>
     <script>
         function loginChecker(){
-            localStorage.setItem("id", sha256(document.getElementById("text_id").value));
-            localStorage.setItem("pw", sha256(document.getElementById("text_pw").value));
+            setCookie("id", sha256(document.getElementById("text_id").value), 1);
+            setCookie("pw", sha256(document.getElementById("text_pw").value), 1);
             var form = getDefaultPostForm('loginCheck');
             document.body.appendChild(form);
             form.submit();

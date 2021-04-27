@@ -44,7 +44,7 @@
         function autoHeight(textarea) {
             textarea.style.height = "1px";
             textarea.style.height = (16 + textarea.scrollHeight)+"px";
-        };
+        }
 
         function onFileUpload(event){
             event.preventDefault();
@@ -101,7 +101,7 @@
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 120)' value='<?php echo $content['title'] ?>'/>
+                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 30)' value='<?php echo $content['title'] ?>'/>
                 <textarea id=input_content type='text' placeholder='내용' oninput='onInput(this, 3000)' onkeyup="autoHeight(this);"><?php echo $content['content']; ?></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>

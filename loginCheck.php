@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <!-- loginCheck.php -->
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
@@ -48,8 +48,8 @@
     <script>
         window.onload = function() {
             if(<?php echo $user["user_index"]; ?> > 0){
-                localStorage.setItem("id", <?php echo '"'.$_POST["id"].'"'; ?>);
-                localStorage.setItem("pw", <?php echo '"'.$_POST["pw"].'"'; ?>);
+                setCookie("id", <?php echo '"'.$_POST["id"].'"'; ?>, 1);
+                setCookie("pw", <?php echo '"'.$_POST["pw"].'"'; ?>, 1);
                 homeClick();
             }
             else{
@@ -58,8 +58,8 @@
                 else
                     alert("ID 또는 PW가 일치하지 않습니다.");
                     
-                localStorage.removeItem("id");
-                localStorage.removeItem("pw");
+                deleteCookie("id");
+                deleteCookie("pw");
                 location.href = "/login";
             }
         }
@@ -67,7 +67,7 @@
 </head>
 <body>
     <div>
-        <p id='text'>Checking Login ...</p>
+        <p id='text'>Login Checking ...</p>
     </div>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <?php
 
 function checkContentInput($title, $content){
-    if(strlen($title) > 120) return -2;
-    if(strlen($content > 3000)) return -3;
+    if(mb_strlen($title) > 30) return -2;
+    if(mb_strlen($content > 3000)) return -3;
 
     $filter = array('<script', '</');
     for($i = 0; $i < count($filter); $i++) if(mb_stripos($title, $filter[$i]) !== false) return -4;
@@ -21,8 +21,8 @@ function insertContent($user_index, $level, $class_index, $read_level, $write_le
     if($level > $write_level) return -1;
     if(($ret = checkContentInput($title, $content)) < 0) return $ret;
 
-    $thumbnail = mb_substr($content, 0, 190, 'utf-8');
-    if(mb_strlen($content) > 190) $thumbnail.='...';
+    $thumbnail = mb_substr($content, 0, 200, 'utf-8');
+    if(mb_strlen($content) > 200) $thumbnail.='...';
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query
@@ -46,8 +46,8 @@ function editContent($user_index, $content_index, $title, $content){
     if($user_index < 1) return -1;
     if(($ret = checkContentInput($title, $thumbnail, $content)) < 0) return $ret;
 
-    $thumbnail = mb_substr($content, 0, 190, 'utf-8');
-    if(mb_strlen($content) > 190) $thumbnail.='...';
+    $thumbnail = mb_substr($content, 0, 200, 'utf-8');
+    if(mb_strlen($content) > 200) $thumbnail.='...';
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query = 'update contents set title="'.$title.'", thumbnail="'.$thumbnail.'", content="'.$content.

@@ -120,7 +120,7 @@
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 120)'/>
+                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 30)'/>
                 <select id=input_class>
                     <option value=0>분류 선택</option>
                     <?php echoSelectClassList($user['level']); ?>

@@ -1,9 +1,29 @@
 // main.js
 // functions for index page and etc
 
+function formClose(){
+    deleteCookie('id');
+    deleteCookie('pw');
+    sessionStorage.removeItem('title');
+    sessionStorage.removeItem('content');
+}
+
+function setCookie(name, val, exp){
+    var date = new Date();
+    date.setTime(date.getTime() + exp * 3600000);
+    document.cookie = name + '=' + val + ';expires=' + date.toUTCString() + ';path=/';
+}
+function getCookie(name){
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+}
+function deleteCookie(name){
+    document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+}
+
 function getDefaultPostForm(url){
-    var id = localStorage.getItem('id');
-    var pw = localStorage.getItem('pw');
+    var id = getCookie('id');
+    var pw = getCookie('pw');
     var form = document.createElement('form');
 
     form.setAttribute('method', 'post');
@@ -28,11 +48,7 @@ function getDefaultPostForm(url){
 
 function loginoutClick(user_index) {
     if (user_index > 0) {
-        localStorage.removeItem("id");
-        localStorage.removeItem("pw");
-        sessionStorage.removeItem('title');
-        sessionStorage.removeItem('thumbnail');
-        sessionStorage.removeItem('content');
+        formClose();
         alert("로그아웃");
         homeClick();
     }
