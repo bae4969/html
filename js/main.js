@@ -10,7 +10,7 @@ function setCookie(name, val, exp){
 function getCookie(name, exp){
     exp = typeof exp !== 'undefined' ? exp : 1;
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    setCookie(name, value[2], exp);
+    if(value != null) setCookie(name, value[2], exp);
     return value? value[2] : null;
 }
 function deleteCookie(name){
