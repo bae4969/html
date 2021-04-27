@@ -154,13 +154,13 @@ function echoAsideList($level = 4){
 function echoContentList($level = 4, $page, $class_index = null){
     $contentList = getContentList($level, $page, $class_index);
 
-    echo '<div id=contents>';
+    $ret = '<div id=contents><div id=temp>';
     for($i = 0; $i < count($contentList); $i++){
         if($contentList[$i]['state'] < 0)
-            echo '<div class="content_ban" onclick="contentClick('.$contentList[$i]['content_index'].')">';
+            $ret .= '<div id=content'.$i.' class="content_ban" onclick="contentClick('.$contentList[$i]['content_index'].')">';
         else
-            echo '<div class="content" onclick="contentClick('.$contentList[$i]['content_index'].')">';
-        echo
+            $ret .=  '<div id=content'.$i.' class="content" onclick="contentClick('.$contentList[$i]['content_index'].')">';
+            $ret .= 
             '<div class=content_title>'.
                 $contentList[$i]["title"].
             '</div>'.
@@ -175,7 +175,9 @@ function echoContentList($level = 4, $page, $class_index = null){
             '</div>
         </div>';
     }
-    echo '</div>';
+    $ret .=  '</div><div id=left></div><div id=right></div></div>';
+
+    return array(count($contentList), $ret);
 }
 
 function echoDetailContent($user_index, $level, $content_index){

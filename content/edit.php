@@ -25,6 +25,11 @@
 
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
+
+            if(<?php echo $content == null ? -1 : 0; ?> < 0){
+                alert('잘못된 접근');
+                homeClick();
+            }
         }
 
         window.onbeforeunload = function(){

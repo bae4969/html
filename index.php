@@ -16,12 +16,48 @@
         include 'php/basic.php';
         include 'php/load.php';
         $user = checkUser($_POST['id'], $_POST['pw']);
+        $contentList = echoContentList($user['level'], 1, $_POST['class_index']);
     ?>
 
     <script src="/js/main.js"> </script>
     <script>
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
+
+            setContentList();
+        }
+        window.onresize = function(){
+            setContentList()
+        }
+
+        var showState = 0;
+        function setContentList(){
+            if(showState != 2 && document.body.offsetWidth < 1600){
+                showState = 2;
+                document.getElementById('temp').style.height = 0;
+                for(i = 0; i < <?php echo $contentList[0]; ?>; i++)
+                    document.getElementById('temp').appendChild(document.getElementById("content"+i));
+
+                document.getElementById('left').style.width = '100%';
+                document.getElementById('right').style.width = '0%';
+                for(i = 0; i < <?php echo $contentList[0]; ?>; i++)
+                    document.getElementById('left').appendChild(document.getElementById("content"+i));
+            }
+            else if(showState != 1 && document.body.offsetWidth >= 1600){
+                showState = 1;
+                document.getElementById('temp').style.height = 0;
+                for(i = 0; i < <?php echo $contentList[0]; ?>; i++)
+                    document.getElementById('temp').appendChild(document.getElementById("content"+i));
+
+                document.getElementById('left').style.width = '50%';
+                document.getElementById('right').style.width = '50%';
+                for(i = 0; i < <?php echo $contentList[0]; ?>; i++){
+                    if(document.getElementById('left').offsetHeight > document.getElementById('right').offsetHeight)
+                        document.getElementById('right').appendChild(document.getElementById("content"+i));
+                    else
+                        document.getElementById('left').appendChild(document.getElementById("content"+i));
+                }
+            }
         }
     </script>
 </head>
@@ -33,7 +69,7 @@
                 <div id=profile> profile </div>
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
-            <?php echoContentList($user['level'], 1, $_POST['class_index']); ?>
+            <?php echo $contentList[1]; ?>
         </section>
         <footer> <?php echoFooter(); ?> </footer>
     </div>

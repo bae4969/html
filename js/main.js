@@ -1,20 +1,16 @@
 // main.js
 // functions for index page and etc
 
-function formClose(){
-    deleteCookie('id');
-    deleteCookie('pw');
-    sessionStorage.removeItem('title');
-    sessionStorage.removeItem('content');
-}
-
 function setCookie(name, val, exp){
+    exp = typeof exp !== 'undefined' ? exp : 1;
     var date = new Date();
     date.setTime(date.getTime() + exp * 3600000);
     document.cookie = name + '=' + val + ';expires=' + date.toUTCString() + ';path=/';
 }
-function getCookie(name){
+function getCookie(name, exp){
+    exp = typeof exp !== 'undefined' ? exp : 1;
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    setCookie(name, value[2], exp);
     return value? value[2] : null;
 }
 function deleteCookie(name){
@@ -48,7 +44,10 @@ function getDefaultPostForm(url){
 
 function loginoutClick(user_index) {
     if (user_index > 0) {
-        formClose();
+        deleteCookie('id');
+        deleteCookie('pw');
+        sessionStorage.removeItem('title');
+        sessionStorage.removeItem('content');
         alert("로그아웃");
         homeClick();
     }
@@ -56,7 +55,6 @@ function loginoutClick(user_index) {
         location.href = '/login';
     }
 }
-
 function writeClick(user_index){
     if (user_index > 0){
         var form = getDefaultPostForm('/content/writer');
@@ -64,13 +62,11 @@ function writeClick(user_index){
         form.submit();
     }
 }
-
 function homeClick(){
     var form = getDefaultPostForm('/index');
     document.body.appendChild(form);
     form.submit();
 }
-
 function classClick(class_index){
     var form = getDefaultPostForm('/index');
     var hiddenField = document.createElement('input');
@@ -81,7 +77,6 @@ function classClick(class_index){
     document.body.appendChild(form);
     form.submit();
 }
-
 function contentClick(content_index){
     var form = getDefaultPostForm('/content/reader');
     var hiddenField = document.createElement('input');
