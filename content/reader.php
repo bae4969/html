@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/css/main_header.css">
     <link rel="stylesheet" href="/css/main_aside.css">
     <link rel="stylesheet" href="/css/main_detailContent.css">
-    <link rel="stylesheet" href="/css/main_media.css">
     <link rel="stylesheet" href="/css/main_footer.css">
 
     <?php

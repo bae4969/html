@@ -13,8 +13,8 @@ div#content_ban{
 }
 
 div#content, div#content_ban{
-    width: calc(100% - 300px);
-    margin: 20px 0px 30px 10px;
+    width: calc(100% - 280px);
+    margin: 10px 0px 30px 10px;
     padding: 20px;
     border-radius: 20px;
     display: inline-block;
@@ -60,4 +60,14 @@ button.content_control{
 button.content_control:hover{
     border: none;
     background: #484A4C;
+}
+
+@media screen and (max-width: 1600px) {
+    aside {
+        display: none;;
+    }
+
+    div#content, div#content_ban{
+        width: calc(100% - 60px);
+    }
 }

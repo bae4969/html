@@ -2,6 +2,11 @@ img#mainTitle {
     cursor: pointer;
 }
 
+a:link {text-decoration: none; color: skyblue;}
+a:visited {text-decoration: none; color: skyblue;}
+a:active {text-decoration: none; color: skyblue;}
+a:hover {text-decoration: underline; color: red;}
+
 div#topLeft:hover, div#topRight:hover, div#topWrite:hover, div.category:hover {
     color: white;
     text-decoration: none;
@@ -23,4 +28,10 @@ div#main {
     margin: 0px auto;
     padding: 20px;
     padding-top: 10px;
+}
+
+@media screen and (max-width: 1600px) {
+    div#main {
+        width: calc(100% - 40px);
+    }
 }

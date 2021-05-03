@@ -5,6 +5,7 @@ aside {
     float: right;
     border-radius: 20px;
     background: #222426;
+    display: block;
 }
 
 div#profile{
