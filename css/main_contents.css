@@ -64,10 +64,25 @@ div.content_date {
 
 hr{
     background: #C3C3C3;
+    margin-bottom: 20px;
 }
 
-div.content_thumbnail {
-    padding: 3% 10px 10px 10px;
+div.content_bot{
+    text-align: center;
+}
+
+img.content_thumbnail {
+    max-width: 90%;
+    max-height: 400px;
+    padding-bottom: 10px;
+    font-size: 2.5ex;
+    line-height: 200%;
+    word-break: break-all;
+}
+
+div.content_summary {
+    width: 94%;
+    padding: 0 10px 10px 10px;
     font-size: 2.5ex;
     line-height: 200%;
     word-break: break-all;

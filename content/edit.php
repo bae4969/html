@@ -4,6 +4,8 @@
 <head>
     <meta charset='utf-8'>
     <title>Blog</title>
+    <link rel='shortcut icon' href=/res/favicon.ico type=image/x-icon>
+    <link rel='icon' href=/res/favicon.ico type=image/x-icon>
     <link rel="stylesheet" href="/css/after.css">
     <link rel="stylesheet" href="/css/main_outer.css">
     <link rel="stylesheet" href="/css/main_header.css">
@@ -19,6 +21,7 @@
         $content = getEditContent($user['user_index'], $_POST['content_index']);
     ?>
 
+    <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script src="/js/main.js"> </script>
     <script>
         var submitLeave = false;
@@ -29,6 +32,10 @@
             if(<?php echo $content == null ? -1 : 0; ?> < 0){
                 alert('잘못된 접근');
                 homeClick();
+            }
+            else{
+                document.getElementById("input_title").value = <?php echo "'".$content['title']."';\n"; ?>
+                document.getElementById("input_content").value = <?php echo "'".$content['content']."';\n"; ?>
             }
         }
 
@@ -46,30 +53,35 @@
             }
         }
 
-        function autoHeight(textarea) {
-            textarea.style.height = "1px";
-            textarea.style.height = (16 + textarea.scrollHeight)+"px";
-        }
-
-        function onFileUpload(event){
-            event.preventDefault();
-            let file = event.target.files[0];
-        }
-
-        function submitClick(){
+        function submitClick() {
             if(document.getElementById("input_title").value == ''){
                 alert('제목을 작성해주세요.')
                 return;
             }
-            else if(document.getElementById("input_content").value == ''){
+            else if(document.getElementById("input_content").value == '<p>&nbsp;</p>'){
                 alert('내용을 작성해주세요.')
                 return;
             }
 
             submitLeave = true;
+            oEditors.getById["input_content"].exec("UPDATE_CONTENTS_FIELD", []);
 
+            var form = getDefaultPostForm('editCheck');
+            var editorStr = document.getElementById("input_content").value;
+            var editorFrame = document.getElementById('editor_frame');
+            var inputFrame = editorFrame.contentWindow.document.getElementById('se2_iframe');
+            var imgClass = inputFrame.contentWindow.document.getElementsByClassName('photo');
 
-            var form = getDefaultPostForm('/content/editCheck');
+            if(imgClass.length > 0){
+                var thumbnail_src = imgClass[0].src;
+                var thumbnail_title = imgClass[0].title;
+
+                var hiddenField = document.createElement('input');
+                hiddenField.setAttribute('type', 'hidden');
+                hiddenField.setAttribute('name', 'thumbnail');
+                hiddenField.setAttribute('value', 'src="'+thumbnail_src+'" title="'+thumbnail_title+'"');
+                form.appendChild(hiddenField);
+            }
 
             sessionStorage.setItem('title', document.getElementById("input_title").value);
             var hiddenField = document.createElement('input');
@@ -83,6 +95,16 @@
             hiddenField.setAttribute('type', 'hidden');
             hiddenField.setAttribute('name', 'title');
             hiddenField.setAttribute('value', document.getElementById("input_title").value);
+            form.appendChild(hiddenField);
+
+            var inputArea = inputFrame.contentWindow.document.getElementsByClassName('se2_inputarea')[0];
+            var summaryStr = inputArea.innerText.substring(0, 200);
+            if(inputArea.innerText.length > 200) summaryStr += '...';
+            summaryStr  = summaryStr.replaceAll('\n\n', ' ');
+            var hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'summary');
+            hiddenField.setAttribute('value', summaryStr);
             form.appendChild(hiddenField);
 
             sessionStorage.setItem('content', document.getElementById("input_content").value);
@@ -101,17 +123,25 @@
     <div id="main">
         <header> <?php echoHeader($user['user_index'], $user['level']); ?> </header>
         <section>
-            <aside>
-                <div id=profile> profile </div>
-                <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
-            </aside>
             <div id=content>
                 <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 30)' value='<?php echo $content['title'] ?>'/>
-                <textarea id=input_content type='text' placeholder='내용' oninput='onInput(this, 3000)' onkeyup="autoHeight(this);"><?php echo $content['content']; ?></textarea>
+                <textarea id=input_content name=input_content style="width:100%; height:600px; min-width:600px; min-height:600px; display:none;"></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
         </section>
         <footer> <?php echoFooter(); ?> </footer>
     </div>
+    <script type="text/javascript">
+        var oEditors = [];
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "input_content",
+            sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
+            htParams : {
+                bUseModeChanger : false,
+            },
+            fCreator: "createSEditor2"
+        });
+    </script>
 </body>
 </html>

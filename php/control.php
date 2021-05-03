@@ -2,33 +2,33 @@
 <!-- sql insert and update table function -->
 <?php
 
-function checkContentInput($title, $content){
+function checkContentInput($title, $thumbnail, $summary, $content){
     if(mb_strlen($title) > 30) return -2;
-    if(mb_strlen($content > 3000)) return -3;
+    if(mb_strlen($thumbnail) > 100) return -3;
+    if(mb_strlen($summary) > 203) return -4;
+    if(strlen($content > 8388608)) return -5;
 
-    $filter = array('<script', '</');
-    for($i = 0; $i < count($filter); $i++) if(mb_stripos($title, $filter[$i]) !== false) return -4;
-    for($i = 0; $i < count($filter); $i++) if(mb_stripos($content, $filter[$i]) !== false) return -4;
+    $filter = array('<script');
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($title, $filter[$i]) !== false) return -6;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($thumbnail, $filter[$i]) !== false) return -6;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($summary, $filter[$i]) !== false) return -6;
+    for($i = 0; $i < count($filter); $i++) if(mb_stripos($content, $filter[$i]) !== false) return -6;
 
     return 0;
 }
 
-function insertContent($user_index, $level, $class_index, $read_level, $write_level, $title, $content){
+function insertContent($user_index, $level, $class_index, $read_level, $write_level, $title, $thumbnail, $summary, $content){
     include "sqlcon.php";
 
     if($user_index < 1) return -1;
     if($class_index < 1) return -1;
     if($level > $write_level) return -1;
-    if(($ret = checkContentInput($title, $content)) < 0) return $ret;
-
-    $thumbnail = mb_substr($content, 0, 200, 'utf-8');
-    if(mb_strlen($content) > 200) $thumbnail.='...';
+    if(($ret = checkContentInput($title, $thumbnail, $summary, $content)) < 0) return $ret;
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query
-        = 'insert into contents(user_index, class_index, read_level, write_level, title, thumbnail, content) value('.
-        $user_index.','.$class_index.','.$read_level.','.$write_level.',"'.$title.'","'.$thumbnail.'","'.$content.'")';
-
+        = "insert into contents(user_index, class_index, read_level, write_level, title, thumbnail, summary, content) value(".
+        $user_index.",".$class_index.",".$read_level.",".$write_level.",'".$title."','".$thumbnail."','".$summary."','".$content."')";
     if(mysqli_query($conn, $sql_query)){
         $sql_query = 'SELECT LAST_INSERT_ID()';
         $result = mysqli_query($conn, $sql_query);
@@ -40,18 +40,15 @@ function insertContent($user_index, $level, $class_index, $read_level, $write_le
     return 0;
 }
 
-function editContent($user_index, $content_index, $title, $content){
+function editContent($user_index, $content_index, $title, $thumbnail, $summary, $content){
     include "sqlcon.php";
 
     if($user_index < 1) return -1;
-    if(($ret = checkContentInput($title, $thumbnail, $content)) < 0) return $ret;
-
-    $thumbnail = mb_substr($content, 0, 200, 'utf-8');
-    if(mb_strlen($content) > 200) $thumbnail.='...';
+    if(($ret = checkContentInput($title, $thumbnail, $summary, $content)) < 0) return $ret;
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'update contents set title="'.$title.'", thumbnail="'.$thumbnail.'", content="'.$content.
-        '" where content_index='.$content_index.' and user_index='.$user_index;
+    $sql_query = "update contents set title='".$title."', thumbnail='".$thumbnail."', summary='".$summary."', content='".$content.
+        "' where content_index=".$content_index." and user_index=".$user_index;
     if(mysqli_query($conn, $sql_query)){
         return 1;
     }

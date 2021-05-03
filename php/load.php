@@ -63,7 +63,7 @@ function getContentList($level, $pageNum = 1, $class_index = null){
     include "sqlcon.php";
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select user_index, content_index, state, date, title, thumbnail'.getQuerySelectContentList($level, $class_index);
+    $sql_query = 'select user_index, content_index, state, date, title, thumbnail, summary '.getQuerySelectContentList($level, $class_index);
     $sql_query .= ' order by content_index desc limit '.(($pageNum - 1) * 10).', 10';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -169,9 +169,13 @@ function echoContentList($level = 4, $page, $class_index = null){
             '</div>'.
             '<div class=content_date>'.
                 'UID : '.$contentList[$i]["user_index"].
-            '</div><hr>'.
-            '<div class=content_thumbnail>'.
-                $contentList[$i]["thumbnail"].
+            '</div><hr>';
+            if($contentList[$i]["thumbnail"] != ''){
+                $ret .= '<div class=content_bot><img '.$contentList[$i]["thumbnail"].' class=content_thumbnail></div>';
+            }
+            $ret .=
+            '<div class=content_summary>'.
+                $contentList[$i]["summary"].
             '</div>
         </div>';
     }
