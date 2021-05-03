@@ -83,7 +83,7 @@ img.content_thumbnail {
 div.content_summary {
     width: 94%;
     padding: 0 10px 10px 10px;
-    font-size: 2.5ex;
+    font-size: 2ex;
     line-height: 200%;
     word-break: break-all;
 }

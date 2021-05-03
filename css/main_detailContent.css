@@ -23,13 +23,13 @@ div#content, div#content_ban{
 }
 
 div#content_title {
-    padding: 5% 7% 20px 7%;
+    padding: 5% 5% 20px 5%;
     font-size: 5ex;
     font-weight: bold;
 }
 
 div#content_date {
-    padding: 0px 4% 2% 4%;
+    padding: 0px 5% 2% 5%;
     vertical-align: bottom;
     text-align: right;
     font-size: 2ex;
@@ -40,6 +40,8 @@ hr{
 }
 
 div#content_content {
+    margin-top: 20px;
+    padding: 30px;
     white-space: pre-wrap;
 }
 
