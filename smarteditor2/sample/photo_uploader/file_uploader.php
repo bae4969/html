@@ -6,6 +6,7 @@ if($bSuccessUpload) {
 	$tmp_name = $_FILES['Filedata']['tmp_name'];
 	$name = $_FILES['Filedata']['name'];
 	$filename_ext = strtolower(array_pop(explode('.',$name)));
+	$name = date("dHis", time()).'.'.$filename_ext;
 	$allow_file = array("jpg", "png", "bmp", "gif");
 	
 	if(!in_array($filename_ext, $allow_file))

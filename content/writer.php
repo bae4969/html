@@ -78,8 +78,8 @@
 
             var form = getDefaultPostForm('writerCheck');
             var editorStr = document.getElementById("input_content").value;
-            editorStr = editorStr.replaceAll('<p', '<div');
-            editorStr = editorStr.replaceAll('</p>', '</div>');
+            editorStr = editorStr.replaceAll('<div', '<p');
+            editorStr = editorStr.replaceAll('</div>', '</p>');
 
             var editorFrame = document.getElementById('editor_frame');
             var inputFrame = editorFrame.contentWindow.document.getElementById('se2_iframe');
@@ -134,7 +134,7 @@
         <header> <?php echoHeader($user['user_index'], $user['level']); ?> </header>
         <section>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목 (최대 30자)' oninput='onInput(this, 30)'/>
+                <input id=input_title type='text' placeholder='제목 (최대 30자)' oninput='onInput(this, 50)'/>
                 <select id=input_class>
                     <option value=0>분류 선택</option>
                     <?php echoSelectClassList($user['level']); ?>

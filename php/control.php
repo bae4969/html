@@ -3,7 +3,7 @@
 <?php
 
 function checkContentInput($title, $thumbnail, $summary, $content){
-    if(mb_strlen($title) > 30) return -2;
+    if(mb_strlen($title) > 50) return -2;
     if(mb_strlen($thumbnail) > 200) return -3;
     if(mb_strlen($summary) > 203) return -4;
     if(strlen($content > 8388608)) return -5;

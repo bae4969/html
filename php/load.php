@@ -188,8 +188,7 @@ function echoContentList($level = 4, $page = 0, $class_index = 0){
             '</div><hr>';
             if($contentList[$i]["thumbnail"] != ''){
                 $content .=
-                '<div class=content_bot><img src="'.$contentList[$i]["thumbnail"].
-                '" title="'.basename($contentList[$i]["thumbnail"]).'" class=content_thumbnail></div>';
+                '<div class=content_bot><img src="'.$contentList[$i]["thumbnail"].'" class=content_thumbnail></div>';
             }
             $content .=
             '<div class=content_summary>'.
@@ -220,7 +219,7 @@ function echoDetailContent($user_index, $level, $content_index){
         '</div><hr>'.
         '<div id=content_content>'
             .$content["content"].
-        '</div>';
+        '</div><hr>';
     if($user_index == $content['user_index'] || $level < 2){
         if($content['state'] < 0 && $level < 2)
             echo '<button class=content_control onclick=restoreClick()>복구</button>';

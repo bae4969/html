@@ -72,8 +72,8 @@
 
             var form = getDefaultPostForm('editCheck');
             var editorStr = document.getElementById("input_content").value;
-            editorStr = editorStr.replaceAll('<p', '<div');
-            editorStr = editorStr.replaceAll('</p>', '</div>');
+            editorStr = editorStr.replaceAll('<div', '<p');
+            editorStr = editorStr.replaceAll('</div>', '</p>');
 
             var editorFrame = document.getElementById('editor_frame');
             var inputFrame = editorFrame.contentWindow.document.getElementById('se2_iframe');
@@ -128,7 +128,7 @@
         <header> <?php echoHeader($user['user_index'], $user['level']); ?> </header>
         <section>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 30)' value='<?php echo $content['title'] ?>'/>
+                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 50)' value='<?php echo $content['title'] ?>'/>
                 <textarea id=input_content name=input_content style="width:100%; height:600px; min-width:600px; min-height:600px; display:none;"></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
