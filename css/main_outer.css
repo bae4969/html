@@ -2,11 +2,6 @@ img#mainTitle {
     cursor: pointer;
 }
 
-a:link {text-decoration: none; color: skyblue;}
-a:visited {text-decoration: none; color: skyblue;}
-a:active {text-decoration: none; color: skyblue;}
-a:hover {text-decoration: underline; color: red;}
-
 div#topLeft:hover, div#topRight:hover, div#topWrite:hover, div.category:hover {
     color: white;
     text-decoration: none;
