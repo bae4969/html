@@ -17,7 +17,7 @@
         include 'php/basic.php';
         include 'php/load.php';
         $user = checkUser($_POST['id'], $_POST['pw']);
-        $contentList = echoContentList($user['level'], 1, $_POST['class_index']);
+        $contentList = echoContentList($user['level'], $_POST['page_num'], $_POST['class_index']);
     ?>
 
     <script src="/js/main.js"> </script>
@@ -70,7 +70,18 @@
                 <div id=profile> profile </div>
                 <ul id=category> <?php echoAsideList($user['level']); ?> </ul>
             </aside>
-            <?php echo $contentList[1]; ?>
+            <div id=contents>
+                <div>
+                    <div id=left></div>
+                    <div id=right></div>
+                </div>
+                <div id=pages>
+                    <?php echo $contentList[1]; ?>
+                </div>
+                <div id=temp>
+                    <?php echo $contentList[2]; ?>
+                </div>
+            </div>
         </section>
         <footer> <?php echoFooter(); ?> </footer>
     </div>

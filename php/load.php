@@ -35,17 +35,17 @@ function getWriteClassList($level){
     return $classList;
 }
 
-function getQuerySelectContentList($level, $class_index = null){
+function getQuerySelectContentList($level, $class_index = 0){
     $sql_query = ' from contents where read_level>='.$level;
     if($level > 1) $sql_query .= ' and state>=0';
-    if($class_index) $sql_query .= ' and class_index = '.$class_index;
+    if($class_index > 0) $sql_query .= ' and class_index = '.$class_index;
     if($class_index < 0 && $level < 2)
         $sql_query = ' from contents where class_index is NULL';
 
     return $sql_query;
 }
 
-function getContentListCount($level, $class_index = null){
+function getContentListCount($level, $class_index = 0){
     include "sqlcon.php";
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
@@ -59,12 +59,12 @@ function getContentListCount($level, $class_index = null){
     return 0;
 }
 
-function getContentList($level, $pageNum = 1, $class_index = null){
+function getContentList($level, $pageNum = 0, $class_index = 0){
     include "sqlcon.php";
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query = 'select user_index, content_index, state, date, title, thumbnail, summary '.getQuerySelectContentList($level, $class_index);
-    $sql_query .= ' order by content_index desc limit '.(($pageNum - 1) * 10).', 10';
+    $sql_query .= ' order by content_index desc limit '.($pageNum * 10).', 10';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
 
@@ -151,16 +151,32 @@ function echoAsideList($level = 4){
     return;
 }
 
-function echoContentList($level = 4, $page, $class_index = null){
+function echoContentList($level = 4, $page = 0, $class_index = 0){
+    $contentCount = getContentListCount($level, $class_index);
     $contentList = getContentList($level, $page, $class_index);
 
-    $ret = '<div id=contents><div id=temp>';
+    $contentCount = ($contentCount - ($contentCount % 10)) / 10;
+
+    $longBefore = $page < 10 ? 0 : $page - 10;
+    $before = $page < 1 ? 0 : $page - 1;
+    $after = $page >= $contentCount ? $contentCount : $page + 1;
+    $longAfter = $page + 10 >= $contentCount ? $contentCount : $page + 10;
+
+    $pages = '<button class=page onClick=pageClick('.$class_index.','.$longBefore.')><<</button>';
+    $pages .= '<button class=page onClick=pageClick('.$class_index.','.$before.')><</button>';
+    for($i = $page; $i <= $contentCount && $i < $page + 10; $i++){
+        $pages .= '<button class=page onClick=pageClick('.$class_index.','.(string)$i.')>'.($i + 1).'</button>';
+    }
+    $pages .= '<button class=page onClick=pageClick('.$class_index.','.$after.')>></button>';
+    $pages .= '<button class=page onClick=pageClick('.$class_index.','.$longAfter.')>>></button>';
+
+    $content = '';
     for($i = 0; $i < count($contentList); $i++){
         if($contentList[$i]['state'] < 0)
-            $ret .= '<div id=content'.$i.' class="content_ban" onclick="contentClick('.$contentList[$i]['content_index'].')">';
+            $content .= '<div id=content'.$i.' class="content_ban" onclick="contentClick('.$contentList[$i]['content_index'].')">';
         else
-            $ret .=  '<div id=content'.$i.' class="content" onclick="contentClick('.$contentList[$i]['content_index'].')">';
-            $ret .= 
+            $content .= '<div id=content'.$i.' class="content" onclick="contentClick('.$contentList[$i]['content_index'].')">';
+        $content .= 
             '<div class=content_title>'.
                 $contentList[$i]["title"].
             '</div>'.
@@ -171,19 +187,18 @@ function echoContentList($level = 4, $page, $class_index = null){
                 'UID : '.$contentList[$i]["user_index"].
             '</div><hr>';
             if($contentList[$i]["thumbnail"] != ''){
-                $ret .=
+                $content .=
                 '<div class=content_bot><img src="'.$contentList[$i]["thumbnail"].
                 '" title="'.basename($contentList[$i]["thumbnail"]).'" class=content_thumbnail></div>';
             }
-            $ret .=
+            $content .=
             '<div class=content_summary>'.
                 $contentList[$i]["summary"].
             '</div>
         </div>';
     }
-    $ret .=  '</div><div id=left></div><div id=right></div></div>';
 
-    return array(count($contentList), $ret);
+    return array(count($contentList), $pages, $content);
 }
 
 function echoDetailContent($user_index, $level, $content_index){

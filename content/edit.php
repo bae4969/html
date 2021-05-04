@@ -141,6 +141,7 @@
             elPlaceHolder: "input_content",
             sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
             htParams : {
+		        bUseVerticalResizer : false,
                 bUseModeChanger : false,
             },
             fCreator: "createSEditor2"
