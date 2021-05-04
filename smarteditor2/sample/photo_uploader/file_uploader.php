@@ -13,7 +13,8 @@ if($bSuccessUpload) {
 	else if($_FILES['Filedata']['size'] > 5242880)
 		$url .= '&errstr=file_size_error';
 	else {
-		$uploadDir = '/var/www/html/res/upload/';
+		$date = date("Ym", time()).'/';
+		$uploadDir = '/var/www/html/res/upload/'.$date;
 		if(!is_dir($uploadDir)) mkdir($uploadDir);
 		
 		$newPath = $uploadDir.urlencode($name);
@@ -22,7 +23,7 @@ if($bSuccessUpload) {
 		
 		$url .= "&bNewLine=true";
 		$url .= "&sFileName=".urlencode(urlencode($name));
-		$url .= "&sFileURL=/res/upload/".urlencode(urlencode($name));
+		$url .= "&sFileURL=/res/upload/".$date.urlencode(urlencode($name));
 	}
 }
 else {

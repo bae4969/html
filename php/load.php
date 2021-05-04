@@ -171,7 +171,9 @@ function echoContentList($level = 4, $page, $class_index = null){
                 'UID : '.$contentList[$i]["user_index"].
             '</div><hr>';
             if($contentList[$i]["thumbnail"] != ''){
-                $ret .= '<div class=content_bot><img '.$contentList[$i]["thumbnail"].' class=content_thumbnail></div>';
+                $ret .=
+                '<div class=content_bot><img src="'.$contentList[$i]["thumbnail"].
+                '" title="'.basename($contentList[$i]["thumbnail"]).'" class=content_thumbnail></div>';
             }
             $ret .=
             '<div class=content_summary>'.

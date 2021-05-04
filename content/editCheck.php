@@ -62,6 +62,7 @@
             if(<?php echo $ret; ?> > 0){
                 sessionStorage.removeItem('title');
                 sessionStorage.removeItem('content');
+                contentClick(<?php echo $_POST['content_index']; ?>);
             }
             else{
                 if(<?php echo $ret; ?> == -1)
@@ -78,10 +79,19 @@
                     alert("입력 불가능한 문자열이 포함되어 있습니다.");
                 else
                     alert("저장 실패");
-            }
-            contentClick(<?php echo $_POST['content_index']; ?>);
-        }
 
+                alert(<?php echo "'".$_POST['thumbnail']."'";?>);
+
+                var form = getDefaultPostForm('/content/edit');
+                var hiddenField = document.createElement('input');
+                hiddenField.setAttribute('type', 'hidden');
+                hiddenField.setAttribute('name', 'content_index');
+                hiddenField.setAttribute('value', <?php echo $_POST['content_index']; ?>);
+                form.appendChild(hiddenField);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
     </script>
 </head>
 <body>

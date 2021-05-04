@@ -33,8 +33,15 @@
                 homeClick();
             }
             else{
-                document.getElementById("input_title").value = <?php echo "'".$content['title']."';\n"; ?>
-                document.getElementById("input_content").value = <?php echo "'".$content['content']."';\n"; ?>
+                if(sessionStorage.getItem('title') !== null)
+                    document.getElementById("input_title").value = sessionStorage.getItem('title');
+                else
+                    document.getElementById("input_title").value = <?php echo "'".$content['title']."';\n"; ?>
+
+                if(sessionStorage.getItem('content') !== null)
+                    document.getElementById("input_content").value = sessionStorage.getItem('content');
+                else
+                    document.getElementById("input_content").value = <?php echo "'".$content['content']."';\n"; ?>
             }
         }
 
@@ -72,13 +79,10 @@
             var imgClass = inputFrame.contentWindow.document.getElementsByClassName('photo');
 
             if(imgClass.length > 0){
-                var thumbnail_src = imgClass[0].src;
-                var thumbnail_title = imgClass[0].title;
-
                 var hiddenField = document.createElement('input');
                 hiddenField.setAttribute('type', 'hidden');
                 hiddenField.setAttribute('name', 'thumbnail');
-                hiddenField.setAttribute('value', 'src="'+thumbnail_src+'" title="'+thumbnail_title+'"');
+                hiddenField.setAttribute('value', imgClass[0].src);
                 form.appendChild(hiddenField);
             }
 

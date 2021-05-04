@@ -50,8 +50,8 @@
     <script>
         window.onload = function() {
             if(<?php echo $user["user_index"]; ?> > 0){
-                setCookie("id", <?php echo '"'.$_POST["id"].'"'; ?>, 1);
-                setCookie("pw", <?php echo '"'.$_POST["pw"].'"'; ?>, 1);
+                setCookie("id", <?php echo '"'.$_POST["id"].'"'; ?>, 2);
+                setCookie("pw", <?php echo '"'.$_POST["pw"].'"'; ?>, 2);
                 homeClick();
             }
             else{
