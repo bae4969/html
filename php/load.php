@@ -164,7 +164,7 @@ function echoContentList($level = 4, $page = 0, $class_index = 0){
 
     $pages = '<button class=page onClick=pageClick('.$class_index.','.$longBefore.')><<</button>';
     $pages .= '<button class=page onClick=pageClick('.$class_index.','.$before.')><</button>';
-    for($i = $page; $i <= $contentCount + 10 && $i < $page + 10; $i++){
+    for($i = $page; $i <= $contentCount && $i < $page + 10; $i++){
         $pages .= '<button class=page onClick=pageClick('.$class_index.','.(string)$i.')>'.($i + 1).'</button>';
     }
     $pages .= '<button class=page onClick=pageClick('.$class_index.','.$after.')>></button>';
