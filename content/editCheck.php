@@ -80,8 +80,6 @@
                 else
                     alert("저장 실패");
 
-                alert(<?php echo "'".$_POST['thumbnail']."'";?>);
-
                 var form = getDefaultPostForm('/content/edit');
                 var hiddenField = document.createElement('input');
                 hiddenField.setAttribute('type', 'hidden');

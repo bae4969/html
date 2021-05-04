@@ -78,6 +78,9 @@
 
             var form = getDefaultPostForm('writerCheck');
             var editorStr = document.getElementById("input_content").value;
+            editorStr = editorStr.replaceAll('<p', '<div');
+            editorStr = editorStr.replaceAll('</p>', '</div>');
+
             var editorFrame = document.getElementById('editor_frame');
             var inputFrame = editorFrame.contentWindow.document.getElementById('se2_iframe');
             var imgClass = inputFrame.contentWindow.document.getElementsByClassName('photo');
@@ -114,11 +117,11 @@
             hiddenField.setAttribute('value', summaryStr);
             form.appendChild(hiddenField);
 
-            sessionStorage.setItem('content', document.getElementById("input_content").value);
+            sessionStorage.setItem('content', editorStr);
             var hiddenField = document.createElement('input');
             hiddenField.setAttribute('type', 'hidden');
             hiddenField.setAttribute('name', 'content');
-            hiddenField.setAttribute('value', document.getElementById("input_content").value);
+            hiddenField.setAttribute('value', editorStr);
             form.appendChild(hiddenField);
 
             document.body.appendChild(form);

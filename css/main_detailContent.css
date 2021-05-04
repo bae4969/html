@@ -34,7 +34,7 @@ div#content_title {
 }
 
 div#content_date {
-    padding: 0px 5% 2% 5%;
+    padding: 0px 5% 10px 5%;
     vertical-align: bottom;
     text-align: right;
     font-size: 2ex;
@@ -53,7 +53,7 @@ div#content_content {
 button.content_control{
     width: 80px;
     height: 40px;
-    margin: 70px 20px 20px 0px;
+    margin: 40px 20px 20px 0px;
     float: right;
     border: 1px solid #464646;
     border-radius: 5px;

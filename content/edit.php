@@ -44,7 +44,6 @@
                     document.getElementById("input_content").value = <?php echo "'".$content['content']."';\n"; ?>
             }
         }
-
         window.onbeforeunload = function(){
             if(submitLeave == false){
                 sessionStorage.removeItem('title');
@@ -58,7 +57,6 @@
                 return input.value = input.value.substring(0, max_length);
             }
         }
-
         function submitClick() {
             if(document.getElementById("input_title").value == ''){
                 alert('제목을 작성해주세요.')
@@ -74,6 +72,9 @@
 
             var form = getDefaultPostForm('editCheck');
             var editorStr = document.getElementById("input_content").value;
+            editorStr = editorStr.replaceAll('<p', '<div');
+            editorStr = editorStr.replaceAll('</p>', '</div>');
+
             var editorFrame = document.getElementById('editor_frame');
             var inputFrame = editorFrame.contentWindow.document.getElementById('se2_iframe');
             var imgClass = inputFrame.contentWindow.document.getElementsByClassName('photo');
@@ -103,18 +104,18 @@
             var inputArea = inputFrame.contentWindow.document.getElementsByClassName('se2_inputarea')[0];
             var summaryStr = inputArea.innerText.substring(0, 200);
             if(inputArea.innerText.length > 200) summaryStr += '...';
-            summaryStr  = summaryStr.replaceAll('\n\n', ' ');
+            summaryStr  = summaryStr.replaceAll('\n', ' ');
             var hiddenField = document.createElement('input');
             hiddenField.setAttribute('type', 'hidden');
             hiddenField.setAttribute('name', 'summary');
             hiddenField.setAttribute('value', summaryStr);
             form.appendChild(hiddenField);
 
-            sessionStorage.setItem('content', document.getElementById("input_content").value);
+            sessionStorage.setItem('content', editorStr);
             var hiddenField = document.createElement('input');
             hiddenField.setAttribute('type', 'hidden');
             hiddenField.setAttribute('name', 'content');
-            hiddenField.setAttribute('value', document.getElementById("input_content").value);
+            hiddenField.setAttribute('value', editorStr);
             form.appendChild(hiddenField);
 
             document.body.appendChild(form);
