@@ -63,34 +63,10 @@ function writeClick(user_index){
     }
 }
 function homeClick(){
-    var form = getDefaultPostForm('/index');
-    var hiddenField = document.createElement('input');
-    hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', 'class_index');
-    hiddenField.setAttribute('value', 0);
-    form.appendChild(hiddenField);
-    var hiddenField = document.createElement('input');
-    hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', 'page_num');
-    hiddenField.setAttribute('value', 0);
-    form.appendChild(hiddenField);
-    document.body.appendChild(form);
-    form.submit();
+    pageClick(0, 0);
 }
 function classClick(class_index){
-    var form = getDefaultPostForm('/index');
-    var hiddenField = document.createElement('input');
-    hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', 'class_index');
-    hiddenField.setAttribute('value', class_index);
-    form.appendChild(hiddenField);
-    var hiddenField = document.createElement('input');
-    hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', 'page_num');
-    hiddenField.setAttribute('value', 0);
-    form.appendChild(hiddenField);
-    document.body.appendChild(form);
-    form.submit();
+    pageClick(class_index, 0);
 }
 function pageClick(class_index, page_num){
     var form = getDefaultPostForm('/index');

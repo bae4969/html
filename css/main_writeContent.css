@@ -41,9 +41,9 @@ select#input_class {
 }
 
 button#btn_submit{
-    width: 80px;
+    width: 100px;
     height: 40px;
-    margin-top: 5px;
+    margin: 20px 0 10px 0;
     float: right;
     border: 1px solid white;
     border-radius: 5px;
