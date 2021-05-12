@@ -4,22 +4,43 @@
 
 function checkUser($id, $pw){
     include "sqlcon.php";
+    include "const.php";
 
     if($id == '' || $pw == '')
-        return array("user_index"=>0, "level"=>4, "user_index"=>0);
+        return array("user_index"=>0, "level"=>4, "write_limit"=>$write_limit, "img_upload_limit"=>$img_total_limit);
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = 'select user_index, level, state from user_list where id="'.$id.'" and pw="'.$pw.'"';
+    $sql_query = 'select user_index, level, state, write_limit, img_upload_limit from user_list where id="'.$id.'" and pw="'.$pw.'"';
     $result = mysqli_query($conn, $sql_query);
 
     if($row = mysqli_fetch_array($result)){
         if($row["state"] == 0)
             return $row;
         else
-            return array("user_index"=>-1, "level"=>4);
+            return array("user_index"=>-1, "level"=>4, "write_limit"=>$write_limit, "img_upload_limit"=>$img_total_limit);
     }
 
-    return array("user_index"=>0, "level"=>4);
+    return array("user_index"=>0, "level"=>4, "write_limit"=>$write_limit, "img_upload_limit"=>$img_total_limit);
+}
+
+function checkUserCanWrite($user){
+    include "const.php";
+
+    if($user['user_index'] < 1) return false;
+    else if($user['user_index'] == 1) return true;
+    else if($user['write_limit'] < $write_limit) return true;
+
+    return false;
+}
+
+function checkUserCanUploadImg($user){
+    include "const.php";
+
+    if($user['user_index'] < 1) return false;
+    else if($user['user_index'] == 1) return true;
+    else if($user['img_upload_limit'] < $img_total_limit) return true;
+
+    return false;
 }
 
 function getClassLevel($class_index){

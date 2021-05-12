@@ -17,6 +17,37 @@ function checkContentInput($title, $thumbnail, $summary, $content){
     return 0;
 }
 
+function updateWriteLimit($user_index){
+    include "sqlcon.php";
+    
+    if($user_index < 1) return -1;
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = "update user_list set write_limit=write_limit+1 where user_index=".$user_index;
+
+    if(mysqli_query($conn, $sql_query)){
+        return 1;
+    }
+    
+    return 0;
+}
+
+function updateLoadFileLimit($user_index, $volume){
+    include "sqlcon.php";
+    
+    if($user_index < 1) return -1;
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $sql_query = "update user_list set img_upload_limit=img_upload_limit+".$volume.
+        " where user_index=".$user_index;
+
+    if(mysqli_query($conn, $sql_query)){
+        return 1;
+    }
+    
+    return 0;
+}
+
 function insertContent($user_index, $level, $class_index, $read_level, $write_level, $title, $thumbnail, $summary, $content){
     include "sqlcon.php";
 
@@ -33,8 +64,11 @@ function insertContent($user_index, $level, $class_index, $read_level, $write_le
         $sql_query = 'SELECT LAST_INSERT_ID()';
         $result = mysqli_query($conn, $sql_query);
         mysqli_close($conn);
-        if($row = mysqli_fetch_array($result))
-            return $row['LAST_INSERT_ID()'];
+        if($row = mysqli_fetch_array($result)){
+            $ret = $row['LAST_INSERT_ID()'];
+            updateWriteLimit($user_index);
+            return $ret;
+        }
     }
 
     return 0;
@@ -50,10 +84,11 @@ function editContent($user_index, $content_index, $title, $thumbnail, $summary, 
     $sql_query = "update contents set title='".$title."', thumbnail='".$thumbnail."', summary='".$summary."', content='".$content.
         "' where content_index=".$content_index." and user_index=".$user_index;
     if(mysqli_query($conn, $sql_query)){
+        updateWriteLimit($user_index);
         return 1;
     }
     
-    return mysqli_error($conn);
+    return 0;
 }
 
 function disableContent($user_index, $level, $content_user_index, $content_index){

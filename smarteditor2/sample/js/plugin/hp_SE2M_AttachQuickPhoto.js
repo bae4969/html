@@ -5,7 +5,7 @@
  * @ 팝업 마크업은 SimplePhotoUpload.html과 SimplePhotoUpload_html5.html이 있습니다. 
  */
 
-nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({		
+nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({
 	name : "SE2M_AttachQuickPhoto",
 
 	$init : function(){},
@@ -25,7 +25,7 @@ nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({
 			sUrl : ""
 		};
 		this.oPopupMgr = nhn.husky.PopUpManager.getInstance(this.oApp);
-	},
+},
 	
 	/**
 	 * 포토 웹탑 오픈

@@ -52,16 +52,21 @@
     <script>
         window.onload = function() {
             <?php
-                $ret = insertContent(
-                    $user['user_index'],
-                    $user['level'],
-                    $class['class_index'],
-                    $class['read_level'],
-                    $class['write_level'],
-                    $_POST['title'],
-                    $_POST['thumbnail'],
-                    $_POST['summary'],
-                    $_POST['content']);
+                if(!checkUserCanWrite($user)){
+                    $ret = -7;
+                }
+                else{
+                    $ret = insertContent(
+                        $user['user_index'],
+                        $user['level'],
+                        $class['class_index'],
+                        $class['read_level'],
+                        $class['write_level'],
+                        $_POST['title'],
+                        $_POST['thumbnail'],
+                        $_POST['summary'],
+                        $_POST['content']);
+                }
             ?>
             if(<?php echo $ret; ?> > 0){
                 sessionStorage.removeItem('class_index');
@@ -82,6 +87,8 @@
                     alert("내용이 최대 문자열 길이를 초과했습니다.");
                 else if(<?php echo $ret; ?> == -6)
                     alert("입력 불가능한 문자열이 포함되어 있습니다.");
+                else if(<?php echo $ret; ?> == -7)
+                    alert("하루 글쓰기 수가 초과 되었습니다.");
                 else
                     alert("저장 실패");
 

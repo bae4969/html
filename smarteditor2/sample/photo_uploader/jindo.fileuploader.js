@@ -4,6 +4,13 @@
  * NHN_Library:Jindo_Component-1.0.3;JavaScript Components for Jindo;
  * @include Component, UIComponent, FileUploader
  */
+
+function getCookie(name, exp){
+    exp = typeof exp !== 'undefined' ? exp : 2;
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+}
+
 jindo.Component = jindo.$Class({
     _htEventHandler: null,
     _htOption: null,
@@ -271,6 +278,20 @@ jindo.FileUploader = jindo.$Class({
             target: sIframeName,
             action: sAction
         });
+
+        ///////////////////////////////////////////////////////////////////////////////////
+        this._aHiddenInput.push(this._createElement('input', {
+            'type': 'hidden',
+            'name': 'id',
+            'value': getCookie('id')
+        }));
+        this._aHiddenInput.push(this._createElement('input', {
+            'type': 'hidden',
+            'name': 'pw',
+            'value': getCookie('pw')
+        }));
+        ///////////////////////////////////////////////////////////////////////////////////
+
         this._aHiddenInput.push(this._createElement('input', {
             'type': 'hidden',
             'name': 'callback',

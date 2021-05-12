@@ -28,6 +28,11 @@
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
 
+            if(<?php if(!checkUserCanWrite($user)) echo 'true'; else echo 'false'; ?>){
+                alert('하루 글쓰기 수가 초과 되었습니다');
+                homeClick();
+            }
+
             if(sessionStorage.getItem('class_index') !== null){
                 var select = document.getElementById("input_class");
                 for(i = 0; i < select.length; i++)

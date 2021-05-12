@@ -32,6 +32,10 @@
                 alert('잘못된 접근');
                 homeClick();
             }
+            else if(<?php if(!checkUserCanWrite($user)) echo 'true'; else echo 'false'; ?>){
+                alert('하루 글쓰기 수가 초과 되었습니다');
+                homeClick();
+            }
             else{
                 if(sessionStorage.getItem('title') !== null)
                     document.getElementById("input_title").value = sessionStorage.getItem('title');
