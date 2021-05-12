@@ -152,20 +152,28 @@ function echoAsideList($level = 4){
 }
 
 function echoContentList($level = 4, $page = 0, $class_index = 0){
-    $contentCount = getContentListCount($level, $class_index);
+    $pageCount = getContentListCount($level, $class_index);
     $contentList = getContentList($level, $page, $class_index);
 
-    $contentCount = ($contentCount - ($contentCount % 10)) / 10;
+    if($pageCount % 10 == 0)
+        $pageCount = ($pageCount - ($pageCount % 10)) / 10;
+    else
+        $pageCount = ($pageCount - ($pageCount % 10)) / 10 + 1;
+
+    $start = ($page - ($page % 10)) / 10;
 
     $longBefore = $page < 10 ? 0 : $page - 10;
     $before = $page < 1 ? 0 : $page - 1;
-    $after = $page >= $contentCount ? $contentCount : $page + 1;
-    $longAfter = $page + 10 >= $contentCount ? $contentCount : $page + 10;
+    $after = $page + 1 >= $pageCount ? $pageCount - 1 : $page + 1;
+    $longAfter = $page + 10 > $pageCount ? $pageCount - 1 : $page + 10;
 
     $pages = '<button class=page onClick=pageClick('.$class_index.','.$longBefore.')><<</button>';
     $pages .= '<button class=page onClick=pageClick('.$class_index.','.$before.')><</button>';
-    for($i = $page; $i <= $contentCount && $i < $page + 10; $i++){
-        $pages .= '<button class=page onClick=pageClick('.$class_index.','.(string)$i.')>'.($i + 1).'</button>';
+    for($i = $start; $i < $pageCount && $i < 10; $i++){
+        if($i == $page)
+            $pages .= '<button id=selectedPage class=page onClick=pageClick('.$class_index.','.(string)$i.')>'.($i + 1).'</button>';
+        else
+            $pages .= '<button class=page onClick=pageClick('.$class_index.','.(string)$i.')>'.($i + 1).'</button>';
     }
     $pages .= '<button class=page onClick=pageClick('.$class_index.','.$after.')>></button>';
     $pages .= '<button class=page onClick=pageClick('.$class_index.','.$longAfter.')>>></button>';

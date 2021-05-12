@@ -103,6 +103,10 @@ button.page{
     font-size: 2ex;
 }
 
+button#selectedPage{
+    background-color: #36383A;
+}
+
 @media screen and (max-width: 1600px) {
     button.page {
         width: 30px;
