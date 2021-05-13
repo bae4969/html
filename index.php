@@ -27,7 +27,7 @@
     <div id=main>
         <header> <?php echoHeader($user['user_index']); ?> </header>
         <nav>
-            <img id=blog onclick=blogClick() src="/res/index/blog_title.png" alt="Index Page"/>
+            <img id=blog onclick=blogClick() src="/res/index/index_blog_nav.png" alt="Index Page"/>
         </nav>
         <section>
             <aside>

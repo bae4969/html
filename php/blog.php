@@ -320,7 +320,7 @@ function echoHeader($user_index = 0, $level = 4){
     '<div id=topWrite onclick=writeClick('.$user_index.')></div>';
     echo
     '<div id=title>
-        <img id=mainTitle onclick=blogClick() src="/res/index/blog_title.png" alt="Index Page" />
+        <img id=mainTitle onclick=blogClick() src="/res/blog/blog_title.png" alt="Index Page" />
     </div>';
 }
 
