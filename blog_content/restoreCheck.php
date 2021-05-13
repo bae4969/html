@@ -42,13 +42,12 @@
 <!--********************************php_script**********************************-->
 
     <?php
-        include "../php/basic.php";
-        include "../php/control.php";
+        include "../php/blog.php";
         $user = checkUser($_POST['id'], $_POST['pw']);
         $content_info = getContentInfo($_POST['content_index']);
     ?>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/blog.js"></script>
     <script>
         window.onload = function() {
             if(<?php echo $content_info['state']; ?> >= 0){

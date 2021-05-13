@@ -7,21 +7,20 @@
     <link rel='shortcut icon' href=/res/favicon.ico type=image/x-icon>
     <link rel='icon' href=/res/favicon.ico type=image/x-icon>
     <link rel="stylesheet" href="/css/after.css">
-    <link rel="stylesheet" href="/css/main_outer.css">
-    <link rel="stylesheet" href="/css/main_header.css">
-    <link rel="stylesheet" href="/css/main_aside.css">
-    <link rel="stylesheet" href="/css/main_writeContent.css">
-    <link rel="stylesheet" href="/css/main_footer.css">
+    <link rel="stylesheet" href="/css/blog/main_outer.css">
+    <link rel="stylesheet" href="/css/blog/main_header.css">
+    <link rel="stylesheet" href="/css/blog/main_aside.css">
+    <link rel="stylesheet" href="/css/blog/main_writeContent.css">
+    <link rel="stylesheet" href="/css/blog/main_footer.css">
 
     <?php
-        include '../php/basic.php';
-        include '../php/load.php';
+        include '../php/blog.php';
         $user = checkUser($_POST['id'], $_POST['pw']);
         $content = getEditContent($user['user_index'], $_POST['content_index']);
     ?>
 
     <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
-    <script src="/js/main.js"> </script>
+    <script src="/js/blog.js"> </script>
     <script>
         var submitLeave = false;
 
@@ -30,11 +29,11 @@
 
             if(<?php echo $content == null ? -1 : 0; ?> < 0){
                 alert('잘못된 접근');
-                homeClick();
+                blogClick();
             }
             else if(<?php if(!checkUserCanWrite($user)) echo 'true'; else echo 'false'; ?>){
                 alert('하루 글쓰기 수가 초과 되었습니다');
-                homeClick();
+                blogClick();
             }
             else{
                 if(sessionStorage.getItem('title') !== null)
@@ -137,7 +136,10 @@
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
         </section>
-        <footer> <?php echoFooter(); ?> </footer>
+        <footer>
+            <p>Contact : bae4969@naver.com</br>
+            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+        </footer>
     </div>
     <script type="text/javascript">
         var oEditors = [];

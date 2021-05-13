@@ -53,11 +53,17 @@
 
     div#inputLayout {
         width: 100%;
-        height: 35%;
+        height: 37%;
         position: absolute; left: 50%; top: 50%; 
         transform: translate(-50%, -50%); text-align: center;
         font-size: 2ex;
         color: #C8C3BC;
+    }
+
+    div.title{
+        width: 100%;
+        height: 100px;
+        margin-bottom: 30px;
     }
 
     div.input{
@@ -100,7 +106,7 @@
 <!--********************************script**********************************-->
     
     <script src="/encode/sha256.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/blog.js"></script>
     <script>
         function loginChecker(){
             setCookie("id", sha256(document.getElementById("text_id").value), 1);
@@ -114,11 +120,11 @@
 <body>
     <div id='main'>
         <div id="topLeft">
-            <div id=topLeft onclick=homeClick()>Home</div>
+            <div id=topLeft onclick=indexClick()>Home</div>
         </div>
         <div id='inputLayout'>
-            <div class='input'>
-                <img id=mainTitle onclick=homeClick() src="res/index/title.png" alt="Index Page" height="50px" />
+            <div class='title'>
+                <img id=mainTitle onclick=indexClick() src="res/index/index_title.png" alt="Index Page" height="100%" />
             </div>
 
             <div class='input'>

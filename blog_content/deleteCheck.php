@@ -42,18 +42,17 @@
 <!--********************************php_script**********************************-->
 
     <?php
-        include "../php/basic.php";
-        include "../php/control.php";
+        include "../php/blog.php";
         $user = checkUser($_POST['id'], $_POST['pw']);
         $content_info = getContentInfo($_POST['content_index']);
     ?>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/blog.js"></script>
     <script>
         window.onload = function() {
             if(<?php echo $content_info['state']; ?> < 0){
                 alert('이미 삭제된 글입니다.')
-                homeClick();
+                blogClick();
             }
             <?php
                 $ret = disableContent(
@@ -66,7 +65,7 @@
                 if(<?php echo $user['level']; ?> < 2)
                     contentClick(<?php echo $content_info['content_index']; ?>);
                 else
-                    homeClick();
+                    blogClick();
             }
             else{
                 if(<?php echo $ret; ?> == -1)

@@ -42,17 +42,17 @@
 <!--********************************php_script**********************************-->
 
     <?php
-        include "php/basic.php";
+        include "php/login.php";
         $user = checkUser($_POST["id"], $_POST["pw"]);
     ?>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/blog.js"></script>
     <script>
         window.onload = function() {
             if(<?php echo $user["user_index"]; ?> > 0){
                 setCookie("id", <?php echo '"'.$_POST["id"].'"'; ?>, 2);
                 setCookie("pw", <?php echo '"'.$_POST["pw"].'"'; ?>, 2);
-                homeClick();
+                indexClick();
             }
             else{
                 if(<?php echo $user["user_index"]; ?> < 0)

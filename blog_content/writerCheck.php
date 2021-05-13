@@ -42,13 +42,12 @@
 <!--********************************php_script**********************************-->
 
     <?php
-        include "../php/basic.php";
-        include "../php/control.php";
+        include "../php/blog.php";
         $user = checkUser($_POST['id'], $_POST['pw']);
         $class = getClassLevel($_POST['class_index']);
     ?>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/blog.js"></script>
     <script>
         window.onload = function() {
             <?php

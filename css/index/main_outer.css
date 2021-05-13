@@ -1,0 +1,32 @@
+img#mainTitle {
+    cursor: pointer;
+}
+
+div#topLeft:hover, div#topRight:hover, div#topWrite:hover, div.category:hover {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body {
+    min-width: 800px;
+    margin: 0;
+    padding: 0;
+    background: #181A1B;
+    color: #C3C3C3;
+    list-style: none;
+    font-family: "arial";
+}
+
+div#main {
+    width: 70%;
+    margin: 0px auto;
+    padding: 20px;
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 1600px) {
+    div#main {
+        width: calc(100% - 40px);
+    }
+}

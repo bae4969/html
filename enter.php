@@ -42,13 +42,13 @@
 <!--********************************php_script**********************************-->
 
     <?php
-        include "php/basic.php";
+        
     ?>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/index.js"></script>
     <script>
         window.onload = function() {
-            homeClick();
+            blogClick();
         }
     </script>
 </head>

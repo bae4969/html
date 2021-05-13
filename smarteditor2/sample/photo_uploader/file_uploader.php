@@ -1,6 +1,5 @@
 <?php
-include '../../../php/basic.php';
-include '../../../php/control.php';
+include '../../../php/blog.php';
 include '../../../php/const.php';
 
 $user = checkUser($_REQUEST['id'], $_REQUEST['pw']);

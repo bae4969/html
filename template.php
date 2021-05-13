@@ -15,6 +15,10 @@
 
 <body>
 
+        <footer>
+            <p>Contact : bae4969@naver.com</br>
+            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+        </footer>
 </body>
 
 </html>
