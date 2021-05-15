@@ -83,10 +83,11 @@
             var imgClass = inputFrame.contentWindow.document.getElementsByClassName('photo');
 
             if(imgClass.length > 0){
+                var path = imgClass[0].src.split('/res/');
                 var hiddenField = document.createElement('input');
                 hiddenField.setAttribute('type', 'hidden');
                 hiddenField.setAttribute('name', 'thumbnail');
-                hiddenField.setAttribute('value', imgClass[0].src);
+                hiddenField.setAttribute('value', '/res/' + path[1]);
                 form.appendChild(hiddenField);
             }
 
