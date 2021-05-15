@@ -424,7 +424,7 @@ function echoDetailContent($user_index, $level, $content_index){
         else
             echo '<button class=content_control onclick=deleteClick()>삭제</button>';
     }
-    if($user_index == $content['user_index'])
+    if($user_index == $content['user_index'] && $content['state'] >= 0)
         echo '<button class=content_control onclick=editClick()>수정</button>';
     
     echo
