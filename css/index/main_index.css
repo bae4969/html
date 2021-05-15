@@ -1,0 +1,39 @@
+section {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
+    background: #1A1C1D;
+}
+
+div#contents {
+    width: 100%;
+    margin-top: 10px;
+}
+
+div#left {
+    width: 50%;
+    float:left;
+}
+
+div#right {
+    width: 50%;
+    float: right;
+}
+
+div.content{
+    background: #222426;
+}
+
+/* div.content:hover{
+    background-color: #36383A;
+    cursor: pointer;
+} */
+
+div.content {
+    width: calc(100% - 60px);
+    margin: 0px 10px 20px 10px;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 20px;
+    color: white;
+}

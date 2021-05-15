@@ -40,15 +40,10 @@
     </style>
 
 <!--********************************php_script**********************************-->
-
-    <?php
-        
-    ?>
-
     <script src="/js/index.js"></script>
     <script>
         window.onload = function() {
-            blogClick();
+            indexClick();
         }
     </script>
 </head>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/index/main_outer.css">
     <link rel="stylesheet" href="/css/index/main_header.css">
     <link rel="stylesheet" href="/css/index/main_footer.css">
+    <link rel="stylesheet" href="/css/index/main_index.css">
 
     <?php
         include 'php/index.php';
@@ -20,6 +21,42 @@
     <script>
         window.onload = function() {
             <?php echoMainOnload($user['user_index']) ?>
+
+            setContentList();
+        }
+        window.onresize = function(){
+            setContentList()
+        }
+
+        var showState = 0;
+        var contentSize = 2;
+        function setContentList(){
+            if(showState != 2 && document.body.offsetWidth < 1600){
+                showState = 2;
+                document.getElementById('temp').style.height = 0;
+                for(i = 0; i < contentSize; i++)
+                    document.getElementById('temp').appendChild(document.getElementById("content"+i));
+
+                document.getElementById('left').style.width = '100%';
+                document.getElementById('right').style.width = '0%';
+                for(i = 0; i < contentSize; i++)
+                    document.getElementById('left').appendChild(document.getElementById("content"+i));
+            }
+            else if(showState != 1 && document.body.offsetWidth >= 1600){
+                showState = 1;
+                document.getElementById('temp').style.height = 0;
+                for(i = 0; i < contentSize; i++)
+                    document.getElementById('temp').appendChild(document.getElementById("content"+i));
+
+                document.getElementById('left').style.width = '50%';
+                document.getElementById('right').style.width = '50%';
+                for(i = 0; i < contentSize; i++){
+                    if(document.getElementById('left').offsetHeight > document.getElementById('right').offsetHeight)
+                        document.getElementById('right').appendChild(document.getElementById("content"+i));
+                    else
+                        document.getElementById('left').appendChild(document.getElementById("content"+i));
+                }
+            }
         }
     </script>
 </head>
@@ -27,17 +64,25 @@
     <div id=main>
         <header> <?php echoHeader($user['user_index']); ?> </header>
         <nav>
-            <img id=blog onclick=blogClick() src="/res/index/index_blog_nav.png" alt="Index Page"/>
+            <div id=nav>
+                <div class=nav_icon onclick=blogClick() >
+                    <img class=nav_icon src="/res/index/index_blog_nav.png" alt="blog"/>
+                </div>
+            </div>
         </nav>
         <section>
-            <aside>
-            </aside>
             <div id=contents>
                 <div>
                     <div id=left></div>
                     <div id=right></div>
                 </div>
                 <div id=temp>
+                    <div id=content0 class=content>
+                        test0
+                    </div>
+                    <div id=content1 class=content>
+                        test1
+                    </div>
                 </div>
             </div>
         </section>
