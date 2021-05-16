@@ -132,7 +132,7 @@ function insertContent($user_index, $level, $class_index, $read_level, $write_le
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
     $sql_query
         = "insert into contents(user_index, class_index, read_level, write_level, title, thumbnail, summary, content) value(".
-        $user_index.",".$class_index.",".$read_level.",".$write_level.",'".$title."','".$thumbnail."','".$summary."','".$content."')";
+        $user_index.",".$class_index.",".$read_level.",".$write_level.",'".addslashes($title)."','".addslashes($thumbnail)."','".addslashes($summary)."','".addslashes($content)."')";
     if(mysqli_query($conn, $sql_query)){
         $sql_query = 'SELECT LAST_INSERT_ID()';
         $result = mysqli_query($conn, $sql_query);
@@ -144,7 +144,7 @@ function insertContent($user_index, $level, $class_index, $read_level, $write_le
         }
     }
 
-    return 0;
+    return mysqli_error($conn);
 }
 
 function editContent($user_index, $content_index, $title, $thumbnail, $summary, $content){
@@ -154,7 +154,7 @@ function editContent($user_index, $content_index, $title, $thumbnail, $summary, 
     if(($ret = checkContentInput($title, $thumbnail, $summary, $content)) < 0) return $ret;
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
-    $sql_query = "update contents set title='".$title."', thumbnail='".$thumbnail."', summary='".$summary."', content='".$content.
+    $sql_query = "update contents set title='".addslashes($title)."', thumbnail='".addslashes($thumbnail)."', summary='".addslashes($summary)."', content='".addslashes($content).
         "' where content_index=".$content_index." and user_index=".$user_index;
     if(mysqli_query($conn, $sql_query)){
         updateWriteLimit($user_index);

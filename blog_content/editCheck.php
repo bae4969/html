@@ -86,7 +86,7 @@
                 else
                     alert("저장 실패");
 
-                var form = getDefaultPostForm('/content/edit');
+                var form = getDefaultPostForm('/blog_content/edit');
                 var hiddenField = document.createElement('input');
                 hiddenField.setAttribute('type', 'hidden');
                 hiddenField.setAttribute('name', 'content_index');

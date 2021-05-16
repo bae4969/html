@@ -91,9 +91,9 @@
                 else
                     alert("저장 실패");
 
-                var form = getDefaultPostForm('/content/writer');
-                document.body.appendChild(form);
-                form.submit();
+                // var form = getDefaultPostForm('/blog_content/writer');
+                // document.body.appendChild(form);
+                // form.submit();
             }
         }
 
