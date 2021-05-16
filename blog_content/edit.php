@@ -39,12 +39,12 @@
                 if(sessionStorage.getItem('title') !== null)
                     document.getElementById("input_title").value = sessionStorage.getItem('title');
                 else
-                    document.getElementById("input_title").value = <?php echo "'".$content['title']."';\n"; ?>
+                    document.getElementById("input_title").value = <?php echo "'".addslashes($content['title'])."';\n"; ?>
 
                 if(sessionStorage.getItem('content') !== null)
                     document.getElementById("input_content").value = sessionStorage.getItem('content');
                 else
-                    document.getElementById("input_content").value = <?php echo "'".$content['content']."';\n"; ?>
+                    document.getElementById("input_content").value = <?php echo "'".addslashes($content['content'])."';\n"; ?>
             }
         }
         window.onbeforeunload = function(){
