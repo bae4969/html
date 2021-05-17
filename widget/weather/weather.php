@@ -26,7 +26,7 @@
             var y = localStorage.getItem('weather_y') == null ? 126 : localStorage.getItem('weather_y');
 
             var today = new Date();
-            if(today.getHours() < 2 || (today.getHours() == 2 && today.getMinutes() < 30))
+            if(today.getHours() < 2 || (today.getHours() == 2 && today.getMinutes() < 11))
                 today.setDate(today.getDate() - 1);
             document.getElementById('info0').innerHTML = ' ' + today.getMonth() + '월 ' + today.getDate() + '일 날씨';
 
