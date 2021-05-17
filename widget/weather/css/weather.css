@@ -1,0 +1,141 @@
+body{
+    min-width: 400px;
+    min-height: 400px;
+    background: #36383A;
+    color: #C8C3BC;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+select#geo_name{
+    width: 160px;
+    height: 30px;
+    margin: 5px;
+    font-size: 1.7ex;
+    top: 22px;
+    left: 50%;
+    margin-left: 30px;
+    position: absolute;
+    background: #36383A;
+    color: white;
+    cursor: pointer;
+}
+
+div#info0{
+    width: 400px;
+    height: 60px;
+    font-size: 4ex;
+    position: absolute;
+    top :20px;
+    left: 50%;
+    margin-left: -190px;
+}
+
+img#now_img, img#tomm0_img, img#tomm1_img{
+    width: 100%;
+    height: 100%;
+}
+
+div#now{
+    width: 400px;
+    height: 120px;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    margin-left: -200px;
+}
+
+div#now_img_contain{
+    width: 180px;
+    height: 120px;
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    margin-top: -60px;
+    margin-left: -100px;
+}
+
+div#now_detail{
+    width: 180px;
+    height: 120px;
+    font-size: 2.8ex;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    margin-top: -60px;
+    margin-left: -90px;
+}
+
+hr#centor_line{
+    width: 400px;
+    position: absolute;
+    top: 220px;
+    left: 50%;
+    margin-left: -200px;
+}
+
+div#info1{
+    width: 400px;
+    height: 120px;
+    font-size: 2.5ex;
+    position: absolute;
+    top: 240px;
+    left: 50%;
+    margin-left: -180px;
+}
+
+div#tomm{
+    width: 400px;
+    height: 80px;
+    position: absolute;
+    top: 280px;
+    left: 50%;
+    margin-left: -200px;
+}
+
+div#tomm0{
+    width: 200px;
+    height: 80px;
+    position: absolute;
+    left: 25%;
+    margin-left: -100px;
+}
+
+div#tomm1{
+    width: 200px;
+    height: 80px;
+    position: absolute;
+    left: 75%;
+    margin-left: -100px;
+}
+
+div#tomm0_img_contain, div#tomm1_img_contain{
+    width: 80px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    margin-top: -30px;
+    margin-left: -40px;
+}
+
+div#tomm0_detail, div#tomm1_detail{
+    width: 80px;
+    height: 80px;
+    font-size: 1.4ex;
+    position: absolute;
+    vertical-align: middle;
+    top: 50%;
+    left: 75%;
+    margin-top: -35px;
+    margin-left: -40px;
+}
+
+div#info2{
+    width: 130px;
+    height: 60px;
+    position: absolute;
+    top: 370px;
+    left: 50%;
+    margin-left: 70px;
+}
