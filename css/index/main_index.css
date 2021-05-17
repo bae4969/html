@@ -20,10 +20,6 @@ div#right {
     float: right;
 }
 
-div.content{
-    background: #222426;
-}
-
 /* div.content:hover{
     background-color: #36383A;
     cursor: pointer;
@@ -35,5 +31,7 @@ div.content {
     padding: 20px;
     display: inline-block;
     border-radius: 20px;
+    text-align: center;
     color: white;
+    background: #222426;
 }

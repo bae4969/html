@@ -1,0 +1,142 @@
+<?php
+
+include '../php/key.php';
+include '../php/sqlcon.php';
+
+$conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
+$sql_query = 'select * from xyList';
+$result = mysqli_query($conn, $sql_query);
+mysqli_close($conn);
+
+$xyList = array();
+while($row = mysqli_fetch_array($result))
+    $xyList[] = $row;
+
+$yyyy = date("Y");
+$MM = date("m");
+$dd = date("d");
+$hh = '02';
+$mm = '00';
+
+$count = 0;
+for($i = 0; $i < count($xyList); $i++){
+    $x = $xyList[$i]['x'];
+    $y = $xyList[$i]['y'];
+
+    $ch = curl_init();
+    $url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst';
+    $queryParams = '?' . urlencode('ServiceKey') . '='.$gKey;
+    $queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1');
+    $queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('500');
+    $queryParams .= '&' . urlencode('dataType') . '=' . urlencode('JSON');
+    $queryParams .= '&' . urlencode('base_date') . '=' . urlencode($yyyy.$MM.$dd);
+    $queryParams .= '&' . urlencode('base_time') . '=' . urlencode($hh.$mm);
+    $queryParams .= '&' . urlencode('nx') . '=' . urlencode($x);
+    $queryParams .= '&' . urlencode('ny') . '=' . urlencode($y);
+
+    curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $result = json_decode($response, true);
+    if($result['response']['header']['resultCode'] != 0
+        || !is_array($result['response']['body']['items']['item']))
+    {
+        usleep(100000);
+        if($count < 5){
+            $count++;
+            $i--;
+        }
+        continue;
+    }
+    $count = 0;
+
+    $num_data = count($result['response']['body']['items']['item']);
+    $insert_index = 0;
+    $insert_array = array();
+    for($j = 0; $j < 2; $j++)
+        $insert_array[] = array(
+            'x'=>$x, 'y'=>$y, 'num'=>$j,
+            'TMN'=>0, 'TMX'=>0,
+            'REH0'=>0, 'REH1'=>0,
+            'WSD0'=>0.0, 'WSD1'=>0.0,
+            'SKY0'=>0, 'SKY1'=>0,
+            'POP0'=>0, 'POP1'=>0,
+            'PTY0'=>0, 'PTY1'=>0,
+            'R0'=>0.0, 'R1'=>0.0,
+            'S0'=>0.0, 'S1'=>0.0
+        );
+
+    for($j = 0; $j < $num_data; $j++){
+        $date_before = $result['response']['body']['items']['item'][$j]['fcstDate'];
+        $time_before = $result['response']['body']['items']['item'][$j]['fcstTime'];
+        if($time_before == '0600') break;
+    }
+
+    for($j = 0; $j < $num_data; $j++){
+        $date_this = $result['response']['body']['items']['item'][$j]['fcstDate'];
+        $time_this = $result['response']['body']['items']['item'][$j]['fcstTime'];
+        if($time_this == '0600' || $time_this == '1500'){
+            if($date_before != $date_this){
+                $insert_index++;
+                $date_before = $date_this;
+            }
+
+            if($time_this == '0600')
+                switch($result['response']['body']['items']['item'][$j]['category']){
+                    case 'TMN': $insert_array[$insert_index]['TMN'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'REH': $insert_array[$insert_index]['REH0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'WSD': $insert_array[$insert_index]['WSD0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'SKY': $insert_array[$insert_index]['SKY0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'POP': $insert_array[$insert_index]['POP0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'PTY': $insert_array[$insert_index]['PTY0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'R06': $insert_array[$insert_index]['R0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'S06': $insert_array[$insert_index]['S0'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                }
+            else if($time_this == '1500'){
+                switch($result['response']['body']['items']['item'][$j]['category']){
+                    case 'TMX': $insert_array[$insert_index]['TMX'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'REH': $insert_array[$insert_index]['REH1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'WSD': $insert_array[$insert_index]['WSD1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'SKY': $insert_array[$insert_index]['SKY1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'POP': $insert_array[$insert_index]['POP1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'PTY': $insert_array[$insert_index]['PTY1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'R06': $insert_array[$insert_index]['R1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                    case 'S06': $insert_array[$insert_index]['S1'] = $result['response']['body']['items']['item'][$j]['fcstValue']; break;
+                }
+            }
+        }
+
+    }
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
+    for($j = 0; $j < 2; $j++){
+        $sql_query =
+            'update after set'.
+            ' TMN='.$insert_array[$j]['TMN'].
+            ', TMX='.$insert_array[$j]['TMX'].
+            ', REH0='.$insert_array[$j]['REH0'].
+            ', REH1='.$insert_array[$j]['REH1'].
+            ', WSD0='.$insert_array[$j]['WSD0'].
+            ', WSD1='.$insert_array[$j]['WSD1'].
+            ', SKY0='.$insert_array[$j]['SKY0'].
+            ', SKY1='.$insert_array[$j]['SKY1'].
+            ', POP0='.$insert_array[$j]['POP0'].
+            ', POP1='.$insert_array[$j]['POP1'].
+            ', PTY0='.$insert_array[$j]['PTY0'].
+            ', PTY1='.$insert_array[$j]['PTY1'].
+            ', R0='.$insert_array[$j]['R0'].
+            ', R1='.$insert_array[$j]['R1'].
+            ', S0='.$insert_array[$j]['S0'].
+            ', S1='.$insert_array[$j]['S1'].
+            ' where x='.$insert_array[$j]['x'].' and y='.$insert_array[$j]['y'].' and num='.$insert_array[$j]['num'];
+        mysqli_query($conn, $sql_query);
+        print_r(mysqli_error($conn));
+        print_r('<br/>');
+    }
+}
+
+?>

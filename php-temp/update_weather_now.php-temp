@@ -17,6 +17,7 @@ $MM = date("m");
 $dd = date("d");
 $hh = date("H");
 $mm = '00';
+$count = 0;
 
 for($i = 0; $i < count($xyList); $i++){
     $x = $xyList[$i]['x'];
@@ -41,8 +42,17 @@ for($i = 0; $i < count($xyList); $i++){
     curl_close($ch);
 
     $result = json_decode($response, true);
-    if($result['response']['header']['resultCode'] != 0) {usleep(100000); $i--; continue;}
-    if(!is_array($result['response']['body']['items']['item'])) {usleep(100000); $i--; continue;}
+    if($result['response']['header']['resultCode'] != 0
+        || !is_array($result['response']['body']['items']['item']))
+    {
+        usleep(100000);
+        if($count < 5){
+            $count++;
+            $i--;
+        }
+        continue;
+    }
+    $count = 0;
 
     $check = array('T1H'=>false, 'REH'=>false, 'WSD'=>false, 'PTY'=>false, 'RN1'=>false);
     $insert_array = array('x'=>$x, 'y'=>$y, 'T1H'=>0, 'REH'=>0, 'WSD'=>0.0, 'PTY'=>0, 'RN1'=>0.0);

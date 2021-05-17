@@ -26,14 +26,11 @@ function checkUser($id, $pw){
 function echoMainOnload($user_index = 0){
     if($user_index > 0){
         echo'
-        document.getElementById("topRight").innerHTML = "로그아웃";
-        document.getElementById("topWrite").innerHTML = "글쓰기";';
+        document.getElementById("topRight").innerHTML = "로그아웃";';
     }
     else{
         echo'
-        document.getElementById("topRight").innerHTML = "로그인";
-        if(document.getElementById("topWrite") !== null)
-            document.getElementById("topWrite").innerHTML = "";';
+        document.getElementById("topRight").innerHTML = "로그인";';
     }
 }
 

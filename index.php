@@ -78,7 +78,7 @@
                 </div>
                 <div id=temp>
                     <div id=content0 class=content>
-                        test0
+                        <iframe src='weather/weather.php' frameborder=0 scrolling=no style='width: 100%; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                     <div id=content1 class=content>
                         test1

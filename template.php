@@ -5,13 +5,11 @@
 <head>
     <meta charset='utf-8'>
     <title>template</title>
-    <style>
-    
-    </style>
-</head>
-<script>
+    <link rel="stylesheet" href="temp.css">
+    <script>
 
-</script>
+    </script>
+</head>
 
 <body>
 
