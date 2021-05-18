@@ -14,7 +14,6 @@
         var geo = <?php echo json_encode(getGeoData()) ?>;
         var now = <?php echo json_encode(getWeatherNowData()) ?>;
         var after = <?php echo json_encode(getWeatherAfterData()) ?>;
-        var dust = <?php echo json_encode(getDustData()) ?>;
 
         var geo_name = '서울특별시';
         var geo_sub = '용산구';

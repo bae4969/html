@@ -1,6 +1,6 @@
 <?php
-include '../../../php/blog.php';
-include '../../../php/const.php';
+include '/var/www/html/php/blog.php';
+include '/var/www/phpExe/const.php';
 
 $user = checkUser($_REQUEST['id'], $_REQUEST['pw']);
 if(!checkUserCanUploadImg($user)){

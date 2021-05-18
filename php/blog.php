@@ -1,13 +1,13 @@
 <?php
 
 function checkUser($id, $pw){
-    include "sqlcon.php";
-    include "const.php";
+    include '/var/www/phpExe/sqlcon.php';
+    include "/var/www/phpExe/const.php";
 
     if($id == '' || $pw == '')
         return array("user_index"=>0, "level"=>4, "write_limit"=>$write_limit, "img_upload_limit"=>$img_total_limit);
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select user_index, level, state, write_limit, img_upload_limit from user_list where id="'.$id.'" and pw="'.$pw.'"';
     $result = mysqli_query($conn, $sql_query);
 
@@ -22,7 +22,7 @@ function checkUser($id, $pw){
 }
 
 function checkUserCanWrite($user){
-    include "const.php";
+    include "/var/www/phpExe/const.php";
 
     if($user['user_index'] < 1) return false;
     else if($user['user_index'] == 1) return true;
@@ -32,7 +32,7 @@ function checkUserCanWrite($user){
 }
 
 function checkUserCanUploadImg($user){
-    include "const.php";
+    include "/var/www/phpExe/const.php";
 
     if($user['user_index'] < 1) return false;
     else if($user['user_index'] == 1) return true;
@@ -42,12 +42,12 @@ function checkUserCanUploadImg($user){
 }
 
 function getClassLevel($class_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
     if($class_index == '')
         return array("class_index"=>0, "read_level"=>4, "write_level"=>4);
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select class_index, read_level, write_level from class_list where class_index='.$class_index;
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -59,9 +59,9 @@ function getClassLevel($class_index){
 }
 
 function getContentInfo($content_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select content_index, user_index, class_index, read_level, write_level, state, date'.
         ' from contents where content_index='.$content_index;
     $result = mysqli_query($conn, $sql_query);
@@ -91,11 +91,11 @@ function checkContentInput($title, $thumbnail, $summary, $content){
 }
 
 function updateWriteLimit($user_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
     
     if($user_index < 1) return -1;
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = "update user_list set write_limit=write_limit+1 where user_index=".$user_index;
 
     if(mysqli_query($conn, $sql_query)){
@@ -106,11 +106,11 @@ function updateWriteLimit($user_index){
 }
 
 function updateLoadFileLimit($user_index, $volume){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
     
     if($user_index < 1) return -1;
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = "update user_list set img_upload_limit=img_upload_limit+".$volume.
         " where user_index=".$user_index;
 
@@ -122,14 +122,14 @@ function updateLoadFileLimit($user_index, $volume){
 }
 
 function insertContent($user_index, $level, $class_index, $read_level, $write_level, $title, $thumbnail, $summary, $content){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
     if($user_index < 1) return -1;
     if($class_index < 1) return -1;
     if($level > $write_level) return -1;
     if(($ret = checkContentInput($title, $thumbnail, $summary, $content)) < 0) return $ret;
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query
         = "insert into contents(user_index, class_index, read_level, write_level, title, thumbnail, summary, content) value(".
         $user_index.",".$class_index.",".$read_level.",".$write_level.",'".addslashes($title)."','".addslashes($thumbnail)."','".addslashes($summary)."','".addslashes($content)."')";
@@ -148,12 +148,12 @@ function insertContent($user_index, $level, $class_index, $read_level, $write_le
 }
 
 function editContent($user_index, $content_index, $title, $thumbnail, $summary, $content){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
     if($user_index < 1) return -1;
     if(($ret = checkContentInput($title, $thumbnail, $summary, $content)) < 0) return $ret;
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = "update contents set title='".addslashes($title)."', thumbnail='".addslashes($thumbnail)."', summary='".addslashes($summary)."', content='".addslashes($content).
         "' where content_index=".$content_index." and user_index=".$user_index;
     if(mysqli_query($conn, $sql_query)){
@@ -165,11 +165,11 @@ function editContent($user_index, $content_index, $title, $thumbnail, $summary, 
 }
 
 function disableContent($user_index, $level, $content_user_index, $content_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
     if($level > 1 && $user_index != $content_user_index) return -1;
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'update contents set state = -1 where content_index='.$content_index;
     if(mysqli_query($conn, $sql_query))
         return 1;
@@ -178,11 +178,11 @@ function disableContent($user_index, $level, $content_user_index, $content_index
 }
 
 function restoreContent($level, $content_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
     if($level > 1) return -1;
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'update contents set state = 0 where content_index='.$content_index;
     if(mysqli_query($conn, $sql_query))
         return 1;
@@ -193,9 +193,9 @@ function restoreContent($level, $content_index){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getReadClassList($level = 4){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select class_index, name from class_list where read_level>='.$level.' order by order_num asc';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -211,9 +211,9 @@ function getReadClassList($level = 4){
 }
 
 function getWriteClassList($level){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select class_index, name from class_list where write_level>='.$level.' order by class_index asc';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -236,9 +236,9 @@ function getQuerySelectContentList($level, $class_index = 0){
 }
 
 function getContentListCount($level, $class_index = 0){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select count(*)'.getQuerySelectContentList($level, $class_index);
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -250,9 +250,9 @@ function getContentListCount($level, $class_index = 0){
 }
 
 function getContentList($level, $pageNum = 0, $class_index = 0){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select user_index, content_index, state, date, title, thumbnail, summary '.getQuerySelectContentList($level, $class_index);
     $sql_query .= ' order by content_index desc limit '.($pageNum * 10).', 10';
     $result = mysqli_query($conn, $sql_query);
@@ -266,9 +266,9 @@ function getContentList($level, $pageNum = 0, $class_index = 0){
 }
 
 function getDetailContent($level, $content_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select user_index, state, date, title, content from contents where content_index='.$content_index;
     if($level > 1) $sql_query .= ' and read_level>='.$level.' and state>=0';
     $result = mysqli_query($conn, $sql_query);
@@ -281,9 +281,9 @@ function getDetailContent($level, $content_index){
 }
 
 function getEditContent($user_index, $content_index){
-    include "sqlcon.php";
+    include "/var/www/phpExe/sqlcon.php";
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlDb );
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $sql_query = 'select title, content from contents where content_index='.
         $content_index.' and user_index='.$user_index.' and state>=0';
     $result = mysqli_query($conn, $sql_query);

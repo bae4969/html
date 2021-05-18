@@ -4,8 +4,6 @@
 <head>
     <meta charset='utf-8'>
     <title>Entrance Checking</title>
-    <link rel='shortcut icon' href=/res/favicon.ico type=image/x-icon>
-    <link rel='icon' href=/res/favicon.ico type=image/x-icon>
     <style>
 /************************************outer************************************/
 

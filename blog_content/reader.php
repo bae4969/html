@@ -4,8 +4,6 @@
 <head>
     <meta charset='utf-8'>
     <title>Blog</title>
-    <link rel='shortcut icon' href=/res/favicon.ico type=image/x-icon>
-    <link rel='icon' href=/res/favicon.ico type=image/x-icon>
     <link rel="stylesheet" href="/css/after.css">
     <link rel="stylesheet" href="/css/blog/main_outer.css">
     <link rel="stylesheet" href="/css/blog/main_header.css">

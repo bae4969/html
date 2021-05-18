@@ -3,5 +3,6 @@
     $sqlAddr = ;
     $sqlId = ;
     $sqlPw = ;
-    $sqlDb = ;
+    $sqlBlogDb = ;
+    $sqlWeatherDb = ;
 ?>
