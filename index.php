@@ -79,7 +79,7 @@
                         <iframe src='widget/weather/weather.php' frameborder=0 scrolling=no style='width: 100%; height: 415px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                     <div id=content1 class=content>
-                        <iframe src='widget/dust/dust.php' frameborder=0 scrolling=no style='width: 100%; height: 415px; display: inline-block; border-radius: 10px;'></iframe>
+                        <iframe src='widget/dust/dust.php' frameborder=0 scrolling=no style='width: 100%; height: 680px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                 </div>
             </div>

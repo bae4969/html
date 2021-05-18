@@ -6,7 +6,6 @@
     <meta charset='utf-8'>
     <title>Weather</title>
     <link rel="stylesheet" href="css/weather.css">
-    <link rel="stylesheet" href="css/after.css">
     <?php
         include 'php/load.php';
     ?>
