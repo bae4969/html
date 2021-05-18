@@ -40,16 +40,21 @@ img#mainTitle {
 }
 
 nav {
+    width: calc(100% - 40px);
+    padding: 20px 20px 0px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     align-items: center;
     text-align: center;
+    background: #1A1C1D;
 }
 
 div#nav{
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
     margin: 0px;
-    padding: 10px;
+    padding: 5px 20px 5px 20px;
     border-radius: 10px;
-    background: #1A1C1D;
+    background: #222426;
     display: inline-block;
 }
 
