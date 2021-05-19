@@ -1,7 +1,7 @@
 <?php
 
-include '../php/key.php';
-include '../php/sqlcon.php';
+include '/var/www/phpExe/key.php';
+include '/var/www/phpExe/sqlcon.php';
 
 $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
 $sql_query = 'select * from xyList';
@@ -12,13 +12,19 @@ $xyList = array();
 while($row = mysqli_fetch_array($result))
     $xyList[] = $row;
 
-$yyyy = date("Y");
-$MM = date("m");
-$dd = date("d");
-$hh = date("H");
-$mm = '00';
-$count = 0;
+$dateTime_now = new DateTime(date("Y-m-d H").':00:00');
 
+if(date('i') <= 30) $dateTime_now->modify('-1 hour');
+
+$yyyy = $dateTime_now->format('Y');
+$MM = $dateTime_now->format('m');
+$dd = $dateTime_now->format('d');
+$hh = $dateTime_now->format('H');
+$mm = '00';
+
+$api_error_count = 0;
+$sql_error_count = 0;
+$count = 0;
 for($i = 0; $i < count($xyList); $i++){
     $x = $xyList[$i]['x'];
     $y = $xyList[$i]['y'];
@@ -47,6 +53,7 @@ for($i = 0; $i < count($xyList); $i++){
     {
         usleep(100000);
         if($count < 5){
+            $api_error_count++;
             $count++;
             $i--;
         }
@@ -54,44 +61,40 @@ for($i = 0; $i < count($xyList); $i++){
     }
     $count = 0;
 
-    $check = array('T1H'=>false, 'REH'=>false, 'WSD'=>false, 'PTY'=>false, 'RN1'=>false);
-    $insert_array = array('x'=>$x, 'y'=>$y, 'T1H'=>0, 'REH'=>0, 'WSD'=>0.0, 'PTY'=>0, 'RN1'=>0.0);
+    $insert_array = array('x'=>$x, 'y'=>$y, 'T1H'=>null, 'REH'=>null, 'WSD'=>null, 'PTY'=>null, 'RN1'=>null);
 
     $num_data = count($result['response']['body']['items']['item']);
     for($j = 0; $j < $num_data; $j++){
         switch($result['response']['body']['items']['item'][$j]['category']){
-            case 'T1H': $check['T1H'] = true; $insert_array['T1H'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
-            case 'REH': $check['REH'] = true; $insert_array['REH'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
-            case 'WSD': $check['WSD'] = true; $insert_array['WSD'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
-            case 'PTY': $check['PTY'] = true; $insert_array['PTY'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
-            case 'RN1': $check['RN1'] = true; $insert_array['RN1'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
+            case 'T1H': $insert_array['T1H'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
+            case 'REH': $insert_array['REH'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
+            case 'WSD': $insert_array['WSD'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
+            case 'PTY': $insert_array['PTY'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
+            case 'RN1': $insert_array['RN1'] = $result['response']['body']['items']['item'][$j]['obsrValue']; break;
         }
     }
 
-    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
-    if($check['T1H']){
-        $sql_query = 'update now set T1H='.$insert_array['T1H'].' where x='.$x.' and y='.$y;
-        mysqli_query($conn, $sql_query);
-    }
-    if($check['REH']){
-        $sql_query = 'update now set REH='.$insert_array['REH'].' where x='.$x.' and y='.$y;
-        mysqli_query($conn, $sql_query);
-    }
-    if($check['WSD']){
-        $sql_query = 'update now set WSD='.$insert_array['WSD'].' where x='.$x.' and y='.$y;
-        mysqli_query($conn, $sql_query);
-    }
-    if($check['PTY']){
-        $sql_query = 'update now set PTY='.$insert_array['PTY'].' where x='.$x.' and y='.$y;
-        mysqli_query($conn, $sql_query);
-    }
-    if($check['RN1']){
-        $sql_query = 'update now set RN1='.$insert_array['RN1'].' where x='.$x.' and y='.$y;
-        mysqli_query($conn, $sql_query);
-    }
+    $temp = array();
+    if($insert_array['T1H'] != null) $temp['T1H'] = $insert_array['T1H'];
+    if($insert_array['REH'] != null) $temp['REH'] = $insert_array['REH'];
+    if($insert_array['WSD'] != null) $temp['WSD'] = $insert_array['WSD'];
+    if($insert_array['PTY'] != null) $temp['PTY'] = $insert_array['PTY'];
+    if($insert_array['RN1'] != null) $temp['RN1'] = $insert_array['RN1'];
 
-    mysqli_query($conn, $sql_query);
+    $update_str = implode(', ', array_map(
+        function ($k, $v) {
+            if(is_array($v))return $k.'[]='.implode('&'.$k.'[]=', $v);
+            else            return $k.'='.$v;
+        },
+        array_keys($temp),
+        $temp
+    ));
+
+    $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
+    $sql_query = 'update now set '.$update_str.' where x='.$x.' and y='.$y;
+    if(!mysqli_query($conn, $sql_query)) $sql_error_count++;
     usleep(100000);
 }
+print('Execute : update weather now (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
 
 ?>

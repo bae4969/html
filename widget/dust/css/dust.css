@@ -13,7 +13,7 @@ div#info0{
     position: absolute;
     top :20px;
     left: 50%;
-    margin-left: -190px;
+    margin-left: -180px;
 }
 
 select#selectType{
@@ -132,5 +132,5 @@ div#info1{
     position: absolute;
     top: 630px;
     left: 50%;
-    margin-left: 40px;
+    margin-left: 35px;
 }

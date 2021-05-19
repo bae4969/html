@@ -1,7 +1,7 @@
 <?php
 
-include '../php/key.php';
-include '../php/sqlcon.php';
+include '/var/www/phpExe/key.php';
+include '/var/www/phpExe/sqlcon.php';
 
 $name = array(
     'seoul', 'busan', 'daegu', 'incheon', 'gwangju', 'daejeon', 'ulsan', 'gyeonggi', 'gangwon',
@@ -17,6 +17,9 @@ for($i = 0; $i < count($name); $i++){
     $data[$name[$i]] = $temp;
 }
 
+$api_error_count = 0;
+$sql_error_count = 0;
+$count = 0;
 for($i = 0; $i < count($type); $i++){
     $ch = curl_init();
     $url = 'http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureLIst';
@@ -32,11 +35,25 @@ for($i = 0; $i < count($type); $i++){
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
     $response = curl_exec($ch);
     curl_close($ch);
-    
+
     $result = json_decode($response, true);
+    if($result['response']['header']['resultCode'] != 0
+        || !is_array($result['response']['body']['items'][0]))
+    {
+        usleep(100000);
+        if($count < 5){
+            $api_error_count++;
+            $count++;
+            $i--;
+        }
+        continue;
+    }
+    $count = 0;
 
     for($j = 0; $j < count($name); $j++)
         $data[$name[$j]][$type[$i]] = $result['response']['body']['items'][0][$name[$j]];
+
+    usleep(100000);
 }
 
 $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
@@ -54,7 +71,9 @@ for($i = 0; $i < count($name); $i++){
     $sql_query .= " where name='".$name[$i]."'";
 
     if($setCount > 0)
-        mysqli_query($conn, $sql_query);
+        if(!mysqli_query($conn, $sql_query))
+            $sql_error_count++;
 }
+print('Execute : update dust (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
 
 ?>
