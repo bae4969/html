@@ -24,3 +24,9 @@ li.category {
     font-size: 1.8ex;
     font-weight: bold;
 }
+
+li.category:hover{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

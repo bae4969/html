@@ -11,7 +11,7 @@ function checkUser($id, $pw){
     $sql_query = 'select user_index, level, state, write_limit, img_upload_limit from user_list where id="'.$id.'" and pw="'.$pw.'"';
     $result = mysqli_query($conn, $sql_query);
 
-    if($row = mysqli_fetch_array($result)){
+    if($row = mysqli_fetch_assoc($result)){
         if($row["state"] == 0)
             return $row;
         else
@@ -21,26 +21,19 @@ function checkUser($id, $pw){
     return array("user_index"=>0, "level"=>4, "write_limit"=>$write_limit, "img_upload_limit"=>$img_total_limit);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$user = checkUser($_GET["id"], $_GET["pw"]);
 
-function echoMainOnload($user_index = 0){
-    if($user_index > 0){
-        echo'
-        document.getElementById("topRight").innerHTML = "로그아웃";';
-    }
-    else{
-        echo'
-        document.getElementById("topRight").innerHTML = "로그인";';
-    }
+if($user["user_index"] > 0){
+    $user['etc'] = 'none';
+    echo json_encode(array('state'=>'000', 'data'=>$user));
 }
-
-function echoHeader($user_index = 0){
-    echo
-    '<div id=topLeft onclick=indexClick()>Home</div>
-    <div id=topRight onclick=loginoutClick('.$user_index.')></div>
-    <div id=title>
-        <img id=mainTitle onclick=indexClick() src="/res/index/index_title.png" alt="Index Page" />
-    </div>';
+else if($user["user_index"] < 0){
+    $user['etc'] = '접근 불가 유저입니다.';
+    echo json_encode(array('state'=>'200', 'data'=>$user));
+}
+else{
+    $user['etc'] = 'ID 또는 PW가 일치하지 않습니다.';
+    echo json_encode(array('state'=>'100', 'data'=>$user));
 }
 
 ?>

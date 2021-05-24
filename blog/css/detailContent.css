@@ -64,6 +64,11 @@ button.content_control{
     cursor: pointer;
 }
 
+img{
+    max-width: 100%;
+    height: auto;
+}
+
 button.content_control:hover{
     border: none;
     background: #484A4C;

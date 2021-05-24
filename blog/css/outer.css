@@ -2,7 +2,7 @@ img#mainTitle {
     cursor: pointer;
 }
 
-div#topLeft:hover, div#topRight:hover, div#topWrite:hover, div.category:hover {
+div#topLeft:hover, div#topRight:hover, div#topWrite:hover {
     color: white;
     text-decoration: none;
     cursor: pointer;

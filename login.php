@@ -51,17 +51,23 @@
 
     div#inputLayout {
         width: 100%;
-        height: 37%;
-        position: absolute; left: 50%; top: 50%; 
-        transform: translate(-50%, -50%); text-align: center;
+        height: 35%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
         font-size: 2ex;
         color: #C8C3BC;
     }
 
     div.title{
         width: 100%;
-        height: 100px;
         margin-bottom: 30px;
+    }
+
+    img#mainTitle{
+        width: 330px;
     }
 
     div.input{
@@ -104,39 +110,65 @@
 <!--********************************script**********************************-->
     
     <script src="/encode/sha256.js"></script>
-    <script src="/js/blog.js"></script>
+    <script src="/js/basicFunc.js"></script>
     <script>
-        function loginChecker(){
-            setCookie("id", sha256(document.getElementById("text_id").value), 1);
-            setCookie("pw", sha256(document.getElementById("text_pw").value), 1);
-            var form = getDefaultPostForm('loginCheck');
-            document.body.appendChild(form);
-            form.submit();
+        var user;
+
+        function loginClick() {
+            var id = sha256(document.getElementById("text_id").value);
+            var pw = sha256(document.getElementById("text_pw").value);
+
+            var xhr = new XMLHttpRequest();
+            var url = 'get/userInfo';
+            url += '?id=' + id;
+            url += '&pw=' + pw;
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if(xhr.status == 200){
+                        user = JSON.parse(this.responseText);
+                        if(user['state'] == 0){
+                            setCookie("id", id, 1);
+                            setCookie("pw", pw, 1);
+                            location.href = '/index';
+                        }
+                        else {
+                            alert(user['data']['etc']);
+                        }
+                    }
+                    else{
+                        alert('Server Error (' + xhr.status + ')');
+                    }
+                }
+            };
+            xhr.send();
         }
     </script>
 </head>
 <body>
     <div id='main'>
-        <div id="topLeft">
-            <div id=topLeft onclick=indexClick()>Home</div>
-        </div>
+        <header>
+            <div id=topLeft OnClick='location.href="index"'>
+                Home
+            </div>
+        </header>
         <div id='inputLayout'>
             <div class='title'>
-                <img id=mainTitle onclick=indexClick() src="res/index/index_title.png" alt="Index Page" height="100%" />
+                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Index Page" height="100%" />
             </div>
 
             <div class='input'>
                 <input id='text_id' class='input' type='text' placeholder='ID'
-                    onkeyup="if(window.event.keyCode==13){loginChecker()}" />
+                    onkeyup="if(window.event.keyCode==13){loginClick()}" />
             </div>
 
             <div class='input'>
                 <input id='text_pw' class='input' type='password' placeholder='PW'
-                    onkeyup="if(window.event.keyCode==13){loginChecker()}" />
+                    onkeyup="if(window.event.keyCode==13){loginClick()}" />
             </div>
 
             <div class='input'>
-                <button id='btn_login' onclick='loginChecker()'>Login</button>
+                <button id='btn_login' onclick='loginClick()'>Login</button>
             </div>
         </div>
     </div>

@@ -1,58 +1,89 @@
-<!-- index.php -->
+<!-- index page -->
 <!doctype html>
 <html>
 <head>
     <meta charset='utf-8'>
     <title>Index</title>
-    <link rel="stylesheet" href="/css/after.css">
-    <link rel="stylesheet" href="/css/index/main_outer.css">
-    <link rel="stylesheet" href="/css/index/main_header.css">
-    <link rel="stylesheet" href="/css/index/main_footer.css">
-    <link rel="stylesheet" href="/css/index/main_index.css">
+    <link rel="stylesheet" href="css/after.css">
+    <link rel="stylesheet" href="css/outer.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/index.css">
 
-    <?php
-        include 'php/index.php';
-        $user = checkUser($_POST['id'], $_POST['pw']);
-    ?>
-
-    <script src="/js/index.js"> </script>
+    <script src="/js/basicFunc.js"> </script>
     <script>
-        window.onload = function() {
-            <?php echoMainOnload($user['user_index']) ?>
+        var user;
+        var showState = 0;
 
+        window.onload = function() {
+            checkUserInfo();
             setContentList();
         }
         window.onresize = function(){
             setContentList()
         }
+        function loginoutClick(){
+            if (user['state'] == 0) {
+                deleteCookie('id');
+                deleteCookie('pw');
+                alert("로그아웃");
+                location.href = 'index';
+            }
+            else{
+                location.href = 'login';
+            }
+        }
 
-        var showState = 0;
-        var contentSize = 2;
+        function checkUserInfo() {
+            var xhr = new XMLHttpRequest();
+            var url = 'get/userInfo';
+            url += '?id=' + getCookie('id');
+            url += '&pw=' + getCookie('pw');
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                    user = JSON.parse(this.responseText);
+                    if(user['state'] == 0){
+                        document.getElementById("topRight").innerHTML = "로그아웃";
+                    }
+                    else {
+                        document.getElementById("topRight").innerHTML = "로그인";
+                    }
+                }
+            };
+            xhr.send();
+        }
+
         function setContentList(){
+            var contentSize = document.getElementsByClassName('content').length;
+            var div_temp = document.getElementById('temp');
+            var div_left = document.getElementById('left');
+            var div_right = document.getElementById('right');
+
             if(showState != 2 && document.body.offsetWidth < 1600){
                 showState = 2;
-                document.getElementById('temp').style.height = 0;
+                div_temp.style.height = 0;
                 for(i = 0; i < contentSize; i++)
-                    document.getElementById('temp').appendChild(document.getElementById("content"+i));
+                    div_temp.appendChild(document.getElementById("content"+i));
 
-                document.getElementById('left').style.width = '100%';
-                document.getElementById('right').style.width = '0%';
+                div_left.style.width = '100%';
+                div_right.style.width = '0%';
                 for(i = 0; i < contentSize; i++)
-                    document.getElementById('left').appendChild(document.getElementById("content"+i));
+                    div_left.appendChild(document.getElementById("content"+i));
             }
             else if(showState != 1 && document.body.offsetWidth >= 1600){
                 showState = 1;
-                document.getElementById('temp').style.height = 0;
+                div_temp.style.height = 0;
                 for(i = 0; i < contentSize; i++)
-                    document.getElementById('temp').appendChild(document.getElementById("content"+i));
+                    div_temp.appendChild(document.getElementById("content"+i));
 
-                document.getElementById('left').style.width = '50%';
-                document.getElementById('right').style.width = '50%';
+                div_left.style.width = '50%';
+                div_right.style.width = '50%';
                 for(i = 0; i < contentSize; i++){
-                    if(document.getElementById('left').offsetHeight > document.getElementById('right').offsetHeight)
-                        document.getElementById('right').appendChild(document.getElementById("content"+i));
+                    if(div_left.offsetHeight > div_right.offsetHeight)
+                        div_right.appendChild(document.getElementById("content"+i));
                     else
-                        document.getElementById('left').appendChild(document.getElementById("content"+i));
+                        div_left.appendChild(document.getElementById("content"+i));
                 }
             }
         }
@@ -60,11 +91,17 @@
 </head>
 <body>
     <div id=main>
-        <header> <?php echoHeader($user['user_index']); ?> </header>
+        <header>
+            <div id=topLeft OnClick='location.href="index"'>Home</div>
+            <div id=topRight onclick=loginoutClick()></div>
+            <div id=title>
+                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Index Page" />
+            </div>
+        </header>
         <nav>
             <div id=nav>
-                <div class=nav_icon onclick=blogClick() >
-                    <img class=nav_icon src="/res/index/index_blog_nav.png" alt="blog"/>
+                <div class=nav_icon OnClick='location.href="blog/index"' >
+                    <img class=nav_icon src="/res/nav_blog.png" alt="blog"/>
                 </div>
             </div>
         </nav>
@@ -76,10 +113,10 @@
                 </div>
                 <div id=temp>
                     <div id=content0 class=content>
-                        <iframe src='widget/weather/weather.php' frameborder=0 scrolling=no style='width: 100%; height: 415px; display: inline-block; border-radius: 10px;'></iframe>
+                        <iframe src='widget/weather/index' frameborder=0 scrolling=no style='width: 100%; height: 415px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                     <div id=content1 class=content>
-                        <iframe src='widget/dust/dust.php' frameborder=0 scrolling=no style='width: 100%; height: 680px; display: inline-block; border-radius: 10px;'></iframe>
+                        <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 680px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                 </div>
             </div>
