@@ -165,7 +165,7 @@
                             date.innerHTML = content_list['data']['content'][i]['date'];
 
                             writer.className = 'content_date';
-                            writer.innerHTML = content_list['data']['content'][i]['user_index'];
+                            writer.innerHTML = 'UID : ' + content_list['data']['content'][i]['user_index'];
 
                             thumbnail_container.className = 'content_thumbnail_container';
                             thumbnail.className = 'content_thumbnail';

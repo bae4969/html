@@ -128,7 +128,7 @@
                             date.innerHTML = content_detail['data']['content']['date'];
 
                             writer.id = 'content_date';
-                            writer.innerHTML = content_detail['data']['content']['user_index'];
+                            writer.innerHTML = 'UID : ' + content_detail['data']['content']['user_index'];
 
                             content.id = 'content_content';
                             content.innerHTML = content_detail['data']['content']['content'];
