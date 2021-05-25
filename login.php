@@ -109,7 +109,7 @@
 
 <!--********************************script**********************************-->
     
-    <script src="/encode/sha256.js"></script>
+    <script src="/js/sha256.js"></script>
     <script src="/js/basicFunc.js"></script>
     <script>
         var user;
