@@ -97,6 +97,7 @@
             xhr.send();
         }
         function initContent() {
+            loadCount = 0;
             var xhr = new XMLHttpRequest();
             var url = 'get/content';
             url += '?id=' + getCookie('id');
@@ -220,8 +221,11 @@
             xhr.send();
         }
         function checkLoadContent(length){
-            if(loadCount == length)
+            console.log(loadCount + '\t' + length);
+            if(loadCount >= length){
+                showState = 0;
                 setContentList();
+            }
         }
 
         function setContentList(){
