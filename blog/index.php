@@ -18,6 +18,7 @@
         var class_index = 0;
         var page = 0;
         var pageCount = 0;
+        var loadCount = 0;
 
         window.onload = function() {
             var params = {};
@@ -31,7 +32,7 @@
             initContent();
         }
         window.onresize = function(){
-            setContentList()
+            setContentList();
         }
         function loginoutClick(){
             if (user['state'] == 0) {
@@ -103,7 +104,7 @@
             url += '&class_index=' + class_index;
             url += '&page=' + page;
             xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function (){
                 if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
                     var content_list = JSON.parse(this.response);
                     if(content_list['state'] == 0){
@@ -111,18 +112,14 @@
                         var left_container = document.getElementById('left');
                         var right_container = document.getElementById('right');
                         var page_container = document.getElementById('pages');
-                        while(temp_container.hasChildNodes()){
+                        while(temp_container.hasChildNodes())
                             temp_container.removeChild(temp_container.firstChild);
-                        }
-                        while(left_container.hasChildNodes()){
+                        while(left_container.hasChildNodes())
                             left_container.removeChild(left_container.firstChild);
-                        }
-                        while(right_container.hasChildNodes()){
+                        while(right_container.hasChildNodes())
                             right_container.removeChild(right_container.firstChild);
-                        }
-                        while(page_container.hasChildNodes()){
+                        while(page_container.hasChildNodes())
                             page_container.removeChild(page_container.firstChild);
-                        }
 
                         var count = content_list['data']['count'];
                         pageCount = (count - (count % 10)) / 10;
@@ -154,25 +151,28 @@
                                 container.className = 'content_ban';
                             else
                                 container.className = 'content';
-                            container.onclick = function(){
-                                location.href = 'reader?content_index=' + this.value;
-                            }
-                            
+                            container.onclick = function(){location.href = 'reader?content_index=' + this.value;}
                             title.className = 'content_title';
                             title.innerHTML = content_list['data']['content'][i]['title'];
-
                             date.className = 'content_date';
                             date.innerHTML = content_list['data']['content'][i]['date'];
-
                             writer.className = 'content_date';
                             writer.innerHTML = 'UID : ' + content_list['data']['content'][i]['user_index'];
-
                             thumbnail_container.className = 'content_thumbnail_container';
                             thumbnail.className = 'content_thumbnail';
                             thumbnail.src = content_list['data']['content'][i]['thumbnail'];
-
                             summary.className = 'content_summary';
                             summary.innerHTML = content_list['data']['content'][i]['summary'];
+                            
+                            if(content_list['data']['content'][i]['thumbnail'] == ''){
+                                loadCount+=1;
+                                checkLoadContent(content_list['data']['content'].length);
+                            }
+                            else
+                                thumbnail.onload = function(){
+                                    loadCount+=1;
+                                    checkLoadContent(content_list['data']['content'].length);
+                                }
                         }
 
                         var start = (page - (page % 10)) / 10;
@@ -214,13 +214,14 @@
                                 pageClick(this)
                             }
                         }
-
-                        showState = 0;
-                        setContentList();
                     }
                 }
             };
             xhr.send();
+        }
+        function checkLoadContent(length){
+            if(loadCount == length)
+                setContentList();
         }
 
         function setContentList(){
@@ -306,7 +307,7 @@
                 </div>
                 <div id=pages>
                 </div>
-                <div id=temp>
+                <div id=temp style='height: 0;'>
                 </div>
             </div>
         </section>

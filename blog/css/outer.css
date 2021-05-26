@@ -7,7 +7,6 @@ div#topLeft:hover, div#topRight:hover, div#topWrite:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
 body {
     min-width: 800px;
     margin: 0;
@@ -17,6 +16,7 @@ body {
     list-style: none;
     font-family: "arial";
 }
+
 
 div#main {
     width: 70%;

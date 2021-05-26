@@ -30,6 +30,7 @@ function getReadClassList($level){
     mysqli_close($conn);
 
     $classList = array();
+    $classList[] = array('class_index'=>0, 'name'=>'전체 보기');
     while($row = mysqli_fetch_assoc($result))
         $classList[] = $row;
 
