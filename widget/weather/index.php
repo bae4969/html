@@ -132,13 +132,13 @@
                     }
                     else if(sky <= 10)  img.src = 'res/SKY_Overload.png';
                     break;
-                case '1': img.src = 'res/PTY_Rain.png'; break;
-                case '2': img.src = 'res/PTY_Sleet.png'; break;
-                case '3': img.src = 'res/PTY_Snow.png'; break;
+                case '1': img.src = 'res/PTY_Raindrop.png'; break;
+                case '2': img.src = 'res/PTY_Raindrop_Weak_Snow.png'; break;
+                case '3': img.src = 'res/PTY_Weak_Snow.png'; break;
                 case '4': img.src = 'res/PTY_Shower.png'; break;
-                case '5': img.src = 'res/PTY_Raindrop.png'; break;
-                case '6': img.src = 'res/PTY_Raindrop_Weak_Snow.png'; break;
-                case '7': img.src = 'res/PTY_Weak_Snow.png'; break;
+                case '5': img.src = 'res/PTY_Rain.png'; break;
+                case '6': img.src = 'res/PTY_Sleet.png'; break;
+                case '7': img.src = 'res/PTY_Snow.png'; break;
             }
             detail.innerText
                 = '온도 : ' + weather_now['T1H'] + '℃\n'
@@ -156,13 +156,13 @@
                     else if(sky <= 4)   img.src = 'res/SKY_Cloudy.png';
                     else if(sky <= 10)  img.src = 'res/SKY_Overload.png';
                     break;
-                case '1': img.src = 'res/PTY_Rain.png'; break;
-                case '2': img.src = 'res/PTY_Sleet.png'; break;
-                case '3': img.src = 'res/PTY_Snow.png'; break;
+                case '1': img.src = 'res/PTY_Raindrop.png'; break;
+                case '2': img.src = 'res/PTY_Raindrop_Weak_Snow.png'; break;
+                case '3': img.src = 'res/PTY_Weak_Snow.png'; break;
                 case '4': img.src = 'res/PTY_Shower.png'; break;
-                case '5': img.src = 'res/PTY_Raindrop.png'; break;
-                case '6': img.src = 'res/PTY_Raindrop_Weak_Snow.png'; break;
-                case '7': img.src = 'res/PTY_Weak_Snow.png'; break;
+                case '5': img.src = 'res/PTY_Rain.png'; break;
+                case '6': img.src = 'res/PTY_Sleet.png'; break;
+                case '7': img.src = 'res/PTY_Snow.png'; break;
             }
             detail.innerText
                 = '온도 : ' + weather_after1['TMN'] + '℃\n'
@@ -180,13 +180,13 @@
                     else if(sky <= 4)   img.src = 'res/SKY_Cloudy.png';
                     else if(sky <= 10)  img.src = 'res/SKY_Overload.png';
                     break;
-                case '1': img.src = 'res/PTY_Rain.png'; break;
-                case '2': img.src = 'res/PTY_Sleet.png'; break;
-                case '3': img.src = 'res/PTY_Snow.png'; break;
+                case '1': img.src = 'res/PTY_Raindrop.png'; break;
+                case '2': img.src = 'res/PTY_Raindrop_Weak_Snow.png'; break;
+                case '3': img.src = 'res/PTY_Weak_Snow.png'; break;
                 case '4': img.src = 'res/PTY_Shower.png'; break;
-                case '5': img.src = 'res/PTY_Raindrop.png'; break;
-                case '6': img.src = 'res/PTY_Raindrop_Weak_Snow.png'; break;
-                case '7': img.src = 'res/PTY_Weak_Snow.png'; break;
+                case '5': img.src = 'res/PTY_Rain.png'; break;
+                case '6': img.src = 'res/PTY_Sleet.png'; break;
+                case '7': img.src = 'res/PTY_Snow.png'; break;
             }
             detail.innerText
                 = '온도 : ' + weather_after1['TMX'] + '℃\n'
