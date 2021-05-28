@@ -34,7 +34,7 @@ div#dust_img_contain{
     width: 400px;
     height: 580px;
     position: absolute;
-    top: 50px;
+    top: 60px;
     left: 50%;
     margin-left: -200px;
 }
@@ -53,7 +53,7 @@ div.loc{
     padding: 1px;
     display:inline-block;
     position: absolute;
-    top: -30px;
+    top: -20px;
     left: 50%;
     font-size: 1.3em;
 }
@@ -103,7 +103,7 @@ div#incheon{
     margin-left: -120px;
 }
 div#jeju{
-    margin-top: 598px;
+    margin-top: 605px;
     margin-left: -155px;
 }
 div#jeonbuk{
@@ -131,7 +131,7 @@ div#info1{
     width: 160px;
     height: 60px;
     position: absolute;
-    top: 600px;
+    top: 610px;
     left: 50%;
     margin-left: 35px;
 }

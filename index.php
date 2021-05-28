@@ -114,7 +114,7 @@
                 <div id=temp>
                     <div id=content0 class=content>
                         <iframe src='widget/weather/index' frameborder=0 scrolling=no style='width: 100%; height: 415px; display: inline-block; border-radius: 10px; margin-bottom: 10px;'></iframe>
-                        <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 645px; display: inline-block; border-radius: 10px;'></iframe>
+                        <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 655px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                     <div id=content1 class=content>
                         <!--<iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 680px; display: inline-block; border-radius: 10px;'></iframe>-->

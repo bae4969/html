@@ -1,0 +1,88 @@
+<?php
+
+include '/var/www/phpExe/key.php';
+include '/var/www/phpExe/sqlcon.php';
+
+$dateTime_now = new DateTime(date("Y-m-d H").':00:00');
+$hh = $dateTime_now->format('H');
+
+if($hh < 10)        $dateTime_now->modify('-1 day');
+
+$yyyy = $dateTime_now->format('Y');
+$MM = $dateTime_now->format('m');
+$dd = $dateTime_now->format('d');
+
+$api_error_count = 0;
+$sql_error_count = 0;
+while($api_error_count < 4){
+    $ch = curl_init();
+    $url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19GenAgeCaseInfJson';
+    $queryParams = '?' . urlencode('ServiceKey') . '=' . $gKey;
+    $queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1');
+    $queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('100');
+    $queryParams .= '&' . urlencode('startCreateDt') . '=' . urlencode('20210528');
+    $queryParams .= '&' . urlencode('endCreateDt') . '=' . urlencode('20210528');
+
+    curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $response = simplexml_load_string($response);
+    $resultCode = (int)$response->header->resultcode;
+    if($resultCode == 0){
+        for($i = 0; $i < count($response->body->items->item); $i++){
+            $createDt = (string)$response->body->items->item[$i]->createDt;
+            $updateDt = (string)$response->body->items->item[$i]->updateDt;
+            $gubun = (string)$response->body->items->item[$i]->gubun; //구분
+            $confCase = (int)$response->body->items->item[$i]->confCase; //확진자
+            $confCaseRate = (double)$response->body->items->item[$i]->confCaseRate; //확진률
+            $death = (int)$response->body->items->item[$i]->death; //사망자
+            $deathRate = (double)$response->body->items->item[$i]->deathRate; //사망률
+            $criticalRate = (double)$response->body->items->item[$i]->criticalRate; //치명률
+
+            if($updateDt == 'null')
+                $date = $createDt;
+            else
+                $date = $updateDt;
+
+            switch($gubun){
+                case '0-9': $index = 0; break;
+                case '10-19': $index = 1; break;
+                case '20-29': $index = 2; break;
+                case '30-39': $index = 3; break;
+                case '40-49': $index = 4; break;
+                case '50-59': $index = 5; break;
+                case '60-69': $index = 6; break;
+                case '70-79': $index = 7; break;
+                case '80 이상': $index = 8; break;
+                case '여성': $index = 9; break;
+                case '남성': $index = 10; break;
+            }
+
+            $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlCovidDb );
+            $sql_query =
+                'update age set'
+                .' date="'.$date.'"'
+                .', confCase='.$confCase
+                .', confCaseRate='.$confCaseRate
+                .', death='.$death
+                .', deathRate='.$deathRate
+                .', criticalRate='.$criticalRate
+                .' where type='.$index;
+            if(!mysqli_query($conn, $sql_query))
+                $sql_error_count++;
+        }
+        break;
+    }
+    else{
+        $api_error_count++;
+        usleep(100000);
+    }
+}
+
+print('Execute : update covid age (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
+
+?>

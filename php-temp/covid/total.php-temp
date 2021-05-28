@@ -1,0 +1,80 @@
+<?php
+
+include '/var/www/phpExe/key.php';
+include '/var/www/phpExe/sqlcon.php';
+
+$dateTime_now = new DateTime(date("Y-m-d H").':00:00');
+$hh = $dateTime_now->format('H');
+
+if($hh < 10)        $dateTime_now->modify('-1 day');
+
+$yyyy = $dateTime_now->format('Y');
+$MM = $dateTime_now->format('m');
+$dd = $dateTime_now->format('d');
+
+$api_error_count = 0;
+$sql_error_count = 0;
+
+while($api_error_count < 4){
+    $ch = curl_init();
+    $url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson';
+    $queryParams = '?' . urlencode('ServiceKey') . '=' . $gKey;
+    $queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1');
+    $queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('10');
+    $queryParams .= '&' . urlencode('startCreateDt') . '=' . urlencode($yyyy.$MM.$dd);
+    $queryParams .= '&' . urlencode('endCreateDt') . '=' . urlencode($yyyy.$MM.$dd);
+
+    curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $response = simplexml_load_string($response);
+    $resultCode = (int)$response->header->resultcode;
+    if($resultCode == 0){
+        $createDt = (string)$response->body->items->item->createDt; //생성 일
+        $updateDt = (string)$response->body->items->item->updateDt; //업데이트 일
+        $decideCnt = (int)$response->body->items->item->decideCnt; //확진자 수
+        $clearCnt = (int)$response->body->items->item->clearCnt; //격리해제 수
+        $examCnt = (int)$response->body->items->item->examCnt; //검사진행 수
+        $deathCnt = (int)$response->body->items->item->deathCnt; //사망자 수
+        $careCnt = (int)$response->body->items->item->careCnt; //치료중 환자 수
+        $resutlNegCnt = (int)$response->body->items->item->resutlNegCnt; //결과 음성 수
+        $accExamCnt = (int)$response->body->items->item->accExamCnt; //누적 검사 수
+        $accExamCompCnt = (int)$response->body->items->item->accExamCompCnt; //누적 검사 완료 수
+        $accDefRate = (double)$response->body->items->item->accDefRate; //누적 확진률
+
+        if($updateDt == 'null')
+            $date = $createDt;
+        else
+            $date = $updateDt;
+
+        $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlCovidDb );
+        $sql_query =
+            'update total set'
+            .' date="'.$date.'"'
+            .', decideCnt='.$decideCnt
+            .', clearCnt='.$clearCnt
+            .', examCnt='.$examCnt
+            .', deathCnt='.$deathCnt
+            .', careCnt='.$careCnt
+            .', resutlNegCnt='.$resutlNegCnt
+            .', accExamCnt='.$accExamCnt
+            .', accExamCompCnt='.$accExamCompCnt
+            .', accDefRate='.$accDefRate;
+        if(!mysqli_query($conn, $sql_query))
+            $sql_error_count++;
+
+        break;
+    }
+    else{
+        $api_error_count++;
+        usleep(100000);
+    }
+}
+
+print('Execute : update covid total (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
+
+?>
