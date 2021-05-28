@@ -1,19 +1,30 @@
-<!-- dust.php -->
 <!doctype html>
 <html>
 
 <head>
     <meta charset='utf-8'>
     <title>dust</title>
-    <link rel="stylesheet" href="css/dust.css">
-    <?php
-        include 'php/load.php';
-    ?>
+    <link rel="stylesheet" href="css/index.css">
     <script>
-        var dust = <?php echo json_encode(getDustData()) ?>;
+        var dust;
 
         window.onload = function(){
-            setData('PM10');
+            initData();
+        }
+        function initData(){
+            var xhr = new XMLHttpRequest();
+            var url = 'get/data';
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                    var class_list = JSON.parse(this.responseText);
+                    if(class_list['state'] == 0){
+                        dust = class_list['data'];
+                        setData('PM10');
+                    }
+                }
+            };
+            xhr.send();
         }
 
         function selectType(){
@@ -35,8 +46,8 @@
                         else                    loc_div.style.background = '#9C1615';
                         break;
                     case 'CO':
-                        if(value < 2.0)        loc_div.style.background = '#005EAE';
-                        else if(value < 9.0)   loc_div.style.background = '#4B9D2B';
+                        if(value < 2.0)         loc_div.style.background = '#005EAE';
+                        else if(value < 9.0)    loc_div.style.background = '#4B9D2B';
                         else if(value < 15.0)   loc_div.style.background = '#C37D02';
                         else                    loc_div.style.background = '#9C1615';
                         break;
@@ -53,15 +64,15 @@
                         else                    loc_div.style.background = '#9C1615';
                         break;
                     case 'PM10':
-                        if(value < 30)        loc_div.style.background = '#005EAE';
-                        else if(value < 80)   loc_div.style.background = '#4B9D2B';
-                        else if(value < 150)   loc_div.style.background = '#C37D02';
+                        if(value < 30)          loc_div.style.background = '#005EAE';
+                        else if(value < 80)     loc_div.style.background = '#4B9D2B';
+                        else if(value < 150)    loc_div.style.background = '#C37D02';
                         else                    loc_div.style.background = '#9C1615';
                         break;
                     case 'PM25':
-                        if(value < 15)        loc_div.style.background = '#005EAE';
-                        else if(value < 35)   loc_div.style.background = '#4B9D2B';
-                        else if(value < 75)   loc_div.style.background = '#C37D02';
+                        if(value < 15)          loc_div.style.background = '#005EAE';
+                        else if(value < 35)     loc_div.style.background = '#4B9D2B';
+                        else if(value < 75)     loc_div.style.background = '#C37D02';
                         else                    loc_div.style.background = '#9C1615';
                         break;
                 }

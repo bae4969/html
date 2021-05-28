@@ -5,31 +5,72 @@
 <head>
     <meta charset='utf-8'>
     <title>Weather</title>
-    <link rel="stylesheet" href="css/weather.css">
-    <?php
-        include 'php/load.php';
-    ?>
+    <link rel="stylesheet" href="css/index.css">
     <script>
-        var geo = <?php echo json_encode(getGeoData()) ?>;
-        var now = <?php echo json_encode(getWeatherNowData()) ?>;
-        var after = <?php echo json_encode(getWeatherAfterData()) ?>;
+        var geo;
+        var now;
+        var after;
 
         var geo_name = '서울특별시';
         var geo_sub = '용산구';
 
         window.onload = function(){
-            geo_name = localStorage.getItem('weather_geo_name') == null ? '서울특별시' : localStorage.getItem('weather_geo_name');
-            geo_sub = localStorage.getItem('weather_geo_sub') == null ? '용산구' : localStorage.getItem('weather_geo_sub');
-            var x = localStorage.getItem('weather_x') == null ? 60 : localStorage.getItem('weather_x');
-            var y = localStorage.getItem('weather_y') == null ? 126 : localStorage.getItem('weather_y');
-
             var today = new Date();
             if(today.getHours() < 2 || (today.getHours() == 2 && today.getMinutes() < 11))
                 today.setDate(today.getDate() - 1);
             document.getElementById('info0').innerHTML = ' ' + today.getMonth() + '월 ' + today.getDate() + '일 날씨';
-
-            initSelect();
-            setWeatherNow(x, y);
+            initGeo();
+        }
+        function initGeo(){
+            var xhr = new XMLHttpRequest();
+            var url = 'get/geo';
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                    var class_list = JSON.parse(this.responseText);
+                    if(class_list['state'] == 0){
+                        geo = class_list['data'];
+                        geo_name = localStorage.getItem('weather_geo_name') == null ? '서울특별시' : localStorage.getItem('weather_geo_name');
+                        geo_sub = localStorage.getItem('weather_geo_sub') == null ? '용산구' : localStorage.getItem('weather_geo_sub');
+                        var x = localStorage.getItem('weather_x') == null ? 60 : localStorage.getItem('weather_x');
+                        var y = localStorage.getItem('weather_y') == null ? 126 : localStorage.getItem('weather_y');
+                        initSelect();
+                        initWeather(x, y);
+                    }
+                }
+            };
+            xhr.send();
+        }
+        function initWeather(x, y){
+            var xhr0 = new XMLHttpRequest();
+            var url = 'get/now';
+            url += '?x=' + x;
+            url += '&y=' + y;
+            xhr0.open('GET', url);
+            xhr0.onreadystatechange = function () {
+                if (xhr0.readyState == XMLHttpRequest.DONE && xhr0.status == 200){
+                    var now_data = JSON.parse(this.responseText);
+                    if(now_data['state'] == 0){
+                        var xhr1 = new XMLHttpRequest();
+                        var url = 'get/after';
+                        url += '?x=' + x;
+                        url += '&y=' + y;
+                        xhr1.open('GET', url);
+                        xhr1.onreadystatechange = function () {
+                            if (xhr1.readyState == XMLHttpRequest.DONE && xhr1.status == 200){
+                                var after_data = JSON.parse(this.responseText);
+                                if(after_data['state'] == 0){
+                                    now = now_data['data'];
+                                    after = after_data['data'];
+                                    setWeather();
+                                }
+                            }
+                        };
+                        xhr1.send();
+                    }
+                }
+            };
+            xhr0.send();
         }
 
         function initSelect(){
@@ -74,6 +115,7 @@
 
             for (idx in sArr) obj.appendChild(oArr[sArr[idx]]);
         }
+        
         function selectGeo(){
             var geo_name_selector = document.getElementById('geo_name');
             var selectedVal = geo_name_selector.options[geo_name_selector.selectedIndex].value;
@@ -85,30 +127,16 @@
                 if(geo[i]['main'] == selectedVal[0] && geo[i]['sub'] == selectedVal[1]){
                     localStorage.setItem('weather_x', geo[i]['x']);
                     localStorage.setItem('weather_y', geo[i]['y']);
-                    setWeatherNow(geo[i]['x'], geo[i]['y']);
+                    initWeather(geo[i]['x'], geo[i]['y']);
                     break;
                 }
             }
         }
 
-        function setWeatherNow(x, y){
-            var weather_now;
-            var weather_after0;
-            var weather_after1;
-            for(var i = 0; i < now.length; i++){
-                if(now[i]['x'] == x && now[i]['y'] == y){
-                    weather_now = now[i];
-                    break;
-                }
-            }
-            for(var i = 0; i < after.length; i++){
-                if(after[i]['x'] == x && after[i]['y'] == y && after[i]['num'] == 0){
-                    weather_after0 = after[i];
-                }
-                if(after[i]['x'] == x && after[i]['y'] == y && after[i]['num'] == 1){
-                    weather_after1 = after[i];
-                }
-            }
+        function setWeather(){
+            var weather_now = now[0];
+            var weather_after0 = after[0];
+            var weather_after1 = after[1];
 
             var img = document.getElementById('now_img');
             var detail = document.getElementById('now_detail');
@@ -146,7 +174,6 @@
                 + '풍량  : ' + weather_now['WSD'] + 'm/s\n'
                 + '강수량 : ' + weather_now['RN1'] + 'mm';
 
-
             var img = document.getElementById('tomm0_img');
             var detail = document.getElementById('tomm0_detail');
             switch(weather_after1['PTY0']){
@@ -170,7 +197,7 @@
                 + '풍량  : ' + weather_after1['WSD0'] + 'm/s\n'
                 + '강수확률 : ' + weather_after1['POP1'] + '%';
 
-            
+
             var img = document.getElementById('tomm1_img');
             var detail = document.getElementById('tomm1_detail');
             switch(weather_after1['PTY1']){
