@@ -17,9 +17,9 @@
             xhr.open('GET', url);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
-                    var class_list = JSON.parse(this.responseText);
-                    if(class_list['state'] == 0){
-                        dust = class_list['data'];
+                    var data = JSON.parse(this.responseText);
+                    if(data['state'] == 0){
+                        dust = data['data'];
                         setData('PM10');
                     }
                 }
@@ -83,7 +83,7 @@
 
 <body>
     <div id=info0>
-        대기오염
+        <b>대기오염</b>
     </div>
     <select id='selectType' onchange='selectType()'>
         <option value="SO2">아황산가스</option>

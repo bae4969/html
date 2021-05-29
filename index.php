@@ -117,7 +117,7 @@
                         <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 655px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                     <div id=content1 class=content>
-                        <!--<iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 680px; display: inline-block; border-radius: 10px;'></iframe>-->
+                        <iframe src='widget/covid/index' frameborder=0 scrolling=no style='width: 100%; height: 1440px; display: inline-block; border-radius: 10px;'></iframe>
                     </div>
                 </div>
             </div>
