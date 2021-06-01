@@ -4,7 +4,8 @@
 <head>
     <meta charset='utf-8'>
     <title>dust</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/etc.css">
+    <link rel="stylesheet" href="css/dust.css">
     <script>
         var dust;
 

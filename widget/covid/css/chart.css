@@ -1,0 +1,56 @@
+div#chart_contain{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 910px;
+}
+div#info2{
+    width: 400px;
+    height: 60px;
+    font-size: 3.5ex;
+    position: absolute;
+    top :20px;
+    left: 50%;
+    margin-left: -180px;
+}
+select#age_type{
+    width: 130px;
+    height: 30px;
+    margin: 5px;
+    font-size: 1.7ex;
+    top: 22px;
+    left: 50%;
+    margin-left: 50px;
+    position: absolute;
+    background: #36383A;
+    color: white;
+    cursor: pointer;
+}
+div.chart{
+    width: 150px;
+    position: absolute;
+    left: calc(50% - 200px);
+    text-align: center;
+    font-size: 3ex;
+}
+hr#split{
+    width: 360px;
+    position: absolute;
+    top: 142px;
+    left: calc(50% - 180px);
+}
+div.chart0{top: 440px;}
+div.chart1{top: 405px;}
+div.chart2{top: 370px;}
+div.chart3{top: 335px;}
+div.chart4{top: 300px;}
+div.chart5{top: 265px;}
+div.chart6{top: 230px;}
+div.chart7{top: 195px;}
+div.chart8{top: 160px;}
+div.chart9{top: 115px;}
+div.chart10{top: 80px;}
+div.chart_value{margin-left: 150px;width: 220px;}
+div.chart_bar{width: 0px; margin-left: 150px;background: #4B9D2B;}
+div#chart_bar9{background: #9C1615;}
+div#chart_bar10{background: #005EAE;}

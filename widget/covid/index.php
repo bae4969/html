@@ -4,7 +4,10 @@
 <head>
     <meta charset='utf-8'>
     <title>Covid</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/etc.css">
+    <link rel="stylesheet" href="css/total.css">
+    <link rel="stylesheet" href="css/local.css">
+    <link rel="stylesheet" href="css/chart.css">
     <script>
         var initCount = 0;
         var total;

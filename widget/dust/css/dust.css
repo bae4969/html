@@ -1,0 +1,41 @@
+div#dust_img_contain{
+    width: 400px;
+    height: 580px;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    margin-left: -200px;
+}
+img#now_img{
+    width: 100%;
+    height: 100%;
+}
+div#dust_contain{
+    width: 100%;
+    height: 100%;
+}
+div.loc{
+    padding: 1px;
+    display:inline-block;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    font-size: 1.3em;
+}
+div#busan       {margin-top: 460px;margin-left: 110px;}
+div#chungbuk    {margin-top: 260px;margin-left: -10px;}
+div#chungnam    {margin-top: 295px;margin-left: -110px;}
+div#daegu       {margin-top: 380px;margin-left: 70px;}
+div#daejeon     {margin-top: 330px;margin-left: -40px;}
+div#gangwon     {margin-top: 170px;margin-left: 40px;}
+div#gwangju     {margin-top: 450px;margin-left: -95px;}
+div#gyeongbuk   {margin-top: 310px;margin-left: 80px;}
+div#gyeonggi    {margin-top: 210px;margin-left: -50px;}
+div#gyeongnam   {margin-top: 430px;margin-left: 40px;}
+div#incheon     {margin-top: 200px;margin-left: -120px;}
+div#jeju        {margin-top: 605px;margin-left: -155px;}
+div#jeonbuk     {margin-top: 390px;margin-left: -70px;}
+div#jeonnam     {margin-top: 500px;margin-left: -100px;}
+div#sejong      {margin-top: 300px;margin-left: -40px;}
+div#seoul       {margin-top: 170px;margin-left: -80px;}
+div#ulsan       {margin-top: 420px;margin-left: 130px;}

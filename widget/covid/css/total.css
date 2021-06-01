@@ -1,0 +1,26 @@
+div#total_contain{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 90px;
+}
+div.total{
+    width: 150px;
+    position: absolute;
+    text-align: center;
+    font-size: 3ex;
+}
+div.row0            {top: 20px;}
+div.row1            {top: 60px;}
+div.row2            {top: 100px;}
+div.row3            {top: 140px;}
+div.col0            {left: calc(50% - 250px);}
+div.col1            {left: calc(50% - 10px);}
+div.total_value0    {margin-left: 120px;}
+div.total_value1    {margin-left: 110px;}
+hr#hr1{
+    width: 440px;
+    position: absolute;
+    top: 270px;
+    left: calc(50% - 220px);
+}

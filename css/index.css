@@ -7,12 +7,11 @@ section {
 
 div#contents {
     width: 100%;
-    margin-top: 10px;
 }
 
 div#left {
     width: 50%;
-    float:left;
+    float: left;
 }
 
 div#right {
@@ -26,9 +25,9 @@ div#right {
 } */
 
 div.content {
-    width: calc(100% - 60px);
-    margin: 0px 10px 20px 10px;
-    padding: 20px;
+    width: calc(100% - 40px);
+    margin: 10px 10px 10px 10px;
+    padding: 10px;
     display: inline-block;
     border-radius: 20px;
     text-align: center;

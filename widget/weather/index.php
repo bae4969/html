@@ -5,7 +5,9 @@
 <head>
     <meta charset='utf-8'>
     <title>Weather</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/etc.css">
+    <link rel="stylesheet" href="css/now.css">
+    <link rel="stylesheet" href="css/tomorrow.css">
     <script>
         var geo;
         var now;
