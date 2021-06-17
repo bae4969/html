@@ -221,7 +221,6 @@
             xhr.send();
         }
         function checkLoadContent(length){
-            console.log(loadCount + '\t' + length);
             if(loadCount >= length){
                 showState = 0;
                 setContentList();
