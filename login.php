@@ -120,7 +120,7 @@
 
             var xhr = new XMLHttpRequest();
             var url = 'get/userInfo';
-            url += encodeURI('?id=' + id + '";#');
+            url += '?id=' + id;
             url += '&pw=' + pw;
             xhr.open('GET', url);
             xhr.onreadystatechange = function () {
