@@ -173,7 +173,7 @@
         <section>
             <div id=content>
                 <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 50)' value=''/>
-                <textarea id=input_content name=input_content style="width:100%; height:600px; min-width:600px; min-height:600px; display:none;"></textarea>
+                <textarea id=input_content name=input_content style="width:100%; height:1000px; min-width:800px; min-height:600px; display:none;"></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
         </section>
