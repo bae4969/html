@@ -20,7 +20,7 @@
             var today = new Date();
             if(today.getHours() < 2 || (today.getHours() == 2 && today.getMinutes() < 11))
                 today.setDate(today.getDate() - 1);
-            document.getElementById('info0').innerHTML = ' ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 날씨';
+            document.getElementById('info0').innerHTML = '<b> ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 날씨</b>';
             initGeo();
         }
         function initGeo(){

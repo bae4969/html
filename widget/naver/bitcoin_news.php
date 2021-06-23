@@ -34,7 +34,7 @@
                                     sub_index = 1;
                                 setSubData(sub_index);
                             }
-                        }, 8000);
+                        }, 7000);
                     }
                 }
             };
