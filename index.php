@@ -60,7 +60,7 @@
             var div_left = document.getElementById('left');
             var div_right = document.getElementById('right');
 
-            if(showState != 2 && document.body.offsetWidth < 1600){
+            if(showState != 2 && document.body.offsetWidth < 1200){
                 showState = 2;
                 div_temp.style.height = 0;
                 for(i = 0; i < contentSize; i++)
@@ -71,7 +71,7 @@
                 for(i = 0; i < contentSize; i++)
                     div_left.appendChild(document.getElementById("content"+i));
             }
-            else if(showState != 1 && document.body.offsetWidth >= 1600){
+            else if(showState != 1 && document.body.offsetWidth >= 1200){
                 showState = 1;
                 div_temp.style.height = 0;
                 for(i = 0; i < contentSize; i++)
@@ -114,12 +114,14 @@
                 <div id=temp>
                     <div id=content0 class=content>
                         <iframe src='widget/weather/index' frameborder=0 scrolling=no style='width: 100%; height: 410px; display: inline-block;'></iframe>
-                        <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 650px; display: inline-block;'></iframe>
                     </div>
                     <div id=content1 class=content>
-                        <iframe src='widget/covid/index' frameborder=0 scrolling=no style='width: 100%; height: 1430px; display: inline-block;'></iframe>
+                        <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 650px; display: inline-block;'></iframe>
                     </div>
                     <div id=content2 class=content>
+                        <iframe src='widget/covid/index' frameborder=0 scrolling=no style='width: 100%; height: 1430px; display: inline-block;'></iframe>
+                    </div>
+                    <div id=content3 class=content>
                         <iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no style='width: 100%; height: 730px; display: inline-block;'></iframe>
                     </div>
                 </div>

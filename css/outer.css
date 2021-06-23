@@ -9,7 +9,7 @@ div#topLeft:hover, div#topRight:hover, div#topWrite:hover, div.category:hover {
 }
 
 body {
-    min-width: 800px;
+    min-width: 600px;
     margin: 0;
     padding: 0;
     background: #181A1B;
