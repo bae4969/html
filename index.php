@@ -119,6 +119,9 @@
                     <div id=content1 class=content>
                         <iframe src='widget/covid/index' frameborder=0 scrolling=no style='width: 100%; height: 1430px; display: inline-block;'></iframe>
                     </div>
+                    <div id=content2 class=content>
+                        <iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no style='width: 100%; height: 730px; display: inline-block;'></iframe>
+                    </div>
                 </div>
             </div>
         </section>

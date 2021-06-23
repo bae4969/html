@@ -1,0 +1,37 @@
+table{
+    width: 100%;
+    text-align: center;
+}
+
+td.main:hover, td.main_count:hover{
+    cursor: pointer;
+    background: #464646;
+}
+
+td.sub, td.sub_count{
+    background: #464646;
+}
+
+td{
+    border-radius: 5px;
+}
+
+td.rank{
+    width: 10%;
+}
+
+td.main{
+    width: 35%;
+}
+
+td.main_count{
+    width: 10%;
+}
+
+td.sub{
+    width: 35%;
+}
+
+td.sub_count{
+    width: 10%;
+}
