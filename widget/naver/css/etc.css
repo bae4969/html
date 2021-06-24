@@ -7,43 +7,39 @@ body{
 }
 
 div#info0{
-    width: 400px;
-    height: 60px;
-    font-size: 5ex;
+    width: 90%;
+    height: 6%;
+    font-size: 8vw;
     position: absolute;
-    top: 12px;
-    left: 50%;
-    margin-left: -180px;
+    top: 2%;
+    left: 5%;
 }
 
 div#info1{
-    width: 400px;
-    height: 60px;
-    font-size: 3ex;
+    width: 70%;
+    font-size: 5vw;
     position: absolute;
-    top: 90px;
-    left: 50%;
-    margin-left: -180px;
+    top: 12%;
+    left: 5%;
 }
 
 div#info2{
-    width: 200px;
-    height: 60px;
-    font-size: 1.8ex;
+    width: 30%;
+    font-size: 3vw;
     position: absolute;
-    top: 95px;
-    left: 50%;
-    margin-left: 80px;
+    top: 12.7%;
+    right: 6%;
 }
 
 div#btn_info{
-    padding: 5px;
-    float: left;
+    padding: 2px;
+    margin-right: 5px;
+    float: right;
 }
 
 div#btn_rotate{
     padding: 5px;
-    float: left;
+    float: right;
     border-radius: 5px;
     background: #404040;
 }
@@ -53,10 +49,9 @@ div#btn_rotate:hover{
 }
 
 div#table_contain{
-    width: 400px;
-    font-size: 2ex;
+    width: 90%;
+    font-size: 3vw;
     position: absolute;
-    top: 140px;
-    left: 50%;
-    margin-left: -200px;
+    top: 19%;
+    left: 5%;
 }

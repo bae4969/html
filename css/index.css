@@ -34,3 +34,8 @@ div.content {
     color: white;
     background: #222426;
 }
+
+iframe.content_iframe{
+    width: 100%;
+    height: 100%;
+}

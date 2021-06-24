@@ -96,8 +96,8 @@
         <b>검색어 : 비트코인</b>
     </div>
     <div id=info2>
-        <div id=btn_info>자동 순환</div>
         <div id=btn_rotate onclick="setRotate()">ON</div>
+        <div id=btn_info>자동 순환</div>
     </div>
     <div id=table_contain>
         <table>

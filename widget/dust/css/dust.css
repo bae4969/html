@@ -1,16 +1,15 @@
-div#dust_img_contain{
-    width: 400px;
-    height: 580px;
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    margin-left: -200px;
-}
-img#now_img{
+div#dust_contain{
     width: 100%;
     height: 100%;
 }
-div#dust_contain{
+div#dust_img_contain{
+    width: 90%;
+    height: 86%;
+    position: absolute;
+    top: 10%;
+    left: 5%;
+}
+img#now_img{
     width: 100%;
     height: 100%;
 }
@@ -18,24 +17,22 @@ div.loc{
     padding: 1px;
     display:inline-block;
     position: absolute;
-    top: -20px;
-    left: 50%;
-    font-size: 1.3em;
+    font-size: 5vw;
 }
-div#busan       {margin-top: 460px;margin-left: 110px;}
-div#chungbuk    {margin-top: 260px;margin-left: -10px;}
-div#chungnam    {margin-top: 295px;margin-left: -110px;}
-div#daegu       {margin-top: 380px;margin-left: 70px;}
-div#daejeon     {margin-top: 330px;margin-left: -40px;}
-div#gangwon     {margin-top: 170px;margin-left: 40px;}
-div#gwangju     {margin-top: 450px;margin-left: -95px;}
-div#gyeongbuk   {margin-top: 310px;margin-left: 80px;}
-div#gyeonggi    {margin-top: 210px;margin-left: -50px;}
-div#gyeongnam   {margin-top: 430px;margin-left: 40px;}
-div#incheon     {margin-top: 200px;margin-left: -120px;}
-div#jeju        {margin-top: 605px;margin-left: -155px;}
-div#jeonbuk     {margin-top: 390px;margin-left: -70px;}
-div#jeonnam     {margin-top: 500px;margin-left: -100px;}
-div#sejong      {margin-top: 300px;margin-left: -40px;}
-div#seoul       {margin-top: 170px;margin-left: -80px;}
-div#ulsan       {margin-top: 420px;margin-left: 130px;}
+div#busan       {top: 66%; left: 76%;}
+div#chungbuk    {top: 38%; left: 50%;}
+div#chungnam    {top: 43%; left: 23%;}
+div#daegu       {top: 55%; left: 66%;}
+div#daejeon     {top: 48%; left: 40%;}
+div#gangwon     {top: 25%; left: 60%;}
+div#gwangju     {top: 67%; left: 28%;}
+div#gyeongbuk   {top: 45%; left: 63%;}
+div#gyeonggi    {top: 31%; left: 40%;}
+div#gyeongnam   {top: 65%; left: 60%;}
+div#incheon     {top: 28%; left: 20%;}
+div#jeju        {top: 88%; left: 15%;}
+div#jeonbuk     {top: 57%; left: 33%;}
+div#jeonnam     {top: 73%; left: 30%;}
+div#sejong      {top: 43%; left: 40%;}
+div#seoul       {top: 23%; left: 33%;}
+div#ulsan       {top: 60%; left: 80%;}

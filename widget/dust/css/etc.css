@@ -1,31 +1,27 @@
 body{
     margin: 0;
     padding: 0;
-    min-width: 400px;
-    min-height: 690px;
     background: #222426;
     color: #C8C3BC;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 div#info0{
-    width: 400px;
-    height: 60px;
-    font-size: 5ex;
+    width: 60%;
+    height: 6%;
+    font-size: 8vw;
     position: absolute;
-    top :12px;
-    left: 50%;
-    margin-left: -180px;
+    top: 2%;
+    left: 5%;
 }
 
 select#selectType{
-    width: 160px;
-    height: 30px;
+    width: 20%;
+    height: 3.5%;
     margin: 5px;
-    font-size: 1.7ex;
-    top: 22px;
-    left: 50%;
-    margin-left: 30px;
+    font-size: 3vw;
+    top: 3.3%;
+    right: 5%;
     position: absolute;
     background: #36383A;
     color: white;
@@ -33,10 +29,10 @@ select#selectType{
 }
 
 div#info1{
-    width: 160px;
-    height: 60px;
+    width: 50%;
+    min-width: 160px;
     position: absolute;
-    top: 610px;
-    left: 50%;
-    margin-left: 35px;
+    top: 97%;
+    right: 5%;
+    text-align: right;
 }

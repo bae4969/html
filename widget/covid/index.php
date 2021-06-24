@@ -94,10 +94,10 @@
                 if(max_a < parseInt(age[i][type]))
                     max_a = parseInt(age[i][type]);
             
-            document.getElementById('chart_bar9').style.width = (220 * parseInt(age[9][type]) / max_s) + 'px';
-            document.getElementById('chart_bar10').style.width = (220 * parseInt(age[10][type]) / max_s) + 'px';
+            document.getElementById('chart_bar9').style.width = (50 * parseInt(age[9][type]) / max_s) + '%';
+            document.getElementById('chart_bar10').style.width = (50 * parseInt(age[10][type]) / max_s) + '%';
             for(var i = 0; i < 9; i++)
-                document.getElementById('chart_bar' + i).style.width = (220 * parseInt(age[i][type]) / max_a) + 'px';
+                document.getElementById('chart_bar' + i).style.width = (50 * parseInt(age[i][type]) / max_a) + '%';
             
             for(var i = 0; i < age.length; i++){
                 document.getElementById('chart_value' + i).innerHTML = age[i][type];
@@ -179,7 +179,6 @@
         <div class='chart chart6'>60 ~ 69</div><div id=chart_bar6 class='chart chart6 chart_bar'>&nbsp</div><div id=chart_value6 class='chart chart6 chart_value'></div>
         <div class='chart chart7'>70 ~ 79</div><div id=chart_bar7 class='chart chart7 chart_bar'>&nbsp</div><div id=chart_value7 class='chart chart7 chart_value'></div>
         <div class='chart chart8'>80 ~ 89</div><div id=chart_bar8 class='chart chart8 chart_bar'>&nbsp</div><div id=chart_value8 class='chart chart8 chart_value'></div>
-        <hr id=split>
         <div class='chart chart9'>여성</div><div id=chart_bar9 class='chart chart9 chart_bar'>&nbsp</div><div id=chart_value9 class='chart chart9 chart_value'></div>
         <div class='chart chart10'>남성</div><div id=chart_bar10 class='chart chart10 chart_bar'>&nbsp</div><div id=chart_value10 class='chart chart10 chart_value'></div>
     </div>

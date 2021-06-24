@@ -14,13 +14,17 @@
     <script>
         var user;
         var showState = 0;
+        var content_h_1 = ['80vw', '132vw', '230vw', '104vw', ];
+        var content_h_2 = ['40vw', '65vw', '115vw', '57vw', ];
+        var content_h_3 = ['30vw', '49vw', '86vw', '41vw', ];
 
         window.onload = function() {
             checkUserInfo();
             setContentList();
         }
         window.onresize = function(){
-            setContentList()
+            var content = document.getElementsByClassName('content');
+            setContentList();
         }
         function loginoutClick(){
             if (user['state'] == 0) {
@@ -55,31 +59,52 @@
         }
 
         function setContentList(){
-            var contentSize = document.getElementsByClassName('content').length;
+            var content = document.getElementsByClassName('content');
             var div_temp = document.getElementById('temp');
             var div_left = document.getElementById('left');
             var div_right = document.getElementById('right');
 
-            if(showState != 2 && document.body.offsetWidth < 1200){
-                showState = 2;
+            if(showState != 1 && document.body.offsetWidth < 1200){
+                showState = 1;
                 div_temp.style.height = 0;
-                for(i = 0; i < contentSize; i++)
+                for(i = 0; i < content.length; i++){
+                    document.getElementById("content"+i).style.height = content_h_1[i];
                     div_temp.appendChild(document.getElementById("content"+i));
+                }
 
                 div_left.style.width = '100%';
                 div_right.style.width = '0%';
-                for(i = 0; i < contentSize; i++)
+                for(i = 0; i < content.length; i++)
                     div_left.appendChild(document.getElementById("content"+i));
             }
-            else if(showState != 1 && document.body.offsetWidth >= 1200){
-                showState = 1;
+            else if(showState != 2 && document.body.offsetWidth < 1600){
+                showState = 2;
                 div_temp.style.height = 0;
-                for(i = 0; i < contentSize; i++)
+                for(i = 0; i < content.length; i++){
+                    document.getElementById("content"+i).style.height = content_h_2[i];
                     div_temp.appendChild(document.getElementById("content"+i));
+                }
 
                 div_left.style.width = '50%';
                 div_right.style.width = '50%';
-                for(i = 0; i < contentSize; i++){
+                for(i = 0; i < content.length; i++){
+                    if(div_left.offsetHeight > div_right.offsetHeight)
+                        div_right.appendChild(document.getElementById("content"+i));
+                    else
+                        div_left.appendChild(document.getElementById("content"+i));
+                }
+            }
+            else if(showState != 3 && document.body.offsetWidth >= 1600){
+                showState = 3;
+                div_temp.style.height = 0;
+                for(i = 0; i < content.length; i++){
+                    document.getElementById("content"+i).style.height = content_h_3[i];
+                    div_temp.appendChild(document.getElementById("content"+i));
+                }
+
+                div_left.style.width = '50%';
+                div_right.style.width = '50%';
+                for(i = 0; i < content.length; i++){
                     if(div_left.offsetHeight > div_right.offsetHeight)
                         div_right.appendChild(document.getElementById("content"+i));
                     else
@@ -113,16 +138,16 @@
                 </div>
                 <div id=temp>
                     <div id=content0 class=content>
-                        <iframe src='widget/weather/index' frameborder=0 scrolling=no style='width: 100%; height: 410px; display: inline-block;'></iframe>
+                        <iframe class=content_iframe src='widget/weather/index' frameborder=0 scrolling=no></iframe>
                     </div>
                     <div id=content1 class=content>
-                        <iframe src='widget/dust/index' frameborder=0 scrolling=no style='width: 100%; height: 650px; display: inline-block;'></iframe>
+                        <iframe class=content_iframe src='widget/dust/index' frameborder=0 scrolling=no></iframe>
                     </div>
                     <div id=content2 class=content>
-                        <iframe src='widget/covid/index' frameborder=0 scrolling=no style='width: 100%; height: 1430px; display: inline-block;'></iframe>
+                        <iframe class=content_iframe src='widget/covid/index' frameborder=0 scrolling=no></iframe>
                     </div>
                     <div id=content3 class=content>
-                        <iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no style='width: 100%; height: 730px; display: inline-block;'></iframe>
+                        <iframe class=content_iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no></iframe>
                     </div>
                 </div>
             </div>

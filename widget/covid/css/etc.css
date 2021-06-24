@@ -1,34 +1,44 @@
 body{
     margin: 0;
     padding: 0;
-    min-width: 460px;
-    min-height: 900px;
     background: #222426;
     color: #C8C3BC;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 div#info0{
-    width: 400px;
-    height: 60px;
-    font-size: 5ex;
+    width: 60%;
+    height: 6%;
+    font-size: 8vw;
     position: absolute;
-    top :20px;
-    left: 50%;
-    margin-left: -200px;
+    top: 2%;
+    left: 5%;
 }
+
 hr#hr0{
-    width: 440px;
+    width: 96%;
     position: absolute;
-    top: 90px;
-    left: calc(50% - 220px);
+    top: 6%;
+    left: 2%;
+}
+hr#hr1{
+    width: 96%;
+    position: absolute;
+    top: 16.5%;
+    left: 2%;
+}
+hr#hr2{
+    width: 96%;
+    position: absolute;
+    top: 69%;
+    left: 2%;
 }
 
 div#info3{
-    width: 160px;
-    height: 60px;
+    width: 50%;
+    min-width: 160px;
     position: absolute;
-    top: 1395px;
-    left: 50%;
-    margin-left: 50px;
+    top: 98%;
+    right: 5%;
+    text-align: right;
 }
