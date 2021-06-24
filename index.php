@@ -59,12 +59,13 @@
         }
 
         function setContentList(){
+            var win_width = document.body.offsetWidth;
             var content = document.getElementsByClassName('content');
             var div_temp = document.getElementById('temp');
             var div_left = document.getElementById('left');
             var div_right = document.getElementById('right');
 
-            if(showState != 1 && document.body.offsetWidth < 1200){
+            if(showState != 1 && win_width <= 1200){
                 showState = 1;
                 div_temp.style.height = 0;
                 for(i = 0; i < content.length; i++){
@@ -77,7 +78,7 @@
                 for(i = 0; i < content.length; i++)
                     div_left.appendChild(document.getElementById("content"+i));
             }
-            else if(showState != 2 && document.body.offsetWidth < 1600){
+            else if(showState != 2 && win_width > 1200 && win_width <= 1600){
                 showState = 2;
                 div_temp.style.height = 0;
                 for(i = 0; i < content.length; i++){
@@ -94,7 +95,7 @@
                         div_left.appendChild(document.getElementById("content"+i));
                 }
             }
-            else if(showState != 3 && document.body.offsetWidth >= 1600){
+            else if(showState != 3 && win_width > 1600){
                 showState = 3;
                 div_temp.style.height = 0;
                 for(i = 0; i < content.length; i++){
