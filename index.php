@@ -59,7 +59,7 @@
         }
 
         function setContentList(){
-            var win_width = document.body.offsetWidth;
+            var win_width = window.innerWidth;
             var content = document.getElementsByClassName('content');
             var div_temp = document.getElementById('temp');
             var div_left = document.getElementById('left');
