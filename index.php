@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Index</title>
+    <title>BWP</title>
     <link rel="stylesheet" href="css/after.css">
     <link rel="stylesheet" href="css/outer.css">
     <link rel="stylesheet" href="css/header.css">
