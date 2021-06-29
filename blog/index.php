@@ -4,12 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
-    <link rel="stylesheet" href="css/after.css">
-    <link rel="stylesheet" href="css/outer.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/contents.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/index.css">
 
     <script src="/js/basicFunc.js"> </script>
     <script>
