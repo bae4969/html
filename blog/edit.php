@@ -1,16 +1,52 @@
 <!-- content/edit.php -->
 <!doctype html>
-<html lang=kr>
+<html lang=ko>
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
     <link rel="stylesheet" href="css/writeEdit.css">
+</head>
+<body>
+    <div id="main">
+        <header>
+            <div id=topLeft OnClick='location.href="/index"'>Home</div>
+            <div id=topRight onclick=loginoutClick()></div>
+            <div id=topWrite OnClick='location.href="writer"'></div>
+            <div id=title>
+                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
+            </div>
+        </header>
+        <section>
+            <div id=content>
+                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 50)' value=''/>
+                <textarea id=input_content name=input_content></textarea>
+                <button id='btn_submit' onclick=submitClick()>수정</button>
+            </div>
+        </section>
+        <footer>
+            <p>Contact : bae4969@naver.com</br>
+            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+        </footer>
+    </div>
+
     <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script src="/js/basicFunc.js"> </script>
-    <script>
+    <script type="text/javascript">
         var content_index = 1;
+        var oEditors = [];
 
         window.onload = function() {
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "input_content",
+                sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
+                htParams : {
+                    bUseVerticalResizer : false,
+                    bUseModeChanger : false,
+                },
+                fCreator: "createSEditor2"
+            });
+
             var params = {};
             location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
             if(params['content_index'])
@@ -152,42 +188,6 @@
             }
             xhr.send(formData);
         }
-    </script>
-</head>
-<body>
-    <div id="main">
-        <header>
-            <div id=topLeft OnClick='location.href="/index"'>Home</div>
-            <div id=topRight onclick=loginoutClick()></div>
-            <div id=topWrite OnClick='location.href="writer"'></div>
-            <div id=title>
-                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
-            </div>
-        </header>
-        <section>
-            <div id=content>
-                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 50)' value=''/>
-                <textarea id=input_content name=input_content></textarea>
-                <button id='btn_submit' onclick=submitClick()>수정</button>
-            </div>
-        </section>
-        <footer>
-            <p>Contact : bae4969@naver.com</br>
-            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
-        </footer>
-    </div>
-    <script type="text/javascript">
-        var oEditors = [];
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "input_content",
-            sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
-            htParams : {
-		        bUseVerticalResizer : false,
-                bUseModeChanger : false,
-            },
-            fCreator: "createSEditor2"
-        });
     </script>
 </body>
 </html>

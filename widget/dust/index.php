@@ -1,11 +1,49 @@
 <!doctype html>
-<html>
+<html lang=ko>
 
 <head>
     <meta charset='utf-8'>
     <title>dust</title>
     <link rel="stylesheet" href="css/index.css">
-    <script>
+</head>
+
+<body>
+    <div id=info0>
+        <b>대기오염</b>
+    </div>
+    <select id='selectType' onchange='selectType()'>
+        <option value="SO2">아황산가스</option>
+        <option value="CO">일산화탄소</option>
+        <option value="O3">오존</option>
+        <option value="NO2">이산화질소</option>
+        <option value="PM10" selected>미세먼지</option>
+        <option value="PM25">초미세먼지</option>
+    </select>
+    <div id=dust_contain>
+        <div id=dust_img_contain><img id=now_img src='res/map.png'></div>
+        <div id=busan class=loc></div>
+        <div id=chungbuk class=loc></div>
+        <div id=chungnam class=loc></div>
+        <div id=daegu class=loc></div>
+        <div id=daejeon class=loc></div>
+        <div id=gangwon class=loc></div>
+        <div id=gwangju class=loc></div>
+        <div id=gyeongbuk class=loc></div>
+        <div id=gyeonggi class=loc></div>
+        <div id=gyeongnam class=loc></div>
+        <div id=incheon class=loc></div>
+        <div id=jeju class=loc></div>
+        <div id=jeonbuk class=loc></div>
+        <div id=jeonnam class=loc></div>
+        <div id=sejong class=loc></div>
+        <div id=seoul class=loc></div>
+        <div id=ulsan class=loc></div>
+    </div>
+    <div id=info1>
+        자료제공 : 에어코리아
+    </div>
+    
+    <script type="text/javascript">
         var dust;
 
         window.onload = function(){
@@ -79,43 +117,6 @@
             }
         }
     </script>
-</head>
-
-<body>
-    <div id=info0>
-        <b>대기오염</b>
-    </div>
-    <select id='selectType' onchange='selectType()'>
-        <option value="SO2">아황산가스</option>
-        <option value="CO">일산화탄소</option>
-        <option value="O3">오존</option>
-        <option value="NO2">이산화질소</option>
-        <option value="PM10" selected>미세먼지</option>
-        <option value="PM25">초미세먼지</option>
-    </select>
-    <div id=dust_contain>
-        <div id=dust_img_contain><img id=now_img src='res/map.png'></div>
-        <div id=busan class=loc></div>
-        <div id=chungbuk class=loc></div>
-        <div id=chungnam class=loc></div>
-        <div id=daegu class=loc></div>
-        <div id=daejeon class=loc></div>
-        <div id=gangwon class=loc></div>
-        <div id=gwangju class=loc></div>
-        <div id=gyeongbuk class=loc></div>
-        <div id=gyeonggi class=loc></div>
-        <div id=gyeongnam class=loc></div>
-        <div id=incheon class=loc></div>
-        <div id=jeju class=loc></div>
-        <div id=jeonbuk class=loc></div>
-        <div id=jeonnam class=loc></div>
-        <div id=sejong class=loc></div>
-        <div id=seoul class=loc></div>
-        <div id=ulsan class=loc></div>
-    </div>
-    <div id=info1>
-        자료제공 : 에어코리아
-    </div>
 </body>
 
 </html>

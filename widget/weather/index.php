@@ -1,14 +1,41 @@
 <!-- weather.php -->
 <!doctype html>
-<html>
+<html lang=ko>
 
 <head>
     <meta charset='utf-8'>
     <title>Weather</title>
-    <link rel="stylesheet" href="css/etc.css">
-    <link rel="stylesheet" href="css/now.css">
-    <link rel="stylesheet" href="css/tomorrow.css">
-    <script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div id=info0>
+    </div>
+    <select id='geo_name' onchange='selectGeo()'>
+    </select>
+    <div id=now>
+        <div id=now_img_contain><img id=now_img src=''></div>
+        <div id=now_detail></div>
+    </div>
+    <hr id=centor_line>
+    <div id=info1>
+        내일(오전,오후)의 날씨
+    </div>
+    <div id=tomm>
+        <div id=tomm0>
+            <div id=tomm0_img_contain><img id=tomm0_img src=''></div>
+            <div id=tomm0_detail></div>
+        </div>
+        <div id=tomm1>
+            <div id=tomm1_img_contain><img id=tomm1_img src=''></div>
+            <div id=tomm1_detail></div>
+        </div>
+    </div>
+    <div id=info2>
+        자료제공 : 기상청
+    </div>
+    
+    <script type="text/javascript">
         var geo;
         var now;
         var after;
@@ -224,34 +251,6 @@
                 + '강수확률 : ' + weather_after1['POP1'] + '%';
         }
     </script>
-</head>
-
-<body>
-    <div id=info0>
-    </div>
-    <select id='geo_name' onchange='selectGeo()'>
-    </select>
-    <div id=now>
-        <div id=now_img_contain><img id=now_img src=''></div>
-        <div id=now_detail></div>
-    </div>
-    <hr id=centor_line>
-    <div id=info1>
-        내일(오전,오후)의 날씨
-    </div>
-    <div id=tomm>
-        <div id=tomm0>
-            <div id=tomm0_img_contain><img id=tomm0_img src=''></div>
-            <div id=tomm0_detail></div>
-        </div>
-        <div id=tomm1>
-            <div id=tomm1_img_contain><img id=tomm1_img src=''></div>
-            <div id=tomm1_detail></div>
-        </div>
-    </div>
-    <div id=info2>
-        자료제공 : 기상청
-    </div>
 </body>
 
 </html>

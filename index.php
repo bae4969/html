@@ -1,12 +1,57 @@
 <!-- index page -->
 <!doctype html>
-<html lang=kr>
+<html lang=ko>
 <head>
     <meta charset='utf-8'>
     <title>BWP</title>
     <link rel="stylesheet" href="css/index.css">
-    <script src="/js/basicFunc.js"> </script>
-    <script>
+</head>
+<body>
+    <div id=main>
+        <header>
+            <div id=topLeft OnClick='location.href="index"'>Home</div>
+            <div id=topRight onclick=loginoutClick()></div>
+            <div id=title>
+                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Index Page" />
+            </div>
+        </header>
+        <nav>
+            <div id=nav>
+                <div class=nav_icon OnClick='location.href="blog/index"' >
+                    <img class=nav_icon src="/res/nav_blog.png" alt="blog"/>
+                </div>
+            </div>
+        </nav>
+        <section>
+            <div id=contents>
+                <div>
+                    <div id=left></div>
+                    <div id=right></div>
+                </div>
+                <div id=temp>
+                    <div id=content0 class=content>
+                        <iframe class=content_iframe src='widget/weather/index' frameborder=0 scrolling=no></iframe>
+                    </div>
+                    <div id=content1 class=content>
+                        <iframe class=content_iframe src='widget/dust/index' frameborder=0 scrolling=no></iframe>
+                    </div>
+                    <div id=content2 class=content>
+                        <iframe class=content_iframe src='widget/covid/index' frameborder=0 scrolling=no></iframe>
+                    </div>
+                    <div id=content3 class=content>
+                        <iframe class=content_iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <p>Contact : bae4969@naver.com</br>
+            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+        </footer>
+    </div>
+    
+    <script type="text/javascript" src="/js/basicFunc.js"> </script>
+    <script type="text/javascript">
         var user;
         var showState = 0;
         var content_h_1 = ['80vw', '132vw', '230vw', '104vw', ];
@@ -109,50 +154,6 @@
             }
         }
     </script>
-</head>
-<body>
-    <div id=main>
-        <header>
-            <div id=topLeft OnClick='location.href="index"'>Home</div>
-            <div id=topRight onclick=loginoutClick()></div>
-            <div id=title>
-                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Index Page" />
-            </div>
-        </header>
-        <nav>
-            <div id=nav>
-                <div class=nav_icon OnClick='location.href="blog/index"' >
-                    <img class=nav_icon src="/res/nav_blog.png" alt="blog"/>
-                </div>
-            </div>
-        </nav>
-        <section>
-            <div id=contents>
-                <div>
-                    <div id=left></div>
-                    <div id=right></div>
-                </div>
-                <div id=temp>
-                    <div id=content0 class=content>
-                        <iframe class=content_iframe src='widget/weather/index' frameborder=0 scrolling=no></iframe>
-                    </div>
-                    <div id=content1 class=content>
-                        <iframe class=content_iframe src='widget/dust/index' frameborder=0 scrolling=no></iframe>
-                    </div>
-                    <div id=content2 class=content>
-                        <iframe class=content_iframe src='widget/covid/index' frameborder=0 scrolling=no></iframe>
-                    </div>
-                    <div id=content3 class=content>
-                        <iframe class=content_iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <footer>
-            <p>Contact : bae4969@naver.com</br>
-            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
-        </footer>
-    </div>
 </body>
 </html>
 

@@ -1,10 +1,32 @@
 <!-- content/reader.php -->
 <!doctype html>
-<html lang=kr>
+<html lang=ko>
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
     <link rel="stylesheet" href="css/reader.css">
+</head>
+<body>
+    <div id="main">
+        <header>
+            <div id=topLeft OnClick='location.href="/index"'>Home</div>
+            <div id=topRight onclick=loginoutClick()></div>
+            <div id=topWrite OnClick='location.href="writer"'></div>
+            <div id=title>
+                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
+            </div>
+        </header>
+        <section id=section>
+            <aside>
+                <div id=profile>profile</div>
+                <ul id=category></ul>
+            </aside>
+        </section>
+        <footer>
+            <p>Contact : bae4969@naver.com</br>
+            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+        </footer>
+    </div>
 
     <script src="/js/basicFunc.js"> </script>
     <script>
@@ -219,27 +241,5 @@
             xhr.send(formData);
         }
     </script>
-</head>
-<body>
-    <div id="main">
-        <header>
-            <div id=topLeft OnClick='location.href="/index"'>Home</div>
-            <div id=topRight onclick=loginoutClick()></div>
-            <div id=topWrite OnClick='location.href="writer"'></div>
-            <div id=title>
-                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
-            </div>
-        </header>
-        <section id=section>
-            <aside>
-                <div id=profile>profile</div>
-                <ul id=category></ul>
-            </aside>
-        </section>
-        <footer>
-            <p>Contact : bae4969@naver.com</br>
-            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
-        </footer>
-    </div>
 </body>
 </html>

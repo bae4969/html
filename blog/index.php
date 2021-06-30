@@ -1,11 +1,44 @@
 <!-- blog.php -->
 <!doctype html>
-<html lang=kr>
+<html lang=ko>
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
     <link rel="stylesheet" href="css/index.css">
-    <script src="/js/basicFunc.js"> </script>
+</head>
+<body>
+    <div id=main>
+        <header>
+            <div id=topLeft OnClick='location.href="/index"'>Home</div>
+            <div id=topRight onclick=loginoutClick()></div>
+            <div id=topWrite OnClick='location.href="writer"'></div>
+            <div id=title>
+                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
+            </div>
+        </header>
+        <section>
+            <aside>
+                <div id=profile>profile</div>
+                <ul id=category></ul>
+            </aside>
+            <div id=contents>
+                <div>
+                    <div id=left></div>
+                    <div id=right></div>
+                </div>
+                <div id=pages>
+                </div>
+                <div id=temp style='height: 0;'>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <p>Contact : bae4969@naver.com</br>
+            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+        </footer>
+    </div>
+
+    <script src="/js/basicFunc.js"></script>
     <script>
         var user;
         var showState = 0;
@@ -281,37 +314,5 @@
                 initContent();
         }
     </script>
-</head>
-<body>
-    <div id=main>
-        <header>
-            <div id=topLeft OnClick='location.href="/index"'>Home</div>
-            <div id=topRight onclick=loginoutClick()></div>
-            <div id=topWrite OnClick='location.href="writer"'></div>
-            <div id=title>
-                <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
-            </div>
-        </header>
-        <section>
-            <aside>
-                <div id=profile>profile</div>
-                <ul id=category></ul>
-            </aside>
-            <div id=contents>
-                <div>
-                    <div id=left></div>
-                    <div id=right></div>
-                </div>
-                <div id=pages>
-                </div>
-                <div id=temp style='height: 0;'>
-                </div>
-            </div>
-        </section>
-        <footer>
-            <p>Contact : bae4969@naver.com</br>
-            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
-        </footer>
-    </div>
 </body>
 </html>
