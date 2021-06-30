@@ -1,15 +1,10 @@
 <!-- content/reader.php -->
 <!doctype html>
-<html>
+<html lang=kr>
 <head>
     <meta charset='utf-8'>
-    <title>Blog</title>
-    <link rel="stylesheet" href="css/after.css">
-    <link rel="stylesheet" href="css/outer.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/detailContent.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <title>BWP Dev News</title>
+    <link rel="stylesheet" href="css/reader.css">
 
     <script src="/js/basicFunc.js"> </script>
     <script>

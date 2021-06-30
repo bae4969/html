@@ -4,8 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>bitcoin_news</title>
-    <link rel="stylesheet" href="css/etc.css">
-    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/bitcoin_news.css">
     <script>
         var bitcoin;
         var sub_index;

@@ -1,15 +1,10 @@
 <!-- index page -->
 <!doctype html>
-<html>
+<html lang=kr>
 <head>
     <meta charset='utf-8'>
-    <title>Index</title>
-    <link rel="stylesheet" href="css/after.css">
-    <link rel="stylesheet" href="css/outer.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <title>BWP</title>
     <link rel="stylesheet" href="css/index.css">
-
     <script src="/js/basicFunc.js"> </script>
     <script>
         var user;
@@ -59,7 +54,7 @@
         }
 
         function setContentList(){
-            var win_width = document.body.offsetWidth;
+            var win_width = window.innerWidth;
             var content = document.getElementsByClassName('content');
             var div_temp = document.getElementById('temp');
             var div_left = document.getElementById('left');

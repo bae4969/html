@@ -1,6 +1,6 @@
 <!--login.php -->
 <!doctype html>
-<html>
+<html lang=kr>
 <head>
     <meta charset='utf-8'>
     <title>Login</title>
@@ -105,10 +105,10 @@
         }
     }
 
+/************************************end************************************/
     </style>
 
 <!--********************************script**********************************-->
-    
     <script src="/js/sha256.js"></script>
     <script src="/js/basicFunc.js"></script>
     <script>
@@ -144,6 +144,7 @@
             xhr.send();
         }
     </script>
+<!--********************************script**********************************-->
 </head>
 <body>
     <div id='main'>

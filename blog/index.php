@@ -1,16 +1,10 @@
 <!-- blog.php -->
 <!doctype html>
-<html>
+<html lang=kr>
 <head>
     <meta charset='utf-8'>
-    <title>Blog</title>
-    <link rel="stylesheet" href="css/after.css">
-    <link rel="stylesheet" href="css/outer.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/contents.css">
-    <link rel="stylesheet" href="css/footer.css">
-
+    <title>BWP Dev News</title>
+    <link rel="stylesheet" href="css/index.css">
     <script src="/js/basicFunc.js"> </script>
     <script>
         var user;
@@ -235,8 +229,8 @@
             var div_left = document.getElementById('left');
             var div_right = document.getElementById('right');
 
-            if(showState != 2 && document.body.offsetWidth < 1600){
-                showState = 2;
+            if(showState != 1 && document.body.offsetWidth < 1600){
+                showState = 1;
                 div_temp.style.height = 0;
                 for(i = 0; i < contentSize; i++)
                     div_temp.appendChild(document.getElementById("content"+i));
@@ -246,8 +240,8 @@
                 for(i = 0; i < contentSize; i++)
                     div_left.appendChild(document.getElementById("content"+i));
             }
-            else if(showState != 1 && document.body.offsetWidth >= 1600){
-                showState = 1;
+            else if(showState != 2 && document.body.offsetWidth >= 1600){
+                showState = 2;
                 div_temp.style.height = 0;
                 for(i = 0; i < contentSize; i++)
                     div_temp.appendChild(document.getElementById("content"+i));

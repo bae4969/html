@@ -1,16 +1,10 @@
 <!-- content/edit.php -->
 <!doctype html>
-<html>
+<html lang=kr>
 <head>
     <meta charset='utf-8'>
-    <title>Blog</title>
-    <link rel="stylesheet" href="css/after.css">
-    <link rel="stylesheet" href="css/outer.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/writeContent.css">
-    <link rel="stylesheet" href="css/footer.css">
-
+    <title>BWP Dev News</title>
+    <link rel="stylesheet" href="css/writeEdit.css">
     <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script src="/js/basicFunc.js"> </script>
     <script>
@@ -173,7 +167,7 @@
         <section>
             <div id=content>
                 <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 50)' value=''/>
-                <textarea id=input_content name=input_content style="width:100%; height:1000px; min-width:800px; min-height:600px; display:none;"></textarea>
+                <textarea id=input_content name=input_content></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
         </section>

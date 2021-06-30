@@ -1,10 +1,13 @@
 .gitignore
-sqlcon.php
-key.php
+
 res
 upload
 testpage
+
+sqlcon.php
+key.php
+template.php
+
 *.swp
 *.dat
 *.ico
-template.php

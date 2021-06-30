@@ -1,6 +1,6 @@
 <!-- template.php -->
 <!doctype html>
-<html>
+<html lang=kr>
 
 <head>
     <meta charset='utf-8'>

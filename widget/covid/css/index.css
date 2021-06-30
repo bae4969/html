@@ -1,0 +1,191 @@
+/************************************ etc ************************************/
+
+body{
+    margin: 0;
+    padding: 0;
+    background: #222426;
+    color: #C8C3BC;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div#info0{
+    width: 60%;
+    height: 6%;
+    font-size: 8vw;
+    position: absolute;
+    top: 2%;
+    left: 5%;
+}
+
+hr#hr0{
+    width: 96%;
+    position: absolute;
+    top: 6%;
+    left: 2%;
+}
+hr#hr1{
+    width: 96%;
+    position: absolute;
+    top: 16.5%;
+    left: 2%;
+}
+hr#hr2{
+    width: 96%;
+    position: absolute;
+    top: 69%;
+    left: 2%;
+}
+
+div#info3{
+    width: 50%;
+    min-width: 160px;
+    position: absolute;
+    top: 98%;
+    right: 5%;
+    text-align: right;
+}
+
+/************************************ total ************************************/
+
+div#total_contain{
+    width: 100%;
+    height: 25%;
+    position: absolute;
+    top: 7%;
+}
+div.total{
+    width: 23%;
+    position: absolute;
+    text-align: center;
+    font-size: 4vw;
+}
+div.row0            {top: 0%;}
+div.row1            {top: 10%;}
+div.row2            {top: 20%;}
+div.row3            {top: 30%;}
+div.col0            {left: 4%;}
+div.col1            {left: 50%;}
+div.total_value0    {left: 27%;}
+div.total_value1    {left: 73%;}
+
+/************************************ local ************************************/
+
+div#local_contain{
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    top: 17.5%
+}
+div#info1{
+    width: 80%;
+    font-size: 6vw;
+    position: absolute;
+    top: 0;
+    left: 5%;
+}
+select#local_type{
+    width: 28%;
+    height: 4%;
+    margin: 5px;
+    font-size: 3vw;
+    top: 0.5%;
+    right: 5%;
+    position: absolute;
+    background: #36383A;
+    color: white;
+    cursor: pointer;
+}
+div#map_img_contain{
+    width: 90%;
+    height: 100%;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+img#map_img{
+    width: 100%;
+    height: 100%;
+}
+div.loc{
+    padding: 1px;
+    display:inline-block;
+    position: absolute;
+    font-size: 4vw;
+    background: #4B9D2B;
+}
+div#Busan               {top: 70%; left: 76%;}
+div#Chungcheongbuk-do   {top: 38%; left: 50%;}
+div#Chungcheongnam-do   {top: 45%; left: 23%;}
+div#Daegu               {top: 57%; left: 66%;}
+div#Daejeon             {top: 52%; left: 40%;}
+div#Gangwon-do          {top: 25%; left: 60%;}
+div#Gwangju             {top: 71%; left: 28%;}
+div#Gyeongsangbuk-do    {top: 49%; left: 66%;}
+div#Gyeonggi-do         {top: 31%; left: 37%;}
+div#Gyeongsangnam-do    {top: 69%; left: 58%;}
+div#Incheon             {top: 26%; left: 19%;}
+div#Jeju                {top: 96%; left: 14%;}
+div#Jeollabuk-do        {top: 61%; left: 33%;}
+div#Jeollanam-do        {top: 79%; left: 30%;}
+div#Sejong              {top: 46%; left: 40%;}
+div#Seoul               {top: 23%; left: 34%;}
+div#Ulsan               {top: 64%; left: 80%;}
+div#Lazaretto_title{
+    padding: 1px;
+    display:inline-block;
+    position: absolute;
+    top: 92%;
+    left: 70%;
+    font-size: 4vw;
+}
+div#Lazaretto           {top: 96%; left: 68.5%;}
+
+/************************************ chart ************************************/
+
+div#chart_contain{
+    width: 100%;
+    height: 40%;
+    position: absolute;
+    top: 70.5%
+}
+div#info2{
+    width: 80%;
+    font-size: 6vw;
+    position: absolute;
+    top: 0;
+    left: 5%;
+}
+select#age_type{
+    width: 28%;
+    height: 5%;
+    margin: 5px;
+    font-size: 3vw;
+    top: 0.5%;
+    right: 5%;
+    position: absolute;
+    background: #36383A;
+    color: white;
+    cursor: pointer;
+}
+div.chart{
+    width: 20%;
+    position: absolute;
+    left: 11%;
+    text-align: center;
+    font-size: 4vw;
+}
+div.chart0{top: 62%;}
+div.chart1{top: 57%;}
+div.chart2{top: 52%;}
+div.chart3{top: 47%;}
+div.chart4{top: 42%;}
+div.chart5{top: 37%;}
+div.chart6{top: 32%;}
+div.chart7{top: 27%;}
+div.chart8{top: 22%;}
+div.chart9{top: 15%;}
+div.chart10{top: 10%;}
+div.chart_value{margin-left: 25%; width: 50%;}
+div.chart_bar{width: 0px; margin-left: 25%; background: #4B9D2B;}
+div#chart_bar9{background: #9C1615;}
+div#chart_bar10{background: #005EAE;}

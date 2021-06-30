@@ -1,18 +1,12 @@
 <!-- content/writer.php -->
 <!doctype html>
-<html>
+<html lang=kr>
 <head>
     <meta charset='utf-8'>
-    <title>Blog</title>
-    <link rel="stylesheet" href="css/after.css">
-    <link rel="stylesheet" href="css/outer.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/writeContent.css">
-    <link rel="stylesheet" href="css/footer.css">
-
+    <title>BWP Dev News</title>
+    <link rel="stylesheet" href="css/writeEdit.css">
     <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
-    <script src="/js/basicFunc.js"></script>
+    <script type="text/javascript" src="/js/basicFunc.js" charset="utf-8"></script>
     <script>
         window.onload = function() {
             checkUserInfo();
