@@ -25,12 +25,12 @@
 
         div#blank{
             width: 100%;
-            height: 40%;
+            height: 45%;
         }
         div#output{
             width: 100%;
             height: 10%;
-            font-size: 5vh;
+            font-size: 10vh;
             text-align: center;
         }
     /************************************************************************/
@@ -41,13 +41,17 @@
     <div id=blank>
     </div>
     <div id=output>
-        <b>점검중 ...</b>
-    </div>
-    <div id=output>
-        <b>Under Inspection ...</b>
+        <!-- <b>점검중 ...</b> -->
+        <b>접속중 ...</b>
     </div>
     <div id=blank>
     </div>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            location.href = 'index';
+        }
+    </script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@
                 </div>
                 <div id=pages>
                 </div>
-                <div id=temp style='height: 0;'>
+                <div id=temp>
                 </div>
             </div>
         </section>

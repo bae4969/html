@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>BWP</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link type="text/css" charset="UTF-8" rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <div id=main>
@@ -50,7 +50,7 @@
         </footer>
     </div>
     
-    <script type="text/javascript" src="/js/basicFunc.js"> </script>
+    <script type="text/javascript" charset="UTF-8" src="/js/basicFunc.js"> </script>
     <script type="text/javascript">
         var user;
         var showState = 0;

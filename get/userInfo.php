@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/html/php/user.php';
+include '../php/user.php';
 
 $user = checkUser($_GET["id"], $_GET["pw"]);
 

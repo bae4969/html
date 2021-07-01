@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /************************************ outer ************************************/
 
 header::after, nav::after, aside::after, div::after, section::after, li::after, select::after {

@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>bitcoin_news</title>
-    <link rel="stylesheet" href="css/bitcoin_news.css">
+    <link type="text/css" rel="stylesheet" href="css/bitcoin_news.css">
 </head>
 
 <body>

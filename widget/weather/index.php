@@ -5,7 +5,7 @@
 <head>
     <meta charset='utf-8'>
     <title>Weather</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link type="text/css" rel="stylesheet" href="css/index.css">
 </head>
 
 <body>

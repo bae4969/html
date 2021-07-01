@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/html/php/user.php';
+include '../../php/user.php';
 
 function disableContent($user_index, $level, $content_index){
     include "/var/www/phpExe/sqlcon.php";
