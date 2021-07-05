@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link type="text/css" rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <div id=main>
@@ -38,8 +38,8 @@
         </footer>
     </div>
 
-    <script src="/js/basicFunc.js"></script>
-    <script>
+    <script type="text/javascript" src="/js/basicFunc.js"></script>
+    <script type="text/javascript">
         var user;
         var showState = 0;
         var class_index = 0;
@@ -184,7 +184,7 @@
                             title.innerHTML = content_list['data']['content'][i]['title'];
                             date.className = 'content_date';
                             date.innerHTML = content_list['data']['content'][i]['date'];
-                            writer.className = 'content_date';
+                            writer.className = 'content_writer';
                             writer.innerHTML = 'UID : ' + content_list['data']['content'][i]['user_index'];
                             thumbnail_container.className = 'content_thumbnail_container';
                             thumbnail.className = 'content_thumbnail';

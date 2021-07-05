@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
-    <link rel="stylesheet" href="css/reader.css">
+    <link type="text/css" rel="stylesheet" href="css/reader.css">
 </head>
 <body>
     <div id="main">
@@ -28,8 +28,8 @@
         </footer>
     </div>
 
-    <script src="/js/basicFunc.js"> </script>
-    <script>
+    <script type="text/javascript" src="/js/basicFunc.js"> </script>
+    <script type="text/javascript">
         var content_index = 1;
 
         window.onload = function() {
@@ -144,7 +144,7 @@
                             date.id = 'content_date';
                             date.innerHTML = content_detail['data']['content']['date'];
 
-                            writer.id = 'content_date';
+                            writer.id = 'content_writer';
                             writer.innerHTML = 'UID : ' + content_detail['data']['content']['user_index'];
 
                             content.id = 'content_content';

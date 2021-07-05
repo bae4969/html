@@ -190,7 +190,7 @@ div.content_title {
     text-overflow: ellipsis;
 }
 
-div.content_date {
+div.content_date, div.content_writer {
     padding: 0px 4% 2% 4%;
     vertical-align: bottom;
     text-align: right;

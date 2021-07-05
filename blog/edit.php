@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
-    <link rel="stylesheet" href="css/writeEdit.css">
+    <link type="text/css" rel="stylesheet" href="css/writeEdit.css">
 </head>
 <body>
     <div id="main">
@@ -30,7 +30,7 @@
     </div>
 
     <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
-    <script src="/js/basicFunc.js"> </script>
+    <script type="text/javascript" src="/js/basicFunc.js"> </script>
     <script type="text/javascript">
         var content_index = 1;
         var oEditors = [];

@@ -168,7 +168,7 @@ div#content_title {
     font-weight: bold;
 }
 
-div#content_date {
+div#content_date, div#content_writer {
     padding: 0px 5% 10px 5%;
     vertical-align: bottom;
     text-align: right;
