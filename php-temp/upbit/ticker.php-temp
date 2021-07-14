@@ -60,14 +60,21 @@ if ($err) {
 }
 
 $trade_data = json_decode($response, true);
-$datetime_str = date("Y-m-d H:i:",strtotime(date("Y-m-d H:i:s")." +1 minutes")).'00';
+$datetime_str = date("Y-m-d H:i:").'00';
 
 $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlUpbitDb );
 for($i = 0; $i < count($trade_data); $i++){
+    $tableName = str_replace('-', '_', $trade_data[$i]['market']);
     $sql_quary = 'insert into '.
-        str_replace('-', '_', $trade_data[$i]['market']).'(date, value) values("'.
+        $tableName.'(date, value) values("'.
         $datetime_str.'", '.
         $trade_data[$i]['trade_price'].')';
+    if(!mysqli_query($conn, $sql_quary)){
+        $sql_error_count++;
+    }
+    $sql_quary = 'delete from '.$tableName.
+        ' where date < (select min(date) from (select date from '.$tableName.
+        ' order by date desc limit '.$sqlUpbitLength.') a)';
     if(!mysqli_query($conn, $sql_quary)){
         $sql_error_count++;
     }

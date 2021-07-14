@@ -5,4 +5,8 @@
     $sqlPw = ;
     $sqlBlogDb = ;
     $sqlWeatherDb = ;
+    $sqlCovidDb = ;
+    $sqlNaverDb = ;
+    $sqlUpbitDb = ;
+    $sqlUpbitLength = ;
 ?>
