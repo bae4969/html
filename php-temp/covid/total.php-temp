@@ -12,6 +12,8 @@ $yyyy = $dateTime_now->format('Y');
 $MM = $dateTime_now->format('m');
 $dd = $dateTime_now->format('d');
 
+function get_time() { $t=explode(' ',microtime()); return (float)$t[0]+(float)$t[1]; }
+$start = get_time();
 $api_error_count = 0;
 $sql_error_count = 0;
 
@@ -34,17 +36,17 @@ while($api_error_count < 4){
     $response = simplexml_load_string($response);
     $resultCode = (int)$response->header->resultcode;
     if($resultCode == 0){
-        $createDt = (string)$response->body->items->item->createDt; //생성 일
-        $updateDt = (string)$response->body->items->item->updateDt; //업데이트 일
-        $decideCnt = (int)$response->body->items->item->decideCnt; //확진자 수
-        $clearCnt = (int)$response->body->items->item->clearCnt; //격리해제 수
-        $examCnt = (int)$response->body->items->item->examCnt; //검사진행 수
-        $deathCnt = (int)$response->body->items->item->deathCnt; //사망자 수
-        $careCnt = (int)$response->body->items->item->careCnt; //치료중 환자 수
-        $resutlNegCnt = (int)$response->body->items->item->resutlNegCnt; //결과 음성 수
-        $accExamCnt = (int)$response->body->items->item->accExamCnt; //누적 검사 수
-        $accExamCompCnt = (int)$response->body->items->item->accExamCompCnt; //누적 검사 완료 수
-        $accDefRate = (double)$response->body->items->item->accDefRate; //누적 확진률
+        $createDt = (string)$response->body->items->item->createDt;
+        $updateDt = (string)$response->body->items->item->updateDt;
+        $decideCnt = (int)$response->body->items->item->decideCnt;
+        $clearCnt = (int)$response->body->items->item->clearCnt;
+        $examCnt = (int)$response->body->items->item->examCnt;
+        $deathCnt = (int)$response->body->items->item->deathCnt;
+        $careCnt = (int)$response->body->items->item->careCnt;
+        $resutlNegCnt = (int)$response->body->items->item->resutlNegCnt;
+        $accExamCnt = (int)$response->body->items->item->accExamCnt;
+        $accExamCompCnt = (int)$response->body->items->item->accExamCompCnt;
+        $accDefRate = (double)$response->body->items->item->accDefRate;
 
         if($updateDt == 'null')
             $date = $createDt;
@@ -75,6 +77,8 @@ while($api_error_count < 4){
     }
 }
 
-print('Execute : update covid total (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
+$end = get_time();
+$time = $end - $start;
+print('Execute : update covid total (Exe_time : '.number_format($time,6).', API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
 
 ?>

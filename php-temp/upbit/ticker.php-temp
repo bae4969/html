@@ -2,6 +2,8 @@
 
 include '/var/www/phpExe/sqlcon.php';
 
+function get_time() { $t=explode(' ',microtime()); return (float)$t[0]+(float)$t[1]; }
+$start = get_time();
 $sql_error_count = 0;
 
 $curl = curl_init();
@@ -18,7 +20,9 @@ $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
 if ($err) {
-    print('Execute : update upbit (API_error : load list)');
+    $end = get_time();
+    $time = $end - $start;
+    print('Execute : update upbit (Exe_time : '.number_format($time,6).', API_error : load list)');
     return;
 }
 
@@ -55,7 +59,9 @@ $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
 if ($err) {
-    print('Execute : update upbit (API_error : load ticker)');
+    $end = get_time();
+    $time = $end - $start;
+    print('Execute : update upbit (Exe_time : '.number_format($time,6).', API_error : load ticker)');
     return;
 }
 
@@ -81,6 +87,8 @@ for($i = 0; $i < count($trade_data); $i++){
 }
 mysqli_close($conn);
 
-print('Execute : update upbit (API_errors : NONE, SQL_errors : '.$sql_error_count.')');
+$end = get_time();
+$time = $end - $start;
+print('Execute : update upbit (Exe_time : '.number_format($time,6).', API_errors : NONE, SQL_errors : '.$sql_error_count.')');
 
 ?>

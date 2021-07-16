@@ -89,6 +89,8 @@ function search_result($input) {
     return array_splice($word_result, 0, 20);
 }
 
+function get_time() { $t=explode(' ',microtime()); return (float)$t[0]+(float)$t[1]; }
+$start = get_time();
 $api_error_count = 0;
 $sql_error_count = 0;
 
@@ -130,6 +132,8 @@ for($k = 0; $k < count($update_list); $k++){
     }
 }
 
-print('Execute : update naver news (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
+$end = get_time();
+$time = $end - $start;
+print('Execute : update naver news (Exe_time : '.number_format($time,6).', API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
 
 ?>

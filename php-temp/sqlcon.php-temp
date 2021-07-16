@@ -1,12 +1,14 @@
 <!-- sql connetion value -->
 <?php
-    $sqlAddr = ;
-    $sqlId = ;
-    $sqlPw = ;
-    $sqlBlogDb = ;
-    $sqlWeatherDb = ;
-    $sqlCovidDb = ;
-    $sqlNaverDb = ;
-    $sqlUpbitDb = ;
-    $sqlUpbitLength = ;
+
+$sqlAddr = ;
+$sqlId = ;
+$sqlPw = ;
+$sqlBlogDb = ;
+$sqlWeatherDb = ;
+$sqlCovidDb = ;
+$sqlNaverDb = ;
+$sqlUpbitDb = ;
+$sqlUpbitLength = ;
+
 ?>

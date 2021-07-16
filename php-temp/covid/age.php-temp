@@ -12,8 +12,11 @@ $yyyy = $dateTime_now->format('Y');
 $MM = $dateTime_now->format('m');
 $dd = $dateTime_now->format('d');
 
+function get_time() { $t=explode(' ',microtime()); return (float)$t[0]+(float)$t[1]; }
+$start = get_time();
 $api_error_count = 0;
 $sql_error_count = 0;
+
 while($api_error_count < 4){
     $ch = curl_init();
     $url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19GenAgeCaseInfJson';
@@ -83,6 +86,8 @@ while($api_error_count < 4){
     }
 }
 
-print('Execute : update covid age (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
+$end = get_time();
+$time = $end - $start;
+print('Execute : update covid age (Exe_time : '.number_format($time,6).', API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
 
 ?>

@@ -1,6 +1,8 @@
 <?php
+
 $gKey = 'Service Key';
 $openKey = '';
 $naverId = '';
 $naverKey = '';
+
 ?>

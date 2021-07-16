@@ -12,8 +12,11 @@ $yyyy = $dateTime_now->format('Y');
 $MM = $dateTime_now->format('m');
 $dd = $dateTime_now->format('d');
 
+function get_time() { $t=explode(' ',microtime()); return (float)$t[0]+(float)$t[1]; }
+$start = get_time();
 $api_error_count = 0;
 $sql_error_count = 0;
+
 while($api_error_count < 4){
     $ch = curl_init();
     $url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson';
@@ -36,15 +39,15 @@ while($api_error_count < 4){
         for($i = 0; $i < count($response->body->items->item); $i++){
             $createDt = (string)$response->body->items->item[$i]->createDt;
             $updateDt = (string)$response->body->items->item[$i]->updateDt;
-            $gubunEn = (string)$response->body->items->item[$i]->gubunEn; //지역
-            $incDec = (int)$response->body->items->item[$i]->incDec; //증가수
-            $defCnt = (int)$response->body->items->item[$i]->defCnt; //확진
-            $deathCnt = (int)$response->body->items->item[$i]->deathCnt; //사망자
-            $isolClearCnt = (int)$response->body->items->item[$i]->isolClearCnt; //격리 해재
-            $isolIngCnt = (int)$response->body->items->item[$i]->isolIngCnt; //격리중 환자
-            $overFlowCnt = (int)$response->body->items->item[$i]->overFlowCnt; //해외 유입
-            $localOccCnt = (int)$response->body->items->item[$i]->localOccCnt; //지역발생
-            $qurRate = (double)$response->body->items->item[$i]->qurRate; //10만명당
+            $gubunEn = (string)$response->body->items->item[$i]->gubunEn;
+            $incDec = (int)$response->body->items->item[$i]->incDec;
+            $defCnt = (int)$response->body->items->item[$i]->defCnt;
+            $deathCnt = (int)$response->body->items->item[$i]->deathCnt;
+            $isolClearCnt = (int)$response->body->items->item[$i]->isolClearCnt;
+            $isolIngCnt = (int)$response->body->items->item[$i]->isolIngCnt;
+            $overFlowCnt = (int)$response->body->items->item[$i]->overFlowCnt;
+            $localOccCnt = (int)$response->body->items->item[$i]->localOccCnt;
+            $qurRate = (double)$response->body->items->item[$i]->qurRate;
 
             if($updateDt == 'null')
                 $date = $createDt;
@@ -67,6 +70,7 @@ while($api_error_count < 4){
             if(!mysqli_query($conn, $sql_query))
                 $sql_error_count++;
         }
+
         break;
     }
     else{
@@ -75,6 +79,8 @@ while($api_error_count < 4){
     }
 }
 
-print('Execute : update covid local (API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
+$end = get_time();
+$time = $end - $start;
+print('Execute : update covid local (Exe_time : '.number_format($time,6).', API_errors : '.$api_error_count.', SQL_errors : '.$sql_error_count).')';
 
 ?>
