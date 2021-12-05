@@ -29,17 +29,18 @@
                     <div id=right></div>
                 </div>
                 <div id=temp>
-                    <div id=content0 class=content>
+                    <!-- 날씨 데이터 API 없어짐 (위젯 높이 80 40 30) -->
+                    <!-- <div id=content0 class=content>
                         <iframe class=content_iframe src='widget/weather/index' frameborder=0 scrolling=no></iframe>
+                    </div> -->
+                    <div id=content0 class=content>
+                        <iframe class=content_iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no></iframe>
                     </div>
                     <div id=content1 class=content>
                         <iframe class=content_iframe src='widget/dust/index' frameborder=0 scrolling=no></iframe>
                     </div>
                     <div id=content2 class=content>
                         <iframe class=content_iframe src='widget/covid/index' frameborder=0 scrolling=no></iframe>
-                    </div>
-                    <div id=content3 class=content>
-                        <iframe class=content_iframe src='widget/naver/bitcoin_news' frameborder=0 scrolling=no></iframe>
                     </div>
                 </div>
             </div>
@@ -54,9 +55,9 @@
     <script type="text/javascript">
         var user;
         var showState = 0;
-        var content_h_1 = ['80vw', '132vw', '230vw', '104vw', ];
-        var content_h_2 = ['40vw', '65vw', '115vw', '57vw', ];
-        var content_h_3 = ['30vw', '49vw', '86vw', '41vw', ];
+        var content_h_1 = ['104vw', '132vw', '230vw', ];
+        var content_h_2 = ['57vw', '65vw', '115vw', ];
+        var content_h_3 = ['41vw', '49vw', '86vw', ];
 
         window.onload = function() {
             checkUserInfo();
