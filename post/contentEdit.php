@@ -1,6 +1,6 @@
 <?php
 
-include '../../php/user.php';
+include '../php/user.php';
 include '../php/writeEdit.php';
 
 function editContent($user_index, $content_index, $title, $thumbnail, $summary, $content){

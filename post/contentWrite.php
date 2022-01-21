@@ -1,6 +1,6 @@
 <?php
 
-include '../../php/user.php';
+include '../php/user.php';
 include '../php/writeEdit.php';
 
 function getClassLevel($class_index){
