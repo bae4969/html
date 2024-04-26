@@ -283,12 +283,12 @@ jindo.FileUploader = jindo.$Class({
         this._aHiddenInput.push(this._createElement('input', {
             'type': 'hidden',
             'name': 'id',
-            'value': getCookie('id')
+            'value': getCookie('user_id')
         }));
         this._aHiddenInput.push(this._createElement('input', {
             'type': 'hidden',
             'name': 'pw',
-            'value': getCookie('pw')
+            'value': getCookie('user_pw')
         }));
         ///////////////////////////////////////////////////////////////////////////////////
 

@@ -142,21 +142,21 @@
         var user;
 
         function loginClick() {
-            var id = sha256(document.getElementById("text_id").value);
-            var pw = sha256(document.getElementById("text_pw").value);
+            var user_id = document.getElementById("text_id").value;
+            var user_pw = sha256(document.getElementById("text_pw").value);
 
             var xhr = new XMLHttpRequest();
-            var url = 'get/userInfo';
-            url += '?id=' + id;
-            url += '&pw=' + pw;
+            var url = 'get/login_verify';
+            url += '?user_id=' + user_id;
+            url += '&user_pw=' + user_pw;
             xhr.open('GET', url);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     if(xhr.status == 200){
                         user = JSON.parse(this.responseText);
                         if(user['state'] == 0){
-                            setCookie("id", id, 1);
-                            setCookie("pw", pw, 1);
+                            setCookie("user_id", user_id, 1);
+                            setCookie("user_pw", user_pw, 1);
                             location.href = '/index';
                         }
                         else {

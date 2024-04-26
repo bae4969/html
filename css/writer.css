@@ -162,7 +162,7 @@ input#input_title {
     cursor: text;
 }
 
-select#input_class {
+select#input_category {
     width: 30%;
     padding: 1.5%;
     margin-bottom: 10px;

@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>BWP Dev News</title>
-    <link type="text/css" rel="stylesheet" href="css/writeEdit.css">
+    <link type="text/css" rel="stylesheet" href="css/writer.css">
 </head>
 <body>
     <div id="main">
@@ -18,8 +18,8 @@
         </header>
         <section>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목 (최대 30자)' oninput='onInput(this, 50)'/>
-                <select id=input_class>
+                <input id=input_title type='text' placeholder='제목 (최대 30자)' oninput='onInput(this, 255)'/>
+                <select id=input_category>
                     <option value=0>분류 선택</option>
                 </select>
                 <textarea id=input_content name=input_content></textarea>
@@ -35,6 +35,8 @@
     <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script type="text/javascript" src="/js/basicFunc.js" charset="utf-8"></script>
     <script type="text/javascript">
+        var user_info_row;
+        var posting_index;  // neg == new posting, else == edit posting
         var oEditors = [];
         
         window.onload = function() {
@@ -48,65 +50,118 @@
                 },
                 fCreator: "createSEditor2"
             });
-            checkUserInfo();
-            initSelectClass();
+
+            var params = {};
+            location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+            if(params['posting_index'])
+                posting_index = params['posting_index'];
+            else
+                posting_index = -1;
+
+            verifyLogin();
+
+            if(posting_index >= 0)
+                initLastPosting();
+            else
+                initSelectCategory();
         }
-        function loginoutClick(){
-            if (user['state'] == 0) {
-                deleteCookie('id');
-                deleteCookie('pw');
+        function loginoutClick() {
+            if (user_info_row['state'] == 0) {
+                deleteCookie('user_id');
+                deleteCookie('user_pw');
                 alert("로그아웃");
                 location.href = 'index';
             }
-            else{
+            else {
                 location.href = '/login';
             }
         }
 
-        function checkUserInfo() {
+        function verifyLogin() {
             var xhr = new XMLHttpRequest();
-            var url = '/get/userInfo';
-            url += '?id=' + getCookie('id');
-            url += '&pw=' + getCookie('pw');
+            var url = '/get/login_verify';
+            url += '?user_id=' + getCookie('user_id');
+            url += '&user_pw=' + getCookie('user_pw');
             xhr.open('GET', url);
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
-                    user = JSON.parse(this.responseText);
-                    if(user['state'] == 0){
-                        document.getElementById("topRight").innerHTML = "로그아웃";
-                        document.getElementById("topWrite").innerHTML = "글쓰기";
-                        if(user['write_limit'] > 20){
-                            alert('하루 글쓰기 수가 초과 되었습니다.')
-                            location.href = 'index';
-                        }
-                    }
-                    else {
-                        alert('잘못된 접근')
-                        location.href = 'index';
-                    }
+                if (xhr.readyState != XMLHttpRequest.DONE) return;
+                if (xhr.status != 200) {
+                    alert('Server Error (' + xhr.status + ')');
+                    return;
+                }
+
+                user_info_row = JSON.parse(this.responseText);
+                if(user_info_row['can_write'] == 0) {
+                    alert('글쓰기 횟수가 초과 되었습니다.');
+                    location.href = 'index';
+                    return;
+                }
+                if (user_info_row['state'] == 0) {
+                    document.getElementById("topRight").innerHTML = "로그아웃";
+                    document.getElementById("topWrite").innerHTML = "글쓰기";
+                }
+                else {
+                    document.getElementById("topRight").innerHTML = "로그인";
+                    if(document.getElementById("topWrite") !== null)
+                        document.getElementById("topWrite").innerHTML = "";
                 }
             };
             xhr.send();
         }
-        function initSelectClass(){
+        function initSelectCategory() {
             var xhr = new XMLHttpRequest();
-            var url = 'get/selectClass';
-            url += '?id=' + getCookie('id');
-            url += '&pw=' + getCookie('pw');
+            var url = 'get/category_write_list';
+            url += '?user_id=' + getCookie('user_id');
+            url += '&user_pw=' + getCookie('user_pw');
             xhr.open('GET', url);
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
-                    var class_list = JSON.parse(this.responseText);
-                    if(class_list['state'] == 0){
-                        var input_class = document.getElementById('input_class');
-                        for(var i = 0; i < class_list['data'].length; i++){
-                            var option = document.createElement('option');
-                            option.value = class_list['data'][i]['class_index']
-                            option.innerHTML = class_list['data'][i]['name'];
-                            input_class.appendChild(option);
-                        }
-                    }
+                if (xhr.readyState != XMLHttpRequest.DONE) return;
+                if (xhr.status != 200) {
+                    alert('Server Error (' + xhr.status + ')');
+                    return;
                 }
+
+                var category_list = JSON.parse(this.responseText);
+                if (category_list['state'] != 0) {
+                    alert('카테고리 초기화 오류 (' + category_list['state'] + ')');
+                    return;
+                }
+                
+
+                var input_category = document.getElementById('input_category');
+                for(var i = 1; i < category_list['data'].length; i++){
+                    var option = document.createElement('option');
+                    option.value = category_list['data'][i]['category_index']
+                    option.innerHTML = category_list['data'][i]['category_name'];
+                    input_category.appendChild(option);
+                }
+            };
+            xhr.send();
+        }
+        function initLastPosting() {
+            var xhr = new XMLHttpRequest();
+            var url = 'get/full_posting';
+            url += '?user_id=' + getCookie('user_id');
+            url += '&user_pw=' + getCookie('user_pw');
+            url += '&posting_index=' + posting_index;
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState != XMLHttpRequest.DONE) return;
+                if (xhr.status != 200) {
+                    alert('Server Error (' + xhr.status + ')');
+                    return;
+                }
+
+                var full_posting = JSON.parse(this.responseText);
+                if(full_posting['state'] != 0){
+                    alert('포스팅 초기화 오류 (' + full_posting['state'] + ')');
+                    location.href = 'reader?posting_index=' + posting_index;
+                    return;
+                }
+                
+                document.getElementById("input_category").style.display = "none";
+                document.getElementById("input_title").value = full_posting['data']['posting_title'];
+                document.getElementById("input_content").value = full_posting['data']['posting_content'];
             };
             xhr.send();
         }
@@ -123,7 +178,7 @@
                 alert('제목을 작성해주세요.')
                 return;
             }
-            else if(document.getElementById("input_class").value < 1){
+            else if(posting_index < 0 && document.getElementById("input_category").value < 1){
                 alert('분류를 선택해주세요.');
                 return;
             }
@@ -135,8 +190,9 @@
             oEditors.getById["input_content"].exec("UPDATE_CONTENTS_FIELD", []);
 
             var formData = new FormData();
-            formData.append('id', getCookie('id'));
-            formData.append('pw', getCookie('pw'));
+            formData.append('user_id', getCookie('user_id'));
+            formData.append('user_pw', getCookie('user_pw'));
+            formData.append('posting_index', posting_index);
 
             var editorStr = document.getElementById("input_content").value;
             editorStr = editorStr.replaceAll('<div', '<p');
@@ -147,35 +203,36 @@
             var imgClass = inputFrame.contentWindow.document.getElementsByClassName('photo');
 
             var inputArea = inputFrame.contentWindow.document.getElementsByClassName('se2_inputarea')[0];
-            var summaryStr = inputArea.innerText.substring(0, 200);
-            if(inputArea.innerText.length > 200) summaryStr += '...';
+            var summaryStr = inputArea.innerText.substring(0, 256);
+            if(inputArea.innerText.length > 256) summaryStr += '...';
             summaryStr  = summaryStr.replaceAll('\n', ' ');
 
+            formData.append('category_index', document.getElementById("input_category").value);
+            formData.append('posting_title', document.getElementById("input_title").value);
             if(imgClass.length > 0){
                 var path = imgClass[0].src.split('/res/');
-                formData.append('thumbnail', '/res/' + path[1]);
+                formData.append('posting_thumbnail', '/res/' + path[1]);
             }
             else
-                formData.append('thumbnail', '');
-            formData.append('title', document.getElementById("input_title").value);
-            formData.append('class_index', document.getElementById("input_class").value);
-            formData.append('summary', summaryStr);
-            formData.append('content', editorStr);
+                formData.append('posting_thumbnail', '');
+            formData.append('posting_summary', summaryStr);
+            formData.append('posting_content', editorStr);
 
             var xhr = new XMLHttpRequest();
-            var url = 'post/contentWrite';
+            var url = 'post/write_posting';
             xhr.open('POST', url);
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE){
-                    if(xhr.status == 200){
-                        var result = JSON.parse(this.responseText);
-                        if(result['state'] == 0)
-                            location.href = 'reader?content_index=' + result['data'];
-                        else 
-                            alert(result['data']);
-                    }
-                    else alert('Server Error (' + xhr.status + ')');
+                if (xhr.readyState != XMLHttpRequest.DONE) return;
+                if (xhr.status != 200) {
+                    alert('Server Error (' + xhr.status + ')');
+                    return;
                 }
+                
+                var result = JSON.parse(this.responseText);
+                if(result['state'] == 0)
+                    location.href = 'reader?posting_index=' + result['posting_index'];
+                else 
+                    alert('포스팅 실패 (' + result['etc'] + ')');
             }
             xhr.send(formData);
         }

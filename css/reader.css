@@ -144,15 +144,15 @@ section {
     background: #1A1C1D;
 }
 
-div#content {
+div#posting {
     background: #222426;
 }
 
-div#content_ban{
+div#posting_ban{
     background: #3D202D;
 }
 
-div#content, div#content_ban{
+div#posting, div#posting_ban{
     width: calc(100% - 280px);
     margin: 10px 0px 10px 10px;
     padding: 20px;
@@ -162,13 +162,13 @@ div#content, div#content_ban{
     color: white;
 }
 
-div#content_title {
+div#posting_title {
     padding: 5% 5% 20px 5%;
     font-size: 5ex;
     font-weight: bold;
 }
 
-div#content_date, div#content_writer {
+div#posting_date, div#posting_writer {
     padding: 0px 5% 10px 5%;
     vertical-align: bottom;
     text-align: right;
@@ -179,13 +179,13 @@ hr{
     background: #C3C3C3;
 }
 
-div#content_content {
+div#posting_content {
     margin-top: 20px;
     padding: 30px;
     white-space: pre-wrap;
 }
 
-button.content_control{
+button.posting_control{
     width: 80px;
     height: 40px;
     margin: 20px 10px 20px 0px;
@@ -204,7 +204,7 @@ img{
     height: auto;
 }
 
-button.content_control:hover{
+button.posting_control:hover{
     border: none;
     background: #484A4C;
 }
@@ -214,7 +214,7 @@ button.content_control:hover{
         display: none;;
     }
 
-    div#content, div#content_ban{
+    div#posting, div#posting_ban{
         width: calc(100% - 60px);
     }
 }

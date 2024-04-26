@@ -139,7 +139,7 @@ section {
     background: #1A1C1D;
 }
 
-div#contents {
+div#postings {
     width: calc(100% - 220px);
     margin-top: 10px;
 }
@@ -154,25 +154,25 @@ div#right {
     float: right;
 }
 
-div.content, button.page{
+div.posting, button.page{
     background: #222426;
 }
 
-div.content_ban{
+div.posting_ban{
     background: #3D202D;
 }
 
-div.content:hover, button.page:hover{
+div.posting:hover, button.page:hover{
     background-color: #36383A;
     cursor: pointer;
 }
 
-div.content_ban:hover{
+div.posting_ban:hover{
     background: #5B243A;
     cursor: pointer;
 }
 
-div.content, div.content_ban {
+div.posting, div.posting_ban {
     width: calc(100% - 60px);
     margin: 0px 10px 20px 10px;
     padding: 20px;
@@ -181,7 +181,7 @@ div.content, div.content_ban {
     color: white;
 }
 
-div.content_title {
+div.posting_title {
     padding: 30px 8% 20px 8%;
     font-size: 4ex;
     font-weight: bold;
@@ -190,7 +190,7 @@ div.content_title {
     text-overflow: ellipsis;
 }
 
-div.content_date, div.content_writer {
+div.posting_date, div.posting_writer {
     padding: 0px 4% 2% 4%;
     vertical-align: bottom;
     text-align: right;
@@ -202,11 +202,11 @@ hr{
     margin-bottom: 20px;
 }
 
-div.content_thumbnail_container{
+div.posting_thumbnail_container{
     text-align: center;
 }
 
-img.content_thumbnail {
+img.posting_thumbnail {
     max-width: 90%;
     max-height: 400px;
     padding-bottom: 10px;
@@ -215,7 +215,7 @@ img.content_thumbnail {
     word-break: break-all;
 }
 
-div.content_summary {
+div.posting_summary {
     width: 94%;
     padding: 0 10px 10px 10px;
     font-size: 2ex;

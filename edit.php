@@ -18,7 +18,7 @@
         </header>
         <section>
             <div id=content>
-                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 50)' value=''/>
+                <input id=input_title type='text' placeholder='제목' oninput='onInput(this, 255)' value=''/>
                 <textarea id=input_content name=input_content></textarea>
                 <button id='btn_submit' onclick=submitClick()>수정</button>
             </div>
@@ -91,35 +91,6 @@
                         alert('잘못된 접근')
                         location.href = 'index';
                     }
-                }
-            };
-            xhr.send();
-        }
-        function initEdit(){
-            var xhr = new XMLHttpRequest();
-            var url = 'get/edit';
-            url += '?id=' + getCookie('id');
-            url += '&pw=' + getCookie('pw');
-            url += '&content_index=' + content_index;
-            xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE){
-                    if( xhr.status == 200){
-                        var edit_data = JSON.parse(this.responseText);
-                        if(edit_data['state'] == 0){
-                            document.getElementById("input_title").value = edit_data['data']['title'];
-                            document.getElementById("input_content").value = edit_data['data']['content'];
-                        }
-                        else if(edit_data['state'] >= 200){
-                            alert(edit_data['data']);
-                            location.href = 'index';
-                        }
-                        else{
-                            alert(edit_data['data']);
-                            location.href = 'reader?content_index=' + content_index;
-                        }
-                    }
-                    else alert('Server Error (' + xhr.status + ')');
                 }
             };
             xhr.send();
