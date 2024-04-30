@@ -3,38 +3,8 @@
 
 <head>
     <meta charset='utf-8'>
-    <title>template</title>
-    <style>
-    /************************************************************************/
-        body {
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            background: #181A1B;
-            color: #C3C3C3;
-            list-style: none;
-            font-family: "arial";
-        }
-
-        div#main {
-            width: 100%;
-            height: 100%;
-            margin: 0px;
-        }
-
-        div#blank{
-            width: 100%;
-            height: 45%;
-        }
-        div#output{
-            width: 100%;
-            height: 10%;
-            font-size: 10vh;
-            text-align: center;
-        }
-    /************************************************************************/
-    </style>
+    <title>Entrance</title>
+    <link type="text/css" rel="stylesheet" href="css/entrance.css">
 </head>
 
 <body>
