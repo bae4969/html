@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------
 
-						blog ver.0.1.4
+						blog ver.0.2.0
 
 ---------------------------------------------------------------------------
 
@@ -10,25 +10,15 @@
 
 ---------------------------------------------------------------------------
 
-	Notice
-
-		 This project for Simple blog page in APM. It's a bit tricky to install. The installation
-		method will be uploaded in the near future.
-
-
----------------------------------------------------------------------------
-
-
 	Can List
 
 		1. Can show index page, blog page
 
 		2. Can log in, out
 
-		3. Can write and edit content with img in blog page
+		3. Can write and edit posting
 
-		4. Can show some widgets
-
+		4. Can show some widgets (Need to restore)
 
 ---------------------------------------------------------------------------
 
@@ -36,21 +26,15 @@
 	
 		1. add naver news(bitcoin) widget
 
-
 ---------------------------------------------------------------------------
 
-	Change
-
-		1. fix widget size according to window size 
-
-		
----------------------------------------------------------------------------
-
-	How to Use
+	How to install
 
 		1. before install this, you have to install APM.
 
-		2. put this project to '/var/www/html'
+		2. put this project to '/var/www'
 
+		3. need to change filename /phpExe/sql_connection_info_temp.php
+		  to /phpExe/sql_connection_info.phpand need to config scret keys
 
 ---------------------------------------------------------------------------
