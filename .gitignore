@@ -1,11 +1,5 @@
-res
-upload
-testpage
-
-sqlcon.php
-key.php
+sql_connection_info.php
 template.php
 
-*.swp
 *.dat
 *.ico
