@@ -58,7 +58,7 @@
                             location.href = '/index';
                         }
                         else {
-                            alert(user['data']['etc']);
+                            alert(user['etc']);
                         }
                     }
                     else{
