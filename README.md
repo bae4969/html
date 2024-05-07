@@ -34,7 +34,7 @@
 
 		2. put this project to '/var/www'
 
-		3. need to change filename /phpExe/sql_connection_info_temp.php
-		  to /phpExe/sql_connection_info.phpand need to config scret keys
+		3. need to change filename /php/sql_connection_info_temp.php
+		  to /php/sql_connection_info.phpand need to config scret keys
 
 ---------------------------------------------------------------------------

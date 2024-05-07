@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/phpExe/sqlcon.php';
+include '/var/www/php/sqlcon.php';
 
 $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlWeatherDb );
 $sql_query = 'select * from dust';

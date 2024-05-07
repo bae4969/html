@@ -3,7 +3,7 @@
 <html lang=ko>
 <head>
     <meta charset='utf-8'>
-    <title>BWP Dev News</title>
+    <title>Developer Blog</title>
     <link type="text/css" rel="stylesheet" href="css/reader.css">
 </head>
 <body>

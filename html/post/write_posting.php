@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/phpExe/sql_functions.php';
+include '/var/www/php/sql_functions.php';
 
 
 $verify_ret = VerifyPostingData($_POST['posting_title'], $_POST['posting_thumbnail'], $_POST['posting_summary'], $_POST['posting_content']);

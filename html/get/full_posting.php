@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/phpExe/sql_functions.php';
+include '/var/www/php/sql_functions.php';
 
 
 $user_info = GetUserInfo($_GET["user_id"], $_GET["user_pw"]);
