@@ -11,6 +11,7 @@ function GetUserInfo($user_id, $user_pw){
         return array("state"=>444);	/* injection 방지 */
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select * from user_list where user_id="'.$user_id.'" and user_pw="'.$user_pw.'"';
     $result = mysqli_query($conn, $sql_query);
 
@@ -28,6 +29,7 @@ function UpdateUserLastActionDatetime($user_info){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = "update user_list set user_last_action_datetime=NOW() where user_index=".$user_info['user_index'];
     $result = mysqli_query($conn, $sql_query);
 	
@@ -43,6 +45,7 @@ function AddUserWriteCount($user_info){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = "update user_list set user_posting_count=user_posting_count+1 where user_index=".$user_info['user_index'];
     $result = mysqli_query($conn, $sql_query);
 	
@@ -60,6 +63,7 @@ function GetCategoryListByReadLevel($user_level){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select * from category_list where category_read_level>='.$user_level.' order by category_order asc';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -78,6 +82,7 @@ function GetCategoryListByWriteLevel($user_level){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select * from category_list where category_write_level>='.$user_level.' order by category_order asc';
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -96,6 +101,7 @@ function GetCategoryInfo($category_index){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select * from category_list where category_index='.$category_index;
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -117,6 +123,7 @@ function GetTotalPostingTotalCount($category_index, $user_info){
 
 
     $conn = mysqli_connect($sqlAddr, $sqlId, $sqlPw, $sqlBlogDb);
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select count(*) from posting_list where category_read_level>='.$user_info['user_level'].' ';
 	if($category_index >= 0)
 		$sql_query .= 'and category_index='.$category_index.' ';
@@ -139,6 +146,7 @@ function GetSummaryPostingList($page_index, $page_size, $category_index, $user_i
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select ';
 	$sql_query .= 'posting_index, user_index, category_index, category_read_level, posting_state, ';
 	$sql_query .= 'posting_first_post_datetime, posting_last_edit_datetime, ';
@@ -169,6 +177,7 @@ function GetPostingInfo($posting_index){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select ';
 	$sql_query .= 'posting_index, user_index, category_index, category_read_level, posting_state, ';
 	$sql_query .= 'posting_first_post_datetime, posting_last_edit_datetime ';
@@ -189,6 +198,7 @@ function GetFullPosting($posting_index, $user_info){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'select ';
 	$sql_query .= 'posting_index, user_index, category_index, category_read_level, posting_state, ';
 	$sql_query .= 'posting_first_post_datetime, posting_last_edit_datetime, ';
@@ -216,6 +226,7 @@ function EnablePosting($posting_index){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'update posting_list set posting_state=0 where posting_index='.$posting_index;
     if(mysqli_query($conn, $sql_query))
         return 1;
@@ -229,6 +240,7 @@ function DisablePosting($posting_index){
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = 'update posting_list set posting_state=1 where posting_index='.$posting_index;
     if(mysqli_query($conn, $sql_query))
         return 1;
@@ -258,6 +270,7 @@ function AddPosting($user_info, $category_info, $title, $thumbnail, $summary, $c
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query
         = "insert into posting_list(user_index, category_index, category_read_level, posting_title, posting_thumbnail, posting_summary, posting_content) value(".
         $user_info['user_index'].",".$category_info['category_index'].",".$category_info['category_read_level'].",'".addslashes($title)."','".addslashes($thumbnail)."','".addslashes($summary)."','".addslashes($content)."')";
@@ -280,6 +293,7 @@ function FixPosting($posting_index, $title, $thumbnail, $summary, $content) {
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
+    $conn->set_charset("utf8mb4");
     $sql_query = "update posting_list set ".
         "posting_last_edit_datetime=NOW(), ".
         "posting_title='".addslashes($title)."', ".
