@@ -40,17 +40,6 @@
         var oEditors = [];
         
         window.onload = function() {
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "input_content",
-                sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
-                htParams : {
-                    bUseVerticalResizer : false,
-                    bUseModeChanger : false,
-                },
-                fCreator: "createSEditor2"
-            });
-
             var params = {};
             location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
             if(params['posting_index'])
@@ -108,6 +97,7 @@
             };
             xhr.send();
         }
+
         function initSelectCategory() {
             var xhr = new XMLHttpRequest();
             var url = 'get/category_write_list';
@@ -135,6 +125,7 @@
                     option.innerHTML = category_list['data'][i]['category_name'];
                     input_category.appendChild(option);
                 }
+                initEditArea()
             };
             xhr.send();
         }
@@ -162,8 +153,21 @@
                 document.getElementById("input_category").style.display = "none";
                 document.getElementById("input_title").value = full_posting['data']['posting_title'];
                 document.getElementById("input_content").value = full_posting['data']['posting_content'];
+                initEditArea()
             };
             xhr.send();
+        }
+        function initEditArea(){
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "input_content",
+                sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
+                htParams : {
+                    bUseVerticalResizer : false,
+                    bUseModeChanger : false,
+                },
+                fCreator: "createSEditor2"
+            });
         }
 
         function onInput(input, max_length){
