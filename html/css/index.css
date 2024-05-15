@@ -1,6 +1,12 @@
 /************************************ outer ************************************/
 
-header::after, nav::after, aside::after, div::after, section::after, li::after, select::after {
+header::after,
+nav::after,
+aside::after,
+div::after,
+section::after,
+li::after,
+select::after {
     content: "";
     display: table;
     clear: both;
@@ -11,11 +17,14 @@ img#mainTitle {
     cursor: pointer;
 }
 
-div#topLeft:hover, div#topRight:hover, div#topWrite:hover {
+div#topLeft:hover,
+div#topRight:hover,
+div#topWrite:hover {
     color: white;
     text-decoration: none;
     cursor: pointer;
 }
+
 body {
     min-width: 800px;
     margin: 0;
@@ -26,9 +35,9 @@ body {
     font-family: "arial";
 }
 
-
 div#main {
     width: 70%;
+    max-width: 1600px;
     margin: 0px auto;
     padding: 20px;
     padding-top: 10px;
@@ -39,6 +48,7 @@ div#main {
         width: calc(100% - 40px);
     }
 }
+
 
 /************************************ header ************************************/
 
@@ -83,6 +93,7 @@ img#mainTitle {
     width: 700px;
 }
 
+
 /************************************ aside ************************************/
 
 aside {
@@ -95,7 +106,7 @@ aside {
     display: block;
 }
 
-div#profile{
+div#profile {
     margin: 20px 10px 40px 10px;
 }
 
@@ -112,24 +123,41 @@ li.category {
     font-weight: bold;
 }
 
-li.category:hover{
+li.category:hover {
     color: white;
     text-decoration: none;
     cursor: pointer;
 }
 
+
 /************************************ footer ************************************/
 
-a.footer:link {text-decoration: none; color: darkgray;}
-a.footer:visited {text-decoration: none; color: darkgray;}
-a.footer:active {text-decoration: none; color: darkgray;}
-a.footer:hover {text-decoration: underline; color: #FF2E2E;}
+a.footer:link {
+    text-decoration: none;
+    color: darkgray;
+}
+
+a.footer:visited {
+    text-decoration: none;
+    color: darkgray;
+}
+
+a.footer:active {
+    text-decoration: none;
+    color: darkgray;
+}
+
+a.footer:hover {
+    text-decoration: underline;
+    color: #FF2E2E;
+}
 
 footer {
     margin: 40px;
     font-size: 2ex;
     color: darkgray;
 }
+
 
 /************************************ content ************************************/
 
@@ -146,7 +174,7 @@ div#postings {
 
 div#left {
     width: 50%;
-    float:left;
+    float: left;
 }
 
 div#right {
@@ -154,25 +182,28 @@ div#right {
     float: right;
 }
 
-div.posting, button.page{
+div.posting,
+button.page {
     background: #222426;
 }
 
-div.posting_ban{
+div.posting_ban {
     background: #3D202D;
 }
 
-div.posting:hover, button.page:hover{
+div.posting:hover,
+button.page:hover {
     background-color: #36383A;
     cursor: pointer;
 }
 
-div.posting_ban:hover{
+div.posting_ban:hover {
     background: #5B243A;
     cursor: pointer;
 }
 
-div.posting, div.posting_ban {
+div.posting,
+div.posting_ban {
     width: calc(100% - 60px);
     margin: 0px 10px 20px 10px;
     padding: 20px;
@@ -190,19 +221,20 @@ div.posting_title {
     text-overflow: ellipsis;
 }
 
-div.posting_date, div.posting_writer {
+div.posting_date,
+div.posting_writer {
     padding: 0px 4% 2% 4%;
     vertical-align: bottom;
     text-align: right;
     font-size: 2ex;
 }
 
-hr{
+hr {
     background: #C3C3C3;
     margin-bottom: 20px;
 }
 
-div.posting_thumbnail_container{
+div.posting_thumbnail_container {
     text-align: center;
 }
 
@@ -223,12 +255,12 @@ div.posting_summary {
     word-break: break-all;
 }
 
-div#pages{
+div#pages {
     margin: 10px 0 30px 0;
     text-align: center;
 }
 
-button.page{
+button.page {
     width: 35px;
     height: 30px;
     margin: 0 2px 0 2px;
@@ -238,7 +270,7 @@ button.page{
     font-size: 2ex;
 }
 
-button#selectedPage{
+button#selectedPage {
     background-color: #36383A;
 }
 
