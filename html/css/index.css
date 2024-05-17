@@ -97,28 +97,23 @@ img#mainTitle {
 /************************************ aside ************************************/
 
 aside {
-    width: 160px;
-    margin: 10px;
-    padding: 20px;
+    width: 220px;
     float: right;
+}
+
+div#profile,
+ul#category,
+div#search_posting_div {
+    margin: 10px 10px 20px 10px;
+    padding: 15px;
+    list-style: none;
     border-radius: 20px;
     background: #222426;
     display: block;
 }
 
-div#profile {
-    margin: 20px 10px 40px 10px;
-}
-
-ul#category {
-    margin: 10px;
-    padding: 0px;
-    list-style: none;
-}
-
 li.category {
-    margin-top: 30px;
-    margin-bottom: 15px;
+    padding: 15px;
     font-size: 2.3ex;
     font-weight: bold;
 }
@@ -128,6 +123,50 @@ li.category:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+select#search_category_list {
+    float: left;
+    width: 70%;
+    height: 25px;
+    padding: 1.5%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5ex;
+    background: #36383A;
+    color: white;
+    cursor: pointer;
+}
+button#search_posting_btn{
+    float: right;
+    width: 25%;
+    height: 25px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.5ex;
+    font-weight: 600;
+    color: white;
+    background: #222426;
+    border: 1px solid #464646;
+    border-radius: 5px;
+    text-align: center;
+}
+button#search_posting_btn:hover {
+    background-color: #36383A;
+    cursor: pointer;
+}
+input#search_posting_text{
+    float: left;
+    width: 163px;
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.5ex;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
 
 
 /************************************ footer ************************************/

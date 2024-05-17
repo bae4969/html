@@ -11,7 +11,7 @@
         <header>
             <div id=topLeft OnClick='location.href="/index"'>Home</div>
             <div id=topRight onclick=loginoutClick()></div>
-            <div id=topWrite OnClick='location.href="writer"'></div>
+            <div id=topWrite onclick=writePostingClick()></div>
             <div id=title>
                 <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
             </div>
@@ -20,7 +20,7 @@
             <div id=content>
                 <input id=input_title type='text' placeholder='제목 (최대 30자)' oninput='onInput(this, 255)'/>
                 <select id=input_category>
-                    <option value=0>분류 선택</option>
+                    <option value=-1>분류 선택</option>
                 </select>
                 <textarea id=input_content name=input_content></textarea>
                 <button id='btn_submit' onclick=submitClick()>제출</button>
@@ -36,16 +36,17 @@
     <script type="text/javascript" src="/js/basicFunc.js" charset="utf-8"></script>
     <script type="text/javascript">
         var user_info_row;
-        var posting_index;  // neg == new posting, else == edit posting
+        var category_index = -1;
+        var posting_index = -1;  // neg == new posting, else == edit posting
         var oEditors = [];
         
         window.onload = function() {
             var params = {};
             location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+            if(params['category_index'])
+                category_index = params['category_index'];
             if(params['posting_index'])
                 posting_index = params['posting_index'];
-            else
-                posting_index = -1;
 
             verifyLogin();
 
@@ -64,6 +65,9 @@
             else {
                 location.href = '/login';
             }
+        }
+        function writePostingClick(){
+            location.href="/writer?category_index=" + category_index;
         }
 
         function verifyLogin() {
@@ -121,10 +125,13 @@
                 var input_category = document.getElementById('input_category');
                 for(var i = 1; i < category_list['data'].length; i++){
                     var option = document.createElement('option');
+                    input_category.appendChild(option);
                     option.value = category_list['data'][i]['category_index']
                     option.innerHTML = category_list['data'][i]['category_name'];
-                    input_category.appendChild(option);
+                    if(category_index >= 0 && option.value == category_index)
+                        option.selected = true;
                 }
+
                 initEditArea()
             };
             xhr.send();
@@ -153,6 +160,7 @@
                 document.getElementById("input_category").style.display = "none";
                 document.getElementById("input_title").value = full_posting['data']['posting_title'];
                 document.getElementById("input_content").value = full_posting['data']['posting_content'];
+
                 initEditArea()
             };
             xhr.send();

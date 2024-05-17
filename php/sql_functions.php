@@ -124,14 +124,20 @@ function GetTotalPostingTotalCount($category_index, $user_info){
 
     $conn = mysqli_connect($sqlAddr, $sqlId, $sqlPw, $sqlBlogDb);
     $conn->set_charset("utf8mb4");
-    $sql_query = 'select count(*) from posting_list where category_read_level>='.$user_info['user_level'].' ';
+    $sql_query = 'SELECT COUNT(*) ';
+	$sql_query .= 'FROM posting_list AS P ';
+	$sql_query .= 'JOIN category_list AS C ';
+    $sql_query .= 'ON P.category_index = C.category_index ';
+    $sql_query .= 'WHERE C.category_read_level>='.$user_info['user_level'].' ';
 	if($category_index >= 0)
-		$sql_query .= 'and category_index='.$category_index.' ';
-    if($user_info['user_level'] > 1){
+		$sql_query .= 'AND P.category_index='.$category_index.' ';
+    if($search_string != '' and strlen($search_string) > 1)
+        $sql_query .= 'AND P.posting_title LIKE "%'.$search_string.'%" ';
+    if($user_info['user_level'] > 1) {
         if($user_info['user_index'] < 0)
-            $sql_query .= 'and posting_state=0 ';
+            $sql_query .= 'AND P.posting_state=0 ';
         else
-            $sql_query .= 'and (posting_state=0 or user_index='.$user_info['user_index'].') ';
+            $sql_query .= 'AND (P.posting_state=0 or P.user_index='.$user_info['user_index'].') ';
     }   
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
@@ -141,24 +147,29 @@ function GetTotalPostingTotalCount($category_index, $user_info){
 }
 
 /* user_level, category_index에 따른 summary posting 리스트 반환 */
-function GetSummaryPostingList($page_index, $page_size, $category_index, $user_info){
+function GetSummaryPostingList($user_info, $category_index, $search_string, $page_index, $page_size){
 	include "sql_connection_info.php";
 
 
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
-    $sql_query = 'select ';
-	$sql_query .= 'posting_index, user_index, category_index, category_read_level, posting_state, ';
-	$sql_query .= 'posting_first_post_datetime, posting_last_edit_datetime, ';
-	$sql_query .= 'posting_title, posting_thumbnail, posting_summary ';
-	$sql_query .= 'from posting_list where category_read_level>='.$user_info['user_level'].' ';
+    $sql_query = 'SELECT ';
+	$sql_query .= 'P.posting_index, P.user_index, P.category_index, C.category_read_level, P.posting_state, ';
+	$sql_query .= 'P.posting_first_post_datetime, P.posting_last_edit_datetime, ';
+	$sql_query .= 'P.posting_title, posting_thumbnail, P.posting_summary ';
+	$sql_query .= 'FROM posting_list AS P ';
+	$sql_query .= 'JOIN category_list AS C ';
+    $sql_query .= 'ON P.category_index = C.category_index ';
+    $sql_query .= 'WHERE C.category_read_level>='.$user_info['user_level'].' ';
 	if($category_index >= 0)
-		$sql_query .= 'and category_index='.$category_index.' ';
+		$sql_query .= 'AND P.category_index='.$category_index.' ';
+    if($search_string != '' and strlen($search_string) > 1)
+        $sql_query .= 'AND P.posting_title LIKE "%'.$search_string.'%" ';
     if($user_info['user_level'] > 1) {
         if($user_info['user_index'] < 0)
-            $sql_query .= 'and posting_state=0 ';
+            $sql_query .= 'AND P.posting_state=0 ';
         else
-            $sql_query .= 'and (posting_state=0 or user_index='.$user_info['user_index'].') ';
+            $sql_query .= 'AND (P.posting_state=0 or P.user_index='.$user_info['user_index'].') ';
     }   
     $sql_query .= 'order by posting_index desc limit '.($page_index * $page_size).', '.$page_size;
     $result = mysqli_query($conn, $sql_query);
@@ -179,9 +190,12 @@ function GetPostingInfo($posting_index){
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
     $sql_query = 'select ';
-	$sql_query .= 'posting_index, user_index, category_index, category_read_level, posting_state, ';
-	$sql_query .= 'posting_first_post_datetime, posting_last_edit_datetime ';
-	$sql_query .= 'from posting_list where posting_index="'.$posting_index.'"';
+	$sql_query .= 'P.posting_index, P.user_index, P.category_index, C.category_read_level, P.posting_state, ';
+	$sql_query .= 'P.posting_first_post_datetime, P.posting_last_edit_datetime ';
+	$sql_query .= 'FROM posting_list as P ';
+	$sql_query .= 'JOIN category_list as C ';
+    $sql_query .= 'ON P.category_index = C.category_index ';
+    $sql_query .= 'where P.posting_index="'.$posting_index.'"';
     $result = mysqli_query($conn, $sql_query);
 
     if($row = mysqli_fetch_assoc($result)){
@@ -200,15 +214,18 @@ function GetFullPosting($posting_index, $user_info){
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
     $sql_query = 'select ';
-	$sql_query .= 'posting_index, user_index, category_index, category_read_level, posting_state, ';
-	$sql_query .= 'posting_first_post_datetime, posting_last_edit_datetime, ';
-	$sql_query .= 'posting_title, posting_content ';
-	$sql_query .= 'from posting_list where category_read_level>='.$user_info['user_level'].' and posting_index='.$posting_index.' ';
+	$sql_query .= 'P.posting_index, P.user_index, P.category_index, P.posting_state, ';
+	$sql_query .= 'P.posting_first_post_datetime, P.posting_last_edit_datetime, ';
+	$sql_query .= 'P.posting_title, P.posting_content ';
+	$sql_query .= 'FROM posting_list as P ';
+	$sql_query .= 'JOIN category_list as C ';
+    $sql_query .= 'ON P.category_index = C.category_index ';
+    $sql_query .= 'where C.category_read_level>='.$user_info['user_level'].' and P.posting_index='.$posting_index.' ';
     if($user_info['user_level'] > 1) {
         if($user_info['user_index'] < 0)
-            $sql_query .= 'and posting_state=0 ';
+            $sql_query .= 'and P.posting_state=0 ';
         else
-            $sql_query .= 'and (posting_state=0 or user_index='.$user_info['user_index'].') ';
+            $sql_query .= 'and (P.posting_state=0 or P.user_index='.$user_info['user_index'].') ';
     }   
     $result = mysqli_query($conn, $sql_query);
 
@@ -272,8 +289,8 @@ function AddPosting($user_info, $category_info, $title, $thumbnail, $summary, $c
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
     $sql_query
-        = "insert into posting_list(user_index, category_index, category_read_level, posting_title, posting_thumbnail, posting_summary, posting_content) value(".
-        $user_info['user_index'].",".$category_info['category_index'].",".$category_info['category_read_level'].",'".addslashes($title)."','".addslashes($thumbnail)."','".addslashes($summary)."','".addslashes($content)."')";
+        = "insert into posting_list(user_index, category_index, posting_title, posting_thumbnail, posting_summary, posting_content) value(".
+        $user_info['user_index'].",".$category_info['category_index'].",'".addslashes($title)."','".addslashes($thumbnail)."','".addslashes($summary)."','".addslashes($content)."')";
     if(mysqli_query($conn, $sql_query)){
         $sql_query = 'SELECT LAST_INSERT_ID()';
         $result = mysqli_query($conn, $sql_query);

@@ -11,7 +11,7 @@
         <header>
             <div id=topLeft OnClick='location.href="/index"'>Home</div>
             <div id=topRight onclick=loginoutClick()></div>
-            <div id=topWrite OnClick='location.href="writer"'></div>
+            <div id=topWrite onclick=writePostingClick()></div>
             <div id=title>
                 <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
             </div>
@@ -20,6 +20,13 @@
             <aside>
                 <div id=profile>profile</div>
                 <ul id=category></ul>
+                <div id=search_posting_div>
+                    <select id='search_category_list'>
+                        <option value=-1>분류 선택</option>
+                    </select>
+                    <button id='search_posting_btn' onclick='searchPostingClick()'>검색</button>
+                    <input id='search_posting_text' type='text' placeholder='제목' onkeyup="if(window.event.keyCode==13){searchPostingClick()}"/>
+                </div>
             </aside>
             <div id=postings>
                 <div>
@@ -43,6 +50,7 @@
         var user_info_row;
         var showState = 0;
         var category_index = -1;
+        var search_string = "";
         var page_index = 0;
         var page_size = 10;
         var pageCount = 0;
@@ -53,8 +61,11 @@
             location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
             if(params['category_index'])
                 category_index = params['category_index'];
+            if(params['search_string'])
+                search_string = decodeURI(decodeURIComponent(params['search_string']));
             if(params['page_index'])
                 page_index = params['page_index'];
+
             verifyLogin();
             initCategoryList();
             initPostingList();
@@ -72,6 +83,9 @@
             else{
                 location.href = '/login';
             }
+        }
+        function writePostingClick(){
+            location.href="/writer?category_index=" + category_index;
         }
 
         function verifyLogin() {
@@ -121,16 +135,25 @@
 
 
                 var aside_ul = document.getElementById('category');
+                var search_category_list = document.getElementById('search_category_list');
                 for(var i = 0; i < category_list['data'].length; i++){
                     var category_li = document.createElement('li');
+                    aside_ul.appendChild(category_li);
                     category_li.className = 'category';
                     category_li.value = category_list['data'][i]['category_index']
                     category_li.innerHTML = category_list['data'][i]['category_name'];
                     category_li.onclick = function(){
                         location.href = 'index?category_index=' + this.value;
                     }
-                    aside_ul.appendChild(category_li);
+                    
+                    var option = document.createElement('option');
+                    search_category_list.appendChild(option);
+                    option.value = category_list['data'][i]['category_index']
+                    option.innerHTML = category_list['data'][i]['category_name'];
+                    if(category_index >= 0 && option.value == category_index)
+                        option.selected = true;
                 }
+                document.getElementById('search_posting_text').value = search_string;
             };
             xhr.send();
         }
@@ -141,6 +164,7 @@
             url += '?user_id=' + getCookie('user_id');
             url += '&user_pw=' + getCookie('user_pw');
             url += '&category_index=' + category_index;
+            url += '&search_string=' + search_string;
             url += '&page_index=' + page_index;
             url += '&page_size=' + page_size;
             xhr.open('GET', url);
@@ -267,13 +291,13 @@
             };
             xhr.send();
         }
+
         function checkLoadPosting(length){
             if(loadCount >= length){
                 showState = 0;
                 setPostingList();
             }
         }
-
         function setPostingList(){
             var postingSize
                 = document.getElementsByClassName('posting').length
@@ -308,6 +332,23 @@
                         div_left.appendChild(document.getElementById("posting"+i));
                 }
             }
+        }
+        
+        function selectSearchCategroyList(t_category_index){
+            var search_category_list = document.getElementById('search_category_list');
+            for(var i = 0; i < category_list['data'].length; i++)
+                if(t_category_index >= 0 && option.value == t_category_index)
+                    option.selected = true;
+        }
+        function searchPostingClick(){
+            var t_search_str = document.getElementById('search_posting_text').value;
+            if(t_search_str.length < 2)
+                alert("검색 문자는 최소 2자 이상이어야 합니다.")
+            else
+                location.href =
+                    "/index" +
+                    "?category_index=" + document.getElementById("search_category_list").value +
+                    "&search_string=" + encodeURI(encodeURIComponent(t_search_str));
         }
 
         function pageClick(ele){

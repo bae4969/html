@@ -11,7 +11,7 @@
         <header>
             <div id=topLeft OnClick='location.href="/index"'>Home</div>
             <div id=topRight onclick=loginoutClick()></div>
-            <div id=topWrite OnClick='location.href="writer"'></div>
+            <div id=topWrite onclick=writePostingClick()></div>
             <div id=title>
                 <img id=mainTitle OnClick='location.href="index"' src="res/title.png" alt="Blog Page" />
             </div>
@@ -20,6 +20,13 @@
             <aside>
                 <div id=profile>profile</div>
                 <ul id=category></ul>
+                <div id=search_posting_div>
+                    <select id='search_category_list'>
+                        <option value=-1>분류 선택</option>
+                    </select>
+                    <button id='search_posting_btn' onclick='searchPostingClick()'>검색</button>
+                    <input id='search_posting_text' type='text' placeholder='제목' onkeyup="if(window.event.keyCode==13){searchPostingClick()}"/>
+                </div>
             </aside>
         </section>
         <footer>
@@ -40,7 +47,7 @@
                 posting_index = params['posting_index'];
             else{
                 alert('잘못된 접근')
-                location.href = 'index';
+                location.href = '/index';
             }
             verifyLogin();
             initCategoryList();
@@ -51,11 +58,14 @@
                 deleteCookie('user_id');
                 deleteCookie('user_pw');
                 alert("로그아웃");
-                location.href = 'index';
+                location.href = '/index';
             }
             else{
                 location.href = '/login';
             }
+        }
+        function writePostingClick(){
+            location.href="/writer?category_index=" + category_index;
         }
 
         function verifyLogin() {
@@ -107,13 +117,18 @@
                 var aside_ul = document.getElementById('category');
                 for(var i = 0; i < category_list['data'].length; i++){
                     var category_li = document.createElement('li');
+                    aside_ul.appendChild(category_li);
                     category_li.className = 'category';
                     category_li.value = category_list['data'][i]['category_index']
                     category_li.innerHTML = category_list['data'][i]['category_name'];
                     category_li.onclick = function(){
                         location.href = 'index?category_index=' + this.value;
                     }
-                    aside_ul.appendChild(category_li);
+                    
+                    var option = document.createElement('option');
+                    search_category_list.appendChild(option);
+                    option.value = category_list['data'][i]['category_index']
+                    option.innerHTML = category_list['data'][i]['category_name'];
                 }
             };
             xhr.send();
@@ -203,6 +218,17 @@
                 }
             };
             xhr.send();
+        }
+        
+        function searchPostingClick(){
+            var t_search_str = document.getElementById('search_posting_text').value;
+            if(t_search_str.length < 2)
+                alert("검색 문자는 최소 2자 이상이어야 합니다.")
+            else
+                location.href =
+                    "/index" +
+                    "?category_index=" + document.getElementById("search_category_list").value +
+                    "&search_string=" + encodeURI(encodeURIComponent(t_search_str));
         }
 
         function editClick(){
