@@ -22,7 +22,7 @@
                 <select id=input_category>
                     <option value=-1>분류 선택</option>
                 </select>
-                <textarea id=input_content name=input_content></textarea>
+                <textarea id=input_content name=input_content style="width:100%"></textarea>
                 <button id='btn_submit' onclick=submitClick()>제출</button>
             </div>
         </section>
@@ -174,9 +174,36 @@
                     bUseVerticalResizer : false,
                     bUseModeChanger : false,
                 },
-                fCreator: "createSEditor2"
+                fCreator: "createSEditor2",
+                fOnAppLoad: function() {
+                    setIframeWidth();
+                    setIframeHeight();
+                },
+                fOnBeforeUnload: function() {
+                    setIframeWidth();
+                    setIframeHeight();
+                }
             });
         }
+        function setIframeWidth() {
+            var iframe = document.getElementById("input_content_iframe");
+            if (iframe) {
+                iframe.style.width = '100%';
+            }
+        }
+
+        function setIframeHeight() {
+            var iframe = document.getElementById("input_content_iframe");
+            if (iframe) {
+                var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframe.style.height = innerDoc.body.scrollHeight + "px";
+            }
+        }
+
+        window.addEventListener("resize", function() {
+            setIframeWidth();
+            setIframeHeight();
+        });
 
         function onInput(input, max_length){
             if(input.value.length > max_length){
