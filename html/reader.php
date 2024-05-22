@@ -38,11 +38,14 @@
     <script type="text/javascript" src="/js/basicFunc.js"> </script>
     <script type="text/javascript">
         var user_info_row;
+        var category_index = -1;
         var posting_index = -1;
 
         window.onload = function() {
             var params = {};
             location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+            if(params['category_index'])
+                category_index = params['category_index'];
             if(params['posting_index'])
                 posting_index = params['posting_index'];
             else{
@@ -179,6 +182,8 @@
 
                 title.id = 'posting_title';
                 title.innerHTML = full_posting['data']['posting_title'];
+
+                category_index = full_posting['data']['category_index']
 
                 date.id = 'posting_date';
                 date.innerHTML = full_posting['data']['posting_first_post_datetime'];
