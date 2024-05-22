@@ -138,12 +138,12 @@ function GetTotalPostingTotalCount($category_index, $user_info){
             $sql_query .= 'AND P.posting_state=0 ';
         else
             $sql_query .= 'AND (P.posting_state=0 or P.user_index='.$user_info['user_index'].') ';
-    }   
+    }
     $result = mysqli_query($conn, $sql_query);
     mysqli_close($conn);
 
     if($row = mysqli_fetch_assoc($result))
-        return $row['count(*)'];
+        return $row['COUNT(*)'];
 }
 
 /* user_level, category_index에 따른 summary posting 리스트 반환 */
