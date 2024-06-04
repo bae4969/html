@@ -312,7 +312,6 @@ function FixPosting($posting_index, $title, $thumbnail, $summary, $content) {
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
     $sql_query = "update posting_list set ".
-        "posting_last_edit_datetime=NOW(), ".
         "posting_title='".addslashes($title)."', ".
         "posting_thumbnail='".addslashes($thumbnail)."', ".
         "posting_summary='".addslashes($summary)."', ".
