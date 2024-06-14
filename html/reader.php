@@ -163,14 +163,24 @@
 
                 var container = document.createElement('div');
                 var title = document.createElement('div');
-                var date = document.createElement('div');
+                var info_container = document.createElement('div');
+                var info_container_left = document.createElement('div');
+                var info_container_right = document.createElement('div');
                 var writer = document.createElement('div');
+                var read_cnt = document.createElement('div');
+                var create_date = document.createElement('div');
+                var last_edit_date = document.createElement('div');
                 var hr = document.createElement('hr');
                 var content = document.createElement('div');
 
                 container.appendChild(title);
-                container.appendChild(date);
-                container.appendChild(writer);
+                container.appendChild(info_container);
+                info_container.appendChild(info_container_left);
+                info_container.appendChild(info_container_right);
+                info_container_left.appendChild(writer);
+                info_container_left.appendChild(read_cnt);
+                info_container_right.appendChild(create_date);
+                info_container_right.appendChild(last_edit_date);
                 container.appendChild(hr);
                 container.appendChild(content);
                 section.appendChild(container);
@@ -183,13 +193,22 @@
                 title.id = 'posting_title';
                 title.innerHTML = full_posting['data']['posting_title'];
 
-                category_index = full_posting['data']['category_index']
-
-                date.id = 'posting_date';
-                date.innerHTML = full_posting['data']['posting_first_post_datetime'];
+                category_index = full_posting['data']['category_index'];
 
                 writer.id = 'posting_writer';
-                writer.innerHTML = 'UID : ' + full_posting['data']['user_index'];
+                writer.innerHTML = '유저 : ' + full_posting['data']['user_index'];
+
+                read_cnt.id = 'posting_read_cnt';
+                read_cnt.innerHTML = '조회 : ' + full_posting['data']['posting_read_cnt'];
+
+                create_date.id = 'posting_create_date';
+                create_date.innerHTML = '작성 : ' + full_posting['data']['posting_first_post_datetime'];
+
+                last_edit_date.id = 'posting_last_edit_date';
+                last_edit_date.innerHTML = '수정 : ' + full_posting['data']['posting_last_edit_datetime'];
+
+                info_container_left.id = 'posting_info_container_left';
+                info_container_right.id = 'posting_info_container_right';
 
                 content.id = 'posting_content';
                 content.innerHTML = full_posting['data']['posting_content'];

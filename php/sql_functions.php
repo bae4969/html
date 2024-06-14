@@ -31,7 +31,6 @@ function UpdateUserLastActionDatetime($user_info){
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
     $sql_query = "update user_list set user_last_action_datetime=NOW() where user_index=".$user_info['user_index'];
-    $result = mysqli_query($conn, $sql_query);
 	
     if(mysqli_query($conn, $sql_query))
         return array('state'=>0);
@@ -211,22 +210,14 @@ function GetFullPosting($posting_index, $user_info){
 	include "sql_connection_info.php";
 
 
+    $user_level = (int)$user_info['user_level'];
+    $user_index = (int)$user_info['user_index'];
+    $posting_index = (int)$posting_index;
+
     $conn = mysqli_connect( $sqlAddr, $sqlId, $sqlPw, $sqlBlogDb );
     $conn->set_charset("utf8mb4");
-    $sql_query = 'select ';
-	$sql_query .= 'P.posting_index, P.user_index, P.category_index, P.posting_state, ';
-	$sql_query .= 'P.posting_first_post_datetime, P.posting_last_edit_datetime, ';
-	$sql_query .= 'P.posting_title, P.posting_content ';
-	$sql_query .= 'FROM posting_list as P ';
-	$sql_query .= 'JOIN category_list as C ';
-    $sql_query .= 'ON P.category_index = C.category_index ';
-    $sql_query .= 'where C.category_read_level>='.$user_info['user_level'].' and P.posting_index='.$posting_index.' ';
-    if($user_info['user_level'] > 1) {
-        if($user_info['user_index'] < 0)
-            $sql_query .= 'and P.posting_state=0 ';
-        else
-            $sql_query .= 'and (P.posting_state=0 or P.user_index='.$user_info['user_index'].') ';
-    }   
+    $sql_query = "CALL get_full_posting_and_increase_cnt($user_level, $user_index, $posting_index)";  
+
     $result = mysqli_query($conn, $sql_query);
 
     if($row = mysqli_fetch_assoc($result)){

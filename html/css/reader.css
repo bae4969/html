@@ -138,7 +138,8 @@ select#search_category_list {
     color: white;
     cursor: pointer;
 }
-button#search_posting_btn{
+
+button#search_posting_btn {
     float: right;
     width: 25%;
     height: 25px;
@@ -152,11 +153,13 @@ button#search_posting_btn{
     border-radius: 5px;
     text-align: center;
 }
+
 button#search_posting_btn:hover {
     background-color: #36383A;
     cursor: pointer;
 }
-input#search_posting_text{
+
+input#search_posting_text {
     float: left;
     width: 163px;
     height: 20px;
@@ -245,17 +248,28 @@ div#posting_ban {
 }
 
 div#posting_title {
-    padding: 5% 5% 20px 5%;
+    padding: 5% 5% 30px 5%;
     font-size: 5ex;
     font-weight: bold;
 }
 
-div#posting_date,
-div#posting_writer {
-    padding: 0px 5% 10px 5%;
+div#posting_info_container_left {
+    float: left;
+    padding: 0px 5% 0px 5%;
+}
+
+div#posting_info_container_right {
+    float: right;
+    padding: 0px 5% 0px 5%;
+}
+
+div#posting_writer,
+div#posting_create_date,
+div#posting_last_edit_date,
+div#posting_read_cnt {
     vertical-align: bottom;
-    text-align: right;
-    font-size: 2ex;
+    padding: 0px 0px 10px 0px;
+    font-size: 1.7ex;
 }
 
 hr {
