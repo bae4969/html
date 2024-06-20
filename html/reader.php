@@ -1,11 +1,13 @@
 <!-- content/reader.php -->
 <!doctype html>
 <html lang=ko>
+
 <head>
     <meta charset='utf-8'>
     <title>Developer Blog</title>
     <link type="text/css" rel="stylesheet" href="css/reader.css">
 </head>
+
 <body>
     <div id="main">
         <header>
@@ -19,19 +21,20 @@
         <section id=section>
             <aside>
                 <div id=profile>profile</div>
+                <div id=user_count>user_count</div>
                 <ul id=category></ul>
                 <div id=search_posting_div>
                     <select id='search_category_list'>
                         <option value=-1>분류 선택</option>
                     </select>
                     <button id='search_posting_btn' onclick='searchPostingClick()'>검색</button>
-                    <input id='search_posting_text' type='text' placeholder='제목' onkeyup="if(window.event.keyCode==13){searchPostingClick()}"/>
+                    <input id='search_posting_text' type='text' placeholder='제목' onkeyup="if(window.event.keyCode==13){searchPostingClick()}" />
                 </div>
             </aside>
         </section>
         <footer>
             <p>Contact : bae4969@naver.com</br>
-            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+                Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
         </footer>
     </div>
 
@@ -43,12 +46,14 @@
 
         window.onload = function() {
             var params = {};
-            location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
-            if(params['category_index'])
+            location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
+                params[key] = value;
+            });
+            if (params['category_index'])
                 category_index = params['category_index'];
-            if(params['posting_index'])
+            if (params['posting_index'])
                 posting_index = params['posting_index'];
-            else{
+            else {
                 alert('잘못된 접근')
                 location.href = '/index';
             }
@@ -56,19 +61,20 @@
             initCategoryList();
             initPostingDetail();
         }
-        function loginoutClick(){
+
+        function loginoutClick() {
             if (user_info_row['state'] == 0) {
                 deleteCookie('user_id');
                 deleteCookie('user_pw');
                 alert("로그아웃");
                 location.href = '/index';
-            }
-            else{
+            } else {
                 location.href = '/login';
             }
         }
-        function writePostingClick(){
-            location.href="/writer?category_index=" + category_index;
+
+        function writePostingClick() {
+            location.href = "/writer?category_index=" + category_index;
         }
 
         function verifyLogin() {
@@ -77,7 +83,7 @@
             url += '?user_id=' + getCookie('user_id');
             url += '&user_pw=' + getCookie('user_pw');
             xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
@@ -88,28 +94,28 @@
                 if (user_info_row['state'] == 0) {
                     document.getElementById("topRight").innerHTML = "로그아웃";
                     document.getElementById("topWrite").innerHTML = "글쓰기";
-                }
-                else {
+                } else {
                     document.getElementById("topRight").innerHTML = "로그인";
-                    if(document.getElementById("topWrite") !== null)
+                    if (document.getElementById("topWrite") !== null)
                         document.getElementById("topWrite").innerHTML = "";
                 }
             };
             xhr.send();
         }
+
         function initCategoryList() {
             var xhr = new XMLHttpRequest();
             var url = 'get/category_read_list';
             url += '?user_id=' + getCookie('user_id');
             url += '&user_pw=' + getCookie('user_pw');
             xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
                     return;
                 }
-                
+
                 var category_list = JSON.parse(this.responseText);
                 if (category_list['state'] != 0) {
                     alert('카테고리 초기화 오류 (' + category_list['state'] + ')');
@@ -118,16 +124,16 @@
 
 
                 var aside_ul = document.getElementById('category');
-                for(var i = 0; i < category_list['data'].length; i++){
+                for (var i = 0; i < category_list['data'].length; i++) {
                     var category_li = document.createElement('li');
                     aside_ul.appendChild(category_li);
                     category_li.className = 'category';
                     category_li.value = category_list['data'][i]['category_index']
                     category_li.innerHTML = category_list['data'][i]['category_name'];
-                    category_li.onclick = function(){
+                    category_li.onclick = function() {
                         location.href = 'index?category_index=' + this.value;
                     }
-                    
+
                     var option = document.createElement('option');
                     search_category_list.appendChild(option);
                     option.value = category_list['data'][i]['category_index']
@@ -136,17 +142,18 @@
             };
             xhr.send();
         }
-        function initPostingDetail(){
+
+        function initPostingDetail() {
             var xhr = new XMLHttpRequest();
             var url = 'get/full_posting';
             url += '?user_id=' + getCookie('user_id');
             url += '&user_pw=' + getCookie('user_pw');
             url += '&posting_index=' + posting_index;
             xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
-                
-                if ( xhr.status != 200) {
+
+                if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
                     return;
                 }
@@ -157,7 +164,7 @@
                     location.href = 'index';
                     return;
                 }
-                
+
 
                 var section = document.getElementById('section');
 
@@ -185,7 +192,7 @@
                 container.appendChild(content);
                 section.appendChild(container);
 
-                if(full_posting['data']['posting_state'] > 0)
+                if (full_posting['data']['posting_state'] > 0)
                     container.id = 'posting_ban';
                 else
                     container.id = 'posting';
@@ -212,53 +219,54 @@
 
                 content.id = 'posting_content';
                 content.innerHTML = full_posting['data']['posting_content'];
-    
-                if(full_posting['author'] > 0 && full_posting['data']['posting_state'] == 0) {
+
+                if (full_posting['author'] > 0 && full_posting['data']['posting_state'] == 0) {
                     var button = document.createElement('button');
                     container.appendChild(button);
                     button.className = 'posting_control';
                     button.innerHTML = '삭제';
-                    button.onclick = function(){
+                    button.onclick = function() {
                         disableClick()
                     }
                 }
-                if(full_posting['author'] > 0 && full_posting['data']['posting_state'] == 1) {
+                if (full_posting['author'] > 0 && full_posting['data']['posting_state'] == 1) {
                     var button = document.createElement('button');
                     container.appendChild(button);
                     button.className = 'posting_control';
                     button.innerHTML = '복구';
-                    button.onclick = function(){
+                    button.onclick = function() {
                         enableClick()
                     }
                 }
-                if(full_posting['author'] > 0 && full_posting['data']['posting_state'] == 0) {
+                if (full_posting['author'] > 0 && full_posting['data']['posting_state'] == 0) {
                     var button = document.createElement('button');
                     container.appendChild(button);
                     button.className = 'posting_control';
                     button.innerHTML = '수정';
-                    button.onclick = function(){
+                    button.onclick = function() {
                         editClick()
                     }
                 }
             };
             xhr.send();
         }
-        
-        function searchPostingClick(){
+
+        function searchPostingClick() {
             var t_search_str = document.getElementById('search_posting_text').value;
-            if(t_search_str.length < 2)
+            if (t_search_str.length < 2)
                 alert("검색 문자는 최소 2자 이상이어야 합니다.")
             else
                 location.href =
-                    "/index" +
-                    "?category_index=" + document.getElementById("search_category_list").value +
-                    "&search_string=" + encodeURI(encodeURIComponent(t_search_str));
+                "/index" +
+                "?category_index=" + document.getElementById("search_category_list").value +
+                "&search_string=" + encodeURI(encodeURIComponent(t_search_str));
         }
 
-        function editClick(){
+        function editClick() {
             location.href = 'writer?posting_index=' + posting_index;
         }
-        function enableClick(){
+
+        function enableClick() {
             var formData = new FormData();
             formData.append('user_id', getCookie('user_id'));
             formData.append('user_pw', getCookie('user_pw'));
@@ -267,26 +275,27 @@
             var xhr = new XMLHttpRequest();
             var url = 'post/enable_posting';
             xhr.open('POST', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
                     return;
                 }
-                    
+
                 var result = JSON.parse(this.responseText);
                 if (result['state'] != 0) {
                     alert('잘못된 접근 (' + result['state'] + ')');
                     return;
                 }
 
-                
+
                 alert('복구 되었습니다.');
                 location.href = 'reader?posting_index=' + posting_index;
             }
             xhr.send(formData);
         }
-        function disableClick(){
+
+        function disableClick() {
             var formData = new FormData();
             formData.append('user_id', getCookie('user_id'));
             formData.append('user_pw', getCookie('user_pw'));
@@ -295,7 +304,7 @@
             var xhr = new XMLHttpRequest();
             var url = 'post/disable_posting';
             xhr.open('POST', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
@@ -316,4 +325,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -103,7 +103,8 @@ aside {
 
 div#profile,
 ul#category,
-div#search_posting_div {
+div#search_posting_div,
+div#user_count {
     margin: 10px 10px 20px 10px;
     padding: 15px;
     list-style: none;
@@ -138,7 +139,8 @@ select#search_category_list {
     color: white;
     cursor: pointer;
 }
-button#search_posting_btn{
+
+button#search_posting_btn {
     float: right;
     width: 25%;
     height: 25px;
@@ -152,11 +154,13 @@ button#search_posting_btn{
     border-radius: 5px;
     text-align: center;
 }
+
 button#search_posting_btn:hover {
     background-color: #36383A;
     cursor: pointer;
 }
-input#search_posting_text{
+
+input#search_posting_text {
     float: left;
     width: 163px;
     height: 20px;
@@ -166,7 +170,6 @@ input#search_posting_text{
     font-weight: 600;
     border-radius: 5px;
 }
-
 
 
 /************************************ footer ************************************/

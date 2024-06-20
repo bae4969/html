@@ -10,7 +10,7 @@ if($user_info['state'] != 0 or $user_info['user_state'] != 0){
 }
 
 $posting_list = GetSummaryPostingList($user_info, $_GET['category_index'], $_GET['search_string'], $_GET['page_index'], $_GET['page_size']);
-$posting_total_count = GetTotalPostingTotalCount($_GET['category_index'], $user_info);
+$posting_total_count = GetTotalPostingTotalCount($_GET['category_index'], $_GET['search_string'], $user_info);
 if(count($posting_list) == 0) {
 	echo json_encode(array('state'=>000, 'total_count'=>$posting_total_count, 'data'=>array()));
 	return;

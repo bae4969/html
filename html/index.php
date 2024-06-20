@@ -1,11 +1,13 @@
 <!-- blog.php -->
 <!doctype html>
 <html lang=ko>
+
 <head>
     <meta charset='utf-8'>
     <title>Developer Blog</title>
     <link type="text/css" rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
     <div id=main>
         <header>
@@ -19,13 +21,14 @@
         <section>
             <aside>
                 <div id=profile>profile</div>
+                <div id=user_count>user_count</div>
                 <ul id=category></ul>
                 <div id=search_posting_div>
                     <select id='search_category_list'>
                         <option value=-1>분류 선택</option>
                     </select>
                     <button id='search_posting_btn' onclick='searchPostingClick()'>검색</button>
-                    <input id='search_posting_text' type='text' placeholder='제목' onkeyup="if(window.event.keyCode==13){searchPostingClick()}"/>
+                    <input id='search_posting_text' type='text' placeholder='제목' onkeyup="if(window.event.keyCode==13){searchPostingClick()}" />
                 </div>
             </aside>
             <div id=postings>
@@ -41,7 +44,7 @@
         </section>
         <footer>
             <p>Contact : bae4969@naver.com</br>
-            Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
+                Github : <a class=footer href=https://github.com/bae4969>https://github.com/bae4969</a></p>
         </footer>
     </div>
 
@@ -58,34 +61,37 @@
 
         window.onload = function() {
             var params = {};
-            location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
-            if(params['category_index'])
+            location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
+                params[key] = value;
+            });
+            if (params['category_index'])
                 category_index = params['category_index'];
-            if(params['search_string'])
+            if (params['search_string'])
                 search_string = decodeURI(decodeURIComponent(params['search_string']));
-            if(params['page_index'])
+            if (params['page_index'])
                 page_index = params['page_index'];
 
             verifyLogin();
             initCategoryList();
             initPostingList();
         }
-        window.onresize = function(){
+        window.onresize = function() {
             setPostingList();
         }
-        function loginoutClick(){
+
+        function loginoutClick() {
             if (user_info_row['state'] == 0) {
                 deleteCookie('user_id');
                 deleteCookie('user_pw');
                 alert("로그아웃");
                 location.href = 'index';
-            }
-            else{
+            } else {
                 location.href = '/login';
             }
         }
-        function writePostingClick(){
-            location.href="/writer?category_index=" + category_index;
+
+        function writePostingClick() {
+            location.href = "/writer?category_index=" + category_index;
         }
 
         function verifyLogin() {
@@ -94,7 +100,7 @@
             url += '?user_id=' + getCookie('user_id');
             url += '&user_pw=' + getCookie('user_pw');
             xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
@@ -105,28 +111,26 @@
                 if (user_info_row['state'] == 0) {
                     document.getElementById("topRight").innerHTML = "로그아웃";
                     document.getElementById("topWrite").innerHTML = "글쓰기";
-                }
-                else {
+                } else {
                     document.getElementById("topRight").innerHTML = "로그인";
-                    if(document.getElementById("topWrite") !== null)
+                    if (document.getElementById("topWrite") !== null)
                         document.getElementById("topWrite").innerHTML = "";
                 }
             };
             xhr.send();
         }
-        function initCategoryList() {
+
+        function initProfile() {
             var xhr = new XMLHttpRequest();
-            var url = 'get/category_read_list';
-            url += '?user_id=' + getCookie('user_id');
-            url += '&user_pw=' + getCookie('user_pw');
+            var url = 'get/profile_info';
             xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
                     return;
                 }
-                
+
                 var category_list = JSON.parse(this.responseText);
                 if (category_list['state'] != 0) {
                     alert('카테고리 초기화 오류 (' + category_list['state'] + ')');
@@ -136,27 +140,72 @@
 
                 var aside_ul = document.getElementById('category');
                 var search_category_list = document.getElementById('search_category_list');
-                for(var i = 0; i < category_list['data'].length; i++){
+                for (var i = 0; i < category_list['data'].length; i++) {
                     var category_li = document.createElement('li');
                     aside_ul.appendChild(category_li);
                     category_li.className = 'category';
                     category_li.value = category_list['data'][i]['category_index']
                     category_li.innerHTML = category_list['data'][i]['category_name'];
-                    category_li.onclick = function(){
+                    category_li.onclick = function() {
                         location.href = 'index?category_index=' + this.value;
                     }
-                    
+
                     var option = document.createElement('option');
                     search_category_list.appendChild(option);
                     option.value = category_list['data'][i]['category_index']
                     option.innerHTML = category_list['data'][i]['category_name'];
-                    if(category_index >= 0 && option.value == category_index)
+                    if (category_index >= 0 && option.value == category_index)
                         option.selected = true;
                 }
                 document.getElementById('search_posting_text').value = search_string;
             };
             xhr.send();
         }
+
+        function initCategoryList() {
+            var xhr = new XMLHttpRequest();
+            var url = 'get/category_read_list';
+            url += '?user_id=' + getCookie('user_id');
+            url += '&user_pw=' + getCookie('user_pw');
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState != XMLHttpRequest.DONE) return;
+                if (xhr.status != 200) {
+                    alert('Server Error (' + xhr.status + ')');
+                    return;
+                }
+
+                var category_list = JSON.parse(this.responseText);
+                if (category_list['state'] != 0) {
+                    alert('카테고리 초기화 오류 (' + category_list['state'] + ')');
+                    return;
+                }
+
+
+                var aside_ul = document.getElementById('category');
+                var search_category_list = document.getElementById('search_category_list');
+                for (var i = 0; i < category_list['data'].length; i++) {
+                    var category_li = document.createElement('li');
+                    aside_ul.appendChild(category_li);
+                    category_li.className = 'category';
+                    category_li.value = category_list['data'][i]['category_index']
+                    category_li.innerHTML = category_list['data'][i]['category_name'];
+                    category_li.onclick = function() {
+                        location.href = 'index?category_index=' + this.value;
+                    }
+
+                    var option = document.createElement('option');
+                    search_category_list.appendChild(option);
+                    option.value = category_list['data'][i]['category_index']
+                    option.innerHTML = category_list['data'][i]['category_name'];
+                    if (category_index >= 0 && option.value == category_index)
+                        option.selected = true;
+                }
+                document.getElementById('search_posting_text').value = search_string;
+            };
+            xhr.send();
+        }
+
         function initPostingList() {
             loadCount = 0;
             var xhr = new XMLHttpRequest();
@@ -168,15 +217,15 @@
             url += '&page_index=' + page_index;
             url += '&page_size=' + page_size;
             xhr.open('GET', url);
-            xhr.onreadystatechange = function (){
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState != XMLHttpRequest.DONE) return;
                 if (xhr.status != 200) {
                     alert('Server Error (' + xhr.status + ')');
                     return;
                 }
-                
+
                 var posting_list = JSON.parse(this.response);
-                if(posting_list['state'] != 0){
+                if (posting_list['state'] != 0) {
                     alert('포스팅 초기화 오류 (' + category_list['state'] + ')');
                     return;
                 }
@@ -186,21 +235,21 @@
                 var left_container = document.getElementById('left');
                 var right_container = document.getElementById('right');
                 var page_container = document.getElementById('pages');
-                while(temp_container.hasChildNodes())
+                while (temp_container.hasChildNodes())
                     temp_container.removeChild(temp_container.firstChild);
-                while(left_container.hasChildNodes())
+                while (left_container.hasChildNodes())
                     left_container.removeChild(left_container.firstChild);
-                while(right_container.hasChildNodes())
+                while (right_container.hasChildNodes())
                     right_container.removeChild(right_container.firstChild);
-                while(page_container.hasChildNodes())
+                while (page_container.hasChildNodes())
                     page_container.removeChild(page_container.firstChild);
 
                 var total_count = posting_list['total_count'];
                 pageCount = (total_count - (total_count % page_size)) / page_size;
-                if(total_count % page_size != 0)
+                if (total_count % page_size != 0)
                     pageCount += 1;
 
-                for(var i = 0; i < posting_list['data'].length; i++){
+                for (var i = 0; i < posting_list['data'].length; i++) {
                     var container = document.createElement('div');
                     var title = document.createElement('div');
                     var date = document.createElement('div');
@@ -221,11 +270,13 @@
 
                     container.id = 'posting' + i;
                     container.value = posting_list['data'][i]['posting_index'];
-                    if(posting_list['data'][i]['posting_state'] > 0)
+                    if (posting_list['data'][i]['posting_state'] > 0)
                         container.className = 'posting_ban';
                     else
                         container.className = 'posting';
-                    container.onclick = function(){location.href = 'reader?posting_index=' + this.value;}
+                    container.onclick = function() {
+                        location.href = 'reader?posting_index=' + this.value;
+                    }
                     title.className = 'posting_title';
                     title.innerHTML = posting_list['data'][i]['posting_title'];
                     date.className = 'posting_date';
@@ -237,54 +288,53 @@
                     thumbnail.src = posting_list['data'][i]['posting_thumbnail'];
                     summary.className = 'posting_summary';
                     summary.innerHTML = posting_list['data'][i]['posting_summary'];
-                    
-                    if(posting_list['data'][i]['posting_thumbnail'] == ''){
-                        loadCount+=1;
+
+                    if (posting_list['data'][i]['posting_thumbnail'] == '') {
+                        loadCount += 1;
                         checkLoadPosting(posting_list['data'].length);
-                    }
-                    else
-                        thumbnail.onload = function(){
-                            loadCount+=1;
+                    } else
+                        thumbnail.onload = function() {
+                            loadCount += 1;
                             checkLoadPosting(posting_list['data'].length);
                         }
                 }
 
                 var start = (page_index - (page_index % 10)) / 10;
-                for(var i = -4; i < -2; i++){
+                for (var i = -4; i < -2; i++) {
                     var button = document.createElement('button');
                     page_container.appendChild(button);
                     button.className = 'page';
                     button.value = i;
-                    if(i == -4)
+                    if (i == -4)
                         button.innerHTML = '<<';
                     else
                         button.innerHTML = '<';
-                    button.onclick = function(){
+                    button.onclick = function() {
                         pageClick(this)
                     }
                 }
-                for(var i = start; i < pageCount && i < 10; i++){
+                for (var i = start; i < pageCount && i < 10; i++) {
                     var button = document.createElement('button');
                     page_container.appendChild(button);
-                    if(i == page_index)
+                    if (i == page_index)
                         button.id = 'selectedPage';
                     button.className = 'page';
                     button.value = i;
                     button.innerHTML = i + 1;
-                    button.onclick = function(){
+                    button.onclick = function() {
                         pageClick(this)
                     }
                 }
-                for(var i = -2; i < 0; i++){
+                for (var i = -2; i < 0; i++) {
                     var button = document.createElement('button');
                     page_container.appendChild(button);
                     button.className = 'page';
                     button.value = i;
-                    if(i == -2)
+                    if (i == -2)
                         button.innerHTML = '>';
                     else
                         button.innerHTML = '>>';
-                    button.onclick = function(){
+                    button.onclick = function() {
                         pageClick(this)
                     }
                 }
@@ -292,88 +342,88 @@
             xhr.send();
         }
 
-        function checkLoadPosting(length){
-            if(loadCount >= length){
+        function checkLoadPosting(length) {
+            if (loadCount >= length) {
                 showState = 0;
                 setPostingList();
             }
         }
-        function setPostingList(){
-            var postingSize
-                = document.getElementsByClassName('posting').length
-                + document.getElementsByClassName('posting_ban').length;
+
+        function setPostingList() {
+            var postingSize = document.getElementsByClassName('posting').length +
+                document.getElementsByClassName('posting_ban').length;
             var div_temp = document.getElementById('temp');
             var div_left = document.getElementById('left');
             var div_right = document.getElementById('right');
 
-            if(showState != 1 && document.body.offsetWidth < 1600){
+            if (showState != 1 && document.body.offsetWidth < 1600) {
                 showState = 1;
                 div_temp.style.height = 0;
-                for(i = 0; i < postingSize; i++)
-                    div_temp.appendChild(document.getElementById("posting"+i));
+                for (i = 0; i < postingSize; i++)
+                    div_temp.appendChild(document.getElementById("posting" + i));
 
                 div_left.style.width = '100%';
                 div_right.style.width = '0%';
-                for(i = 0; i < postingSize; i++)
-                    div_left.appendChild(document.getElementById("posting"+i));
-            }
-            else if(showState != 2 && document.body.offsetWidth >= 1600){
+                for (i = 0; i < postingSize; i++)
+                    div_left.appendChild(document.getElementById("posting" + i));
+            } else if (showState != 2 && document.body.offsetWidth >= 1600) {
                 showState = 2;
                 div_temp.style.height = 0;
-                for(i = 0; i < postingSize; i++)
-                    div_temp.appendChild(document.getElementById("posting"+i));
+                for (i = 0; i < postingSize; i++)
+                    div_temp.appendChild(document.getElementById("posting" + i));
 
                 div_left.style.width = '50%';
                 div_right.style.width = '50%';
-                for(i = 0; i < postingSize; i++){
-                    if(div_left.offsetHeight > div_right.offsetHeight)
-                        div_right.appendChild(document.getElementById("posting"+i));
+                for (i = 0; i < postingSize; i++) {
+                    if (div_left.offsetHeight > div_right.offsetHeight)
+                        div_right.appendChild(document.getElementById("posting" + i));
                     else
-                        div_left.appendChild(document.getElementById("posting"+i));
+                        div_left.appendChild(document.getElementById("posting" + i));
                 }
             }
         }
-        
-        function selectSearchCategroyList(t_category_index){
+
+        function selectSearchCategroyList(t_category_index) {
             var search_category_list = document.getElementById('search_category_list');
-            for(var i = 0; i < category_list['data'].length; i++)
-                if(t_category_index >= 0 && option.value == t_category_index)
+            for (var i = 0; i < category_list['data'].length; i++)
+                if (t_category_index >= 0 && option.value == t_category_index)
                     option.selected = true;
         }
-        function searchPostingClick(){
+
+        function searchPostingClick() {
             var t_search_str = document.getElementById('search_posting_text').value;
-            if(t_search_str.length < 2)
+            if (t_search_str.length < 2)
                 alert("검색 문자는 최소 2자 이상이어야 합니다.")
             else
                 location.href =
-                    "/index" +
-                    "?category_index=" + document.getElementById("search_category_list").value +
-                    "&search_string=" + encodeURI(encodeURIComponent(t_search_str));
+                "/index" +
+                "?category_index=" + document.getElementById("search_category_list").value +
+                "&search_string=" + encodeURI(encodeURIComponent(t_search_str));
         }
 
-        function pageClick(ele){
+        function pageClick(ele) {
             temp_page = page_index;
-            if(ele.value < 0){
-                if(ele.value == -4)
+            if (ele.value < 0) {
+                if (ele.value == -4)
                     page_index -= 10;
-                else if(ele.value == -3)
+                else if (ele.value == -3)
                     page_index -= 1;
-                else if(ele.value == -2)
+                else if (ele.value == -2)
                     page_index += 1;
-                else if(ele.value == -1)
+                else if (ele.value == -1)
                     page_index += 10;
 
-                if(page_index < 0)
+                if (page_index < 0)
                     page_index = 0;
-                if(page_index >= pageCount)
+                if (page_index >= pageCount)
                     page_index = pageCount - 1;
-            }
-            else
+            } else
                 page_index = ele.value;
 
-            if(temp_page != page_index)
+            if (temp_page != page_index)
                 initPostingList();
         }
     </script>
 </body>
+
 </html>

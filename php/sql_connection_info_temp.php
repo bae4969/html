@@ -8,5 +8,3 @@ $sqlWeatherDb = "";
 $sqlNaverDb = "";
 $sqlUpbitDb = "";
 $sqlUpbitLength = "";
-
-?>

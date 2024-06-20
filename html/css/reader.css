@@ -103,7 +103,8 @@ aside {
 
 div#profile,
 ul#category,
-div#search_posting_div {
+div#search_posting_div,
+div#user_count {
     margin: 10px 10px 20px 10px;
     padding: 15px;
     list-style: none;
