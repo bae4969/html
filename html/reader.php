@@ -57,7 +57,9 @@
                 alert('잘못된 접근')
                 location.href = '/index';
             }
+            
             verifyLogin();
+            initProfile();
             initCategoryList();
             initPostingDetail();
         }
@@ -99,6 +101,29 @@
                     if (document.getElementById("topWrite") !== null)
                         document.getElementById("topWrite").innerHTML = "";
                 }
+            };
+            xhr.send();
+        }
+        
+        function initProfile() {
+            var xhr = new XMLHttpRequest();
+            var url = 'get/profile_info';
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState != XMLHttpRequest.DONE) return;
+                if (xhr.status != 200) {
+                    alert('Server Error (' + xhr.status + ')');
+                    return;
+                }
+
+                var profile_info = JSON.parse(this.responseText);
+                if (profile_info['state'] != 0) {
+                    alert('프로파일 초기화 오류 (' + profile_info['state'] + ')');
+                    return;
+                }
+
+                var user_count = document.getElementById('user_count');
+                user_count.innerHTML = '이번주 방문자 수 : ' + profile_info['weekly_visitors'];
             };
             xhr.send();
         }

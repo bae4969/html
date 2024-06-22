@@ -21,7 +21,7 @@
         <section>
             <aside>
                 <div id=profile>profile</div>
-                <div id=user_count>user_count</div>
+                <div id=user_count>user count</div>
                 <ul id=category></ul>
                 <div id=search_posting_div>
                     <select id='search_category_list'>
@@ -72,6 +72,7 @@
                 page_index = params['page_index'];
 
             verifyLogin();
+            initProfile();
             initCategoryList();
             initPostingList();
         }
@@ -131,33 +132,14 @@
                     return;
                 }
 
-                var category_list = JSON.parse(this.responseText);
-                if (category_list['state'] != 0) {
-                    alert('카테고리 초기화 오류 (' + category_list['state'] + ')');
+                var profile_info = JSON.parse(this.responseText);
+                if (profile_info['state'] != 0) {
+                    alert('프로파일 초기화 오류 (' + profile_info['state'] + ')');
                     return;
                 }
 
-
-                var aside_ul = document.getElementById('category');
-                var search_category_list = document.getElementById('search_category_list');
-                for (var i = 0; i < category_list['data'].length; i++) {
-                    var category_li = document.createElement('li');
-                    aside_ul.appendChild(category_li);
-                    category_li.className = 'category';
-                    category_li.value = category_list['data'][i]['category_index']
-                    category_li.innerHTML = category_list['data'][i]['category_name'];
-                    category_li.onclick = function() {
-                        location.href = 'index?category_index=' + this.value;
-                    }
-
-                    var option = document.createElement('option');
-                    search_category_list.appendChild(option);
-                    option.value = category_list['data'][i]['category_index']
-                    option.innerHTML = category_list['data'][i]['category_name'];
-                    if (category_index >= 0 && option.value == category_index)
-                        option.selected = true;
-                }
-                document.getElementById('search_posting_text').value = search_string;
+                var user_count = document.getElementById('user_count');
+                user_count.innerHTML = '이번주 방문자 수 : ' + profile_info['weekly_visitors'];
             };
             xhr.send();
         }

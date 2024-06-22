@@ -1,6 +1,6 @@
 <?php
 
-
+/* 세션을 활용해서 새로운 접속자인지 확인 */
 function IsNewVisitor()
 {
     session_start();
