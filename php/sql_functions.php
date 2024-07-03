@@ -27,7 +27,6 @@ function UpdateVisitorCount()
     $sql_query = "INSERT INTO weekly_visitors VALUES ($year_week, 1) ";
     $sql_query .= "ON DUPLICATE KEY UPDATE visit_count=visit_count+1";
     $result = mysqli_query($conn, $sql_query);
-    mysqli_fetch_assoc($result);
 }
 
 /* 이번주의 방문자 수를 받음 */
