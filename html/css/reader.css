@@ -278,9 +278,14 @@ hr {
 }
 
 div#posting_content {
+    max-width: 100%;
     margin-top: 20px;
     padding: 30px;
-    white-space: pre-wrap;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
 }
 
 button.posting_control {
