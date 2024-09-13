@@ -336,22 +336,22 @@ function AddPosting($user_info, $category_info, $title, $thumbnail, $summary, $c
 {
     include "sql_connection_info.php";
 
-
     $conn = mysqli_connect($sqlAddr, $sqlId, $sqlPw, $sqlBlogDb);
     $conn->set_charset("utf8mb4");
-    $sql_query
-        = "INSERT INTO posting_list(user_index, category_index, posting_title, posting_thumbnail, posting_summary, posting_content) value(" .
-        $user_info['user_index'] . "," . $category_info['category_index'] . ",'" . addslashes($title) . "','" . addslashes($thumbnail) . "','" . addslashes($summary) . "','" . addslashes($content) . "')";
-    if (mysqli_query($conn, $sql_query)) {
-        $sql_query = 'SELECT LAST_INSERT_ID()';
-        $result = mysqli_query($conn, $sql_query);
-        mysqli_close($conn);
-        if ($row = mysqli_fetch_assoc($result)) {
-            $ret = $row['LAST_INSERT_ID()'];
-            return $ret;
-        }
+
+    if ($stmt = $conn->prepare("INSERT INTO posting_list (user_index, category_index, posting_title, posting_thumbnail, posting_summary, posting_content) VALUES (?, ?, ?, ?, ?, ?)")) {
+        $stmt->bind_param("iissss", $user_info['user_index'], $category_info['category_index'], $title, $thumbnail, $summary, $content);
+        
+        if ($stmt->execute()) {
+            $last_id = $conn->insert_id;  // 마지막으로 삽입된 ID 가져오기
+            $stmt->close();
+            mysqli_close($conn);
+            return $last_id;
+        } 
+        $stmt->close();
     }
 
+    mysqli_close($conn);
     return -1;
 }
 
@@ -360,18 +360,20 @@ function FixPosting($posting_index, $title, $thumbnail, $summary, $content)
 {
     include "sql_connection_info.php";
 
-
     $conn = mysqli_connect($sqlAddr, $sqlId, $sqlPw, $sqlBlogDb);
     $conn->set_charset("utf8mb4");
-    $sql_query = "UPDATE posting_list SET " .
-        "posting_title='" . addslashes($title) . "', " .
-        "posting_thumbnail='" . addslashes($thumbnail) . "', " .
-        "posting_summary='" . addslashes($summary) . "', " .
-        "posting_content='" . addslashes($content) . "' " .
-        "WHERE posting_index=" . $posting_index;
-    if (mysqli_query($conn, $sql_query)) {
-        return 0;
+
+    if ($stmt = $conn->prepare("UPDATE posting_list SET posting_title=?, posting_thumbnail=?, posting_summary=?, posting_content=? WHERE posting_index=?")) {
+        $stmt->bind_param("ssssi", $title, $thumbnail, $summary, $content, $posting_index);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            mysqli_close($conn);
+            return 0;
+        }
+        $stmt->close();
     }
 
+    mysqli_close($conn);
     return -1;
 }
